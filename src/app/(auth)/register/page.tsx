@@ -6,6 +6,8 @@ import OtpHandlerEmail from '@/components/auth/authService/OtpHandlerEmail';
 import OtpHandlerPhone from '@/components/auth/authService/OtpHandlerPhone';
 import Success from '@/components/auth/authExtras/AuthSuccess';
 import Failure from '@/components/auth/authExtras/AuthFailure';
+import { useUser } from '@/actions/UserContext/UserContext';
+import { useRouter } from 'next/navigation';
 
 
 const RegistrationPage: React.FC = () => {
@@ -13,6 +15,10 @@ const RegistrationPage: React.FC = () => {
   const [contactMethod, setContactMethod] = useState<'email' | 'phoneNumber' | null>(null);
   const [contactValue, setContactValue] = useState<string>('');
   const [registrationSuccess, setRegistrationSuccess] = useState<boolean | null>(null);
+
+  const { user } = useUser();
+  const router = useRouter();
+
 
   const handleFormSubmit = async (method: 'email' | 'phoneNumber', formData: {
     email: string;
@@ -54,6 +60,11 @@ const RegistrationPage: React.FC = () => {
   const handleOtpFailure = () => {
     setStep(4);
   };
+
+
+  if (!user) {
+    router.push('/profile')
+  }
 
   return (
     <div className="flex items-center justify-center w-full h-screen">

@@ -1,22 +1,26 @@
+// components/OtpHandlerPhone.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { setTokens } from '@/utils/auth';
+import { useUser } from '@/actions/UserContext/UserContext';
 
 interface OtpHandlerPhoneProps {
     phoneNumber: string;
-    onSuccess: () => void;  
-    onFailure: () => void; 
+    onSuccess: () => void;
+    onFailure: () => void;
 }
 
 const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSuccess, onFailure }) => {
     const [otp, setOtp] = useState<string>('');
     const [otpSent, setOtpSent] = useState<boolean>(false);
+    const { setUser } = useUser();
 
     const sendOtp = async () => {
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/phone/send-otp`, {
-                phoneNumber
+                phoneNumber,
             }, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -33,21 +37,25 @@ const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSucces
 
     const verifyOtp = async () => {
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/phone/verify-otp`, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/phone/verify-otp`, {
                 phoneNumber,
-                otp
+                otp,
             }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
 
+            const { accessToken, refreshToken, user } = response.data;
+            setTokens(accessToken, refreshToken);
+            setUser(user);
+
             toast.success('OTP verified successfully!');
             onSuccess();
         } catch (error) {
             console.error(error);
             toast.error('Invalid OTP. Please try again.');
-            onFailure();  // Call the onFailure callback
+            onFailure();
         }
     };
 
@@ -56,7 +64,7 @@ const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSucces
             <button
                 className="px-4 py-2 mb-4 text-white bg-blue-500 rounded hover:bg-blue-600"
                 onClick={sendOtp}
-                disabled={otpSent} // Disable button if OTP is already sent
+                disabled={otpSent}
             >
                 {otpSent ? 'OTP Sent' : 'Send OTP'}
             </button>
