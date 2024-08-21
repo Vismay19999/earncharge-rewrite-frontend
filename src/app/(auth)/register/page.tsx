@@ -62,7 +62,7 @@ const RegistrationPage: React.FC = () => {
   };
 
 
-  if (!user) {
+  if (user) {
     router.push('/profile')
   }
 

@@ -1,11 +1,12 @@
 "use client"
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getAccessToken } from '../../utils/auth';
+import { getAccessToken, logout as removeTokens } from '../../utils/auth';
 import axios from 'axios';
 
 interface UserContextType {
     user: any;
     setUser: React.Dispatch<React.SetStateAction<any>>;
+    logout: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -34,8 +35,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         fetchUser();
     }, []);
 
+    const logout = () => {
+        removeTokens(); // This will remove the tokens from cookies
+        setUser(null);  // This will clear the user state
+    };
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, logout }}>
             {children}
         </UserContext.Provider>
     );

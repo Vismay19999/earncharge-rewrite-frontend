@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '@/actions/UserContext/UserContext';
@@ -18,7 +19,8 @@ const AdminContactDataPage: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setContactData(response.data);
+        setContactData(response.data.data);
+        console.log('Contact data:', response.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching contact data:', err);

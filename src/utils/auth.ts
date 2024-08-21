@@ -7,3 +7,8 @@ export const setTokens = (accessToken: string, refreshToken: string) => {
 
 export const getAccessToken = () => Cookies.get('accessToken');
 export const getRefreshToken = () => Cookies.get('refreshToken');
+
+export const logout = () => {
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
+};

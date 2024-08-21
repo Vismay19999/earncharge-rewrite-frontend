@@ -8,7 +8,7 @@ const page = () => {
 
   const { user } = useUser();
   const router = useRouter()
-  if (!user) {
+  if (user) {
     router.push('/profile')
   }
 

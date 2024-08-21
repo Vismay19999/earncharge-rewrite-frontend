@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "./../../../public/logo.png";
+import { logout as RemoveToken } from "@/utils/auth";
+import { useUser } from "@/actions/UserContext/UserContext";
 
 const Header = () => {
   const [isFixed, setIsFixed] = useState(false);
-
+  const { user, logout } = useUser();
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -22,11 +24,15 @@ const Header = () => {
     };
   }, []);
 
+  const logoutHandler = () => {
+    RemoveToken();
+    logout()
+  }
+
   return (
     <div
-      className={`py-4 ${
-        isFixed ? "fixed top-0 left-0 right-0 z-50" : "relative"
-      } transition-all duration-300 bg-white`}
+      className={`py-4 ${isFixed ? "fixed top-0 left-0 right-0 z-50" : "relative"
+        } transition-all duration-300 bg-white`}
     >
       <div className="flex items-center justify-between mx-24 px-6">
         <div className="flex items-center space-x-2">
@@ -50,15 +56,29 @@ const Header = () => {
 
         {/* Right section: Buttons */}
         <div className="flex items-center space-x-4">
-          <button className="px-4 py-2 bg-white border border-gray-800 text-gray-800 rounded-md hover:bg-gray-100">
-            Log In
-          </button>
-          <button className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900">
-            Get Started
-          </button>
+          {user ? (
+            <>
+              <div onClick={logoutHandler} className="px-4 py-2 bg-white border border-gray-800 text-gray-800 rounded-md hover:bg-gray-100">
+                Log out
+              </div>
+              <Link href={"/profile"} className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900">
+                Profile
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href={"/login"} className="px-4 py-2 bg-white border border-gray-800 text-gray-800 rounded-md hover:bg-gray-100">
+                Log In
+              </Link>
+              <Link href={"/register"} className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900">
+                Get Started
+              </Link>
+            </>
+          )}
+
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
