@@ -1,15 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
+import type { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 
-const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="flex min-h-screen">
-            <aside>
-                navbar here
-            </aside>
-            <main className="flex-1 p-8 bg-gray-100">
-                {children}
-            </main>
+        <div className=" flex flex-row ">
+            <div className="">
+
+            </div>
+            <div className="w-full  mt-14 xl:mt-2 p-5 overflow-hidden">{children}</div>
+            <ToastContainer />
         </div>
     );
 };
