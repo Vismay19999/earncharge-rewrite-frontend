@@ -2,15 +2,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "./../../../public/logo.png";
-import CopyrightIcon from "@mui/icons-material/Copyright";
+import Logo from "@/../public/logo.png";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import HomeIcon from "@mui/icons-material/Home";
 import ExploreIcon from "@mui/icons-material/Explore";
 import InfoIcon from "@mui/icons-material/Info";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 
 const MobileSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);

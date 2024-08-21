@@ -1,7 +1,7 @@
 "use client";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header/Header";
-import MobileSidebar from "@/components/Header/MobileSidebar";
+import Footer from "@/components/core/Footer/Footer";
+import Header from "@/components/core/Header/Header";
+import MobileSidebar from "@/components/core/Header/MobileSidebar";
 
 export default function Home() {
   return (
