@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import verify from "@/../public/verification_done.png"; // Assuming you want to use your own image here
+import success from "@/../public/success.png";
 import Header from "@/components/core/Header/Header";
 import Footer from "@/components/core/Footer/Footer";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
@@ -12,14 +12,16 @@ const Page = () => {
       <div className="flex flex-col justify-center items-center min-h-[800px]">
         <div className="flex justify-center items-center">
           <Image
-            src={verify}
+            src={success}
             alt="Verification Successful"
             width={500}
             height={500}
             className="object-cover"
           />
         </div>
-        <h1 className="text-3xl font-semibold mt-4">Your Account has been Verified</h1>
+        <h1 className="text-3xl font-semibold mt-4">
+          Your Payment has been done Successfully
+        </h1>
         <p className="text-gray-600 text-lg mt-2">
           Enjoy secure access to your profile!
         </p>
