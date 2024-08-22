@@ -1,8 +1,11 @@
 import React from 'react'
+import FindByPN from './FindByPN'
 
 const IndexRecharge = () => {
   return (
-    <div>IndexRecharge</div>
+    <div>
+        <FindByPN />
+    </div>
   )
 }
 
