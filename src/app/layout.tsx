@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ContextLayout from "@/actions/UserContext/UserProvider";
 import { UserProvider } from "@/actions/UserContext/UserContext";
+import Header from "@/components/core/Header/Header";
+import Footer from "@/components/core/Footer/Footer";
+import MobileSidebar from "@/components/core/Header/MobileSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +23,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
+          <div className="hidden lg:block">
+            <Header />
+          </div>
+          <div className="lg:hidden">
+            <MobileSidebar />
+          </div>
           {children}
+          <div>
+            <Footer />
+          </div>
         </UserProvider>
       </body>
     </html>
