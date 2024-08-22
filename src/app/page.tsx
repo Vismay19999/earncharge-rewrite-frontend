@@ -1,15 +1,17 @@
 "use client";
-import Footer from "@/components/core/Footer/Footer";
-import Header from "@/components/core/Header/Header";
-import MobileSidebar from "@/components/core/Header/MobileSidebar";
+import { useUser } from "@/actions/UserContext/UserContext";
 import IndexRecharge from "@/components/recharge/IndexRecharge";
 
 export default function Home() {
+  const { user } = useUser()
+
   return (
-    <>
-      <div>
-        <IndexRecharge />
-      </div>
-    </>
+    <div>
+      {user &&
+        <div>
+          <IndexRecharge />
+        </div>
+      }
+    </div>
   );
 }
