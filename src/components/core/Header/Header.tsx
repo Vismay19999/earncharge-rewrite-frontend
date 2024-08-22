@@ -9,6 +9,7 @@ import { useUser } from "@/actions/UserContext/UserContext";
 const Header = () => {
   const [isFixed, setIsFixed] = useState(false);
   const { user, logout } = useUser();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -32,8 +33,10 @@ const Header = () => {
   return (
     <div
       className={`py-4 ${
-        isFixed ? "fixed top-0 left-0 right-0 z-50" : "relative"
-      } transition-all duration-300 bg-gray-50`}
+        isFixed
+          ? "fixed top-0 left-0 right-0 z-50 backdrop-blur-md shadow-md"
+          : "relative"
+      } transition-all duration-300`}
     >
       <div className="flex items-center justify-between mx-24 px-6">
         <div className="flex items-center space-x-2">
@@ -41,7 +44,7 @@ const Header = () => {
         </div>
 
         {/* Middle section: Navigation links */}
-        <div className="flex items-center space-x-6 text-xl font-semibold text-gray-800">
+        <div className="flex items-center space-x-5 text-xl font-semibold text-gray-800">
           <Link href="/">
             <h1 className="hover:underline">Home</h1>
           </Link>
@@ -61,7 +64,7 @@ const Header = () => {
             <>
               <div
                 onClick={logoutHandler}
-                className="px-4 py-2 bg-white border border-gray-800 text-gray-800 rounded-md hover:bg-gray-100"
+                className="px-4 py-2 bg-white border border-gray-800 text-gray-800 rounded-md hover:bg-gray-100 cursor-pointer"
               >
                 Log out
               </div>
