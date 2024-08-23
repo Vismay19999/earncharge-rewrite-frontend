@@ -11,6 +11,13 @@ const Page = () => {
     const router = useRouter();
     const [phoneNumber, setPhoneNumber] = useState("");
 
+    React.useEffect(() => {
+        if (user) {
+            router.push("/profile");
+        }
+    }, [user, router]);
+
+
     const handleSendLink = async () => {
         try {
             const response = await axios.post(
