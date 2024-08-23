@@ -1,5 +1,6 @@
 "use client";
 import { useUser } from "@/actions/UserContext/UserContext";
+import Recharge from "@/components/core/Home/recharge";
 import IndexRecharge from "@/components/recharge/IndexRecharge";
 
 export default function Home() {
@@ -7,11 +8,14 @@ export default function Home() {
 
   return (
     <div>
-      {user &&
+      <div>
+        <Recharge />
+      </div>
+      {user && (
         <div>
           <IndexRecharge />
         </div>
-      }
+      )}
     </div>
   );
 }

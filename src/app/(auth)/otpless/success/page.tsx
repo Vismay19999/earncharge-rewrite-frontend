@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import success from "@/../public/success.png";
-import Header from "@/components/core/Header/Header";
+import Header from "@/components/core/Header/PcHeader";
 import Footer from "@/components/core/Footer/Footer";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 
@@ -19,7 +19,9 @@ const Page = () => {
             className="object-cover"
           />
         </div>
-        <h1 className="text-3xl font-semibold mt-4">Your Account has been Verified</h1>
+        <h1 className="text-3xl font-semibold mt-4">
+          Your Account has been Verified
+        </h1>
         <p className="text-gray-600 text-lg mt-2">
           Enjoy secure access to your profile!
         </p>

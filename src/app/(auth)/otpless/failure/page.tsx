@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import failure from "@/../public/failure.png";
-import Header from "@/components/core/Header/Header";
+import Header from "@/components/core/Header/PcHeader";
 import Footer from "@/components/core/Footer/Footer";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 

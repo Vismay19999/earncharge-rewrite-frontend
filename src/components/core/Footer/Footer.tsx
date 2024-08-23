@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "@/../public/footer logo.png";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -8,32 +9,62 @@ const Footer = () => {
       <div className="w-full py-12 p-6 bg-[#131c23] mt-[100px]">
         <div className="max-w-[1000px] m-auto">
           <div className="flex flex-col lg:flex-row gap-10">
-            <div className="flex-[1]">
+            <Link href="/" className="flex-[1]">
               <Image src={Logo} alt="Logo" width={200} height={200} />
-            </div>
+            </Link>
             <div className="flex-[1]">
               <span className="text-xs font-bold text-white">Our Company</span>
-              <div className="cursor-pointer text-white mt-4 text-lg">Home</div>
-              <div className="cursor-pointer text-white mt-4 text-lg">Blog</div>
-              <div className="cursor-pointer text-white mt-4 text-lg">Help</div>
+              <Link
+                href="/"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                Home
+              </Link>
+              <Link
+                href="/"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                Blog
+              </Link>
+              <Link
+                href="/"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                Help
+              </Link>
             </div>
             <div className="flex-[1]">
               <span className="text-xs font-bold text-white">Legal</span>
-              <div className="cursor-pointer text-white mt-4 text-lg">
+              <Link
+                href="/refund"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
                 Refund Policy
-              </div>
-              <div className="cursor-pointer text-white mt-4 text-lg">
+              </Link>
+              <Link
+                href="/policy"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
                 Privacy Policy
-              </div>
-              <div className="cursor-pointer text-white mt-4 text-lg">
+              </Link>
+              <Link
+                href="/disclaimer"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
                 Disclaimer
-              </div>
-              <div className="cursor-pointer text-white mt-4 text-lg">
+              </Link>
+              <Link
+                href="/terms"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
                 Terms & Conditions
-              </div>
-              <div className="cursor-pointer text-white mt-4 text-lg">
+              </Link>
+              <Link
+                href="/contact"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
                 Contact
-              </div>
+              </Link>
             </div>
           </div>
           <div className="flex flex-wrap mt-20 justify-between flex-col gap-5 lg:flex-row lg:items-center">

@@ -23,19 +23,19 @@ const MobileSidebar = () => {
 
   return (
     <>
-      <div className="md:hidden bg-gray-500 shadow-lg flex justify-between items-center p-2">
+      <div className="md:hidden z-50 backdrop-blur-md shadow-md flex justify-between items-center p-2">
         <div className="flex items-center justify-center">
           <Image src={Logo} alt="Logo" width={150} height={40} />
         </div>
         <IconButton onClick={toggleSidebar}>
-          <MenuIcon fontSize="large" className="text-white" />
+          <MenuIcon fontSize="large" className="text-[#131c23]" />
         </IconButton>
       </div>
 
       <div
         className={`fixed inset-0 z-40 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out bg-gray-900 text-white font-Primary w-3/4`}
+        } transition-transform duration-300 ease-in-out bg-[#131c23] text-white font-Primary w-3/4`}
       >
         <IconButton onClick={closeSidebar}>
           <CloseIcon fontSize="large" className="text-white" />
