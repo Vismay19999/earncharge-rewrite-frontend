@@ -133,7 +133,7 @@ const LoginForm: React.FC = () => {
                     </div>
                     <div>
                         <p>register a account?<Link className='text-blue-600' href={"/register"}>register now</Link></p>
-                        <p>use <Link className='text-blue-600' href={"/otpless"}>otpless</Link></p>
+                        <p>use <Link className='text-blue-600' href={"/otpless/sendlink"}>otpless</Link></p>
                     </div>
                     <button
                         type="button"

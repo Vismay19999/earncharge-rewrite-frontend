@@ -24,8 +24,8 @@ const Page = () => {
                     },
                 }
             );
-
             toast.success('Link sent successfully!');
+            window.location.href = response.data.requestIds[0].destinationUri
         } catch (error: any) {
             toast.error('Error sending link: ' + error.message);
         }
