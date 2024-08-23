@@ -1,6 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import axios from 'axios'; // Import Axios
+import { setTokens } from '@/utils/auth';
+import { useUser } from '@/actions/UserContext/UserContext';
 
 const Page = () => {
   const router = useRouter();
@@ -8,6 +11,8 @@ const Page = () => {
   const [code, setCode] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { setUser } = useUser();
 
   useEffect(() => {
     const codeFromUrl = searchParams.get('code');
@@ -23,20 +28,20 @@ const Page = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('https://api.earncharge.in/v1/auth/otpless/exchangetoken', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      });
+      const response = await axios.post('https://api.earncharge.in/v1/auth/otpless/exchangetoken', 
+        { code }, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
+      // Set tokens and user data from response
+      setTokens(response.data.accessToken, response.data.refreshToken);
+      setUser(response.data.data);
 
-      const data = await response.json();
-      console.log('API Response:', data);
+      console.log('API Response:', response.data);
     } catch (error) {
       console.error('Failed to authorize:', error);
       setErrorMessage('Authorization failed. Please try again.');
@@ -49,7 +54,6 @@ const Page = () => {
     <div>
       {code ? (
         <div>
-          {/* <p>Code: {code}</p> */}
           <button onClick={handleAuthorization} disabled={isLoading}>
             {isLoading ? 'Authorizing...' : 'Authorize'}
           </button>
