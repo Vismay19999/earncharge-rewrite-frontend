@@ -1,33 +1,29 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import { setTokens } from '@/utils/auth';
 import { useUser } from '@/actions/UserContext/UserContext';
 
-const Page = () => {
+const UseAuthorization = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [code, setCode] = useState<string | null>(null);
+    const code = searchParams?.get('code');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const { user } = useUser();
-  
-    React.useEffect(() => {
-      if (user) {
-        router.push("/profile");
-      }
-    }, [user, router]);
-  
-
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
 
     useEffect(() => {
-        const codeFromUrl = searchParams.get('code');
-        if (codeFromUrl) {
-            setCode(codeFromUrl);
+        if (user) {
+            router.push("/profile");
         }
-    }, [searchParams]);
+    }, [user, router]);
+
+    useEffect(() => {
+        if (code) {
+            handleAuthorization();
+        }
+    }, [code]);
 
     const handleAuthorization = async () => {
         if (!code) return;
@@ -45,7 +41,6 @@ const Page = () => {
                 }
             );
 
-            // Set tokens and user data from response
             setTokens(response.data.accessToken, response.data.refreshToken);
             setUser(response.data.data);
             setTimeout(() => {
@@ -60,20 +55,7 @@ const Page = () => {
         }
     };
 
-    return (
-        <div>
-            {code ? (
-                <div>
-                    <button onClick={handleAuthorization} disabled={isLoading}>
-                        {isLoading ? 'Authorizing...' : 'Authorize'}
-                    </button>
-                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                </div>
-            ) : (
-                <p>No code found in the URL.</p>
-            )}
-        </div>
-    );
+    return { isLoading, errorMessage, code };
 };
 
-export default Page;
+export default UseAuthorization;

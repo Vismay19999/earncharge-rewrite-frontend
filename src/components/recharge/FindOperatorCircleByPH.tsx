@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const FindByPN = () => {
+const FindOperatorCircleByPH = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [operatorInfo, setOperatorInfo] = useState<{ operator: string; circle: string } | null>(null);
     const [loading, setLoading] = useState(false);
@@ -64,4 +64,4 @@ const FindByPN = () => {
     );
 };
 
-export default FindByPN;
+export default FindOperatorCircleByPH;

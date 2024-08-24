@@ -1,5 +1,5 @@
 import React from 'react'
-import FindByPN from './FindByPN'
+import FindOperatorCircleByPH from './FindOperatorCircleByPH'
 import { useUser } from '@/actions/UserContext/UserContext'
 
 const IndexRecharge = () => {
@@ -7,7 +7,7 @@ const IndexRecharge = () => {
 
     return (
         <div>
-            <FindByPN />
+            <FindOperatorCircleByPH />
         </div>
     )
 }
