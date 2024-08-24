@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -11,6 +12,7 @@ interface FormData {
 
 const ContactPage: React.FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+
 
   const onSubmit = async (data: FormData) => {
     try {
