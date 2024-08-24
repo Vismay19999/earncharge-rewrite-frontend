@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import { setTokens } from '@/utils/auth';
+import { useUser } from '@/actions/UserContext/UserContext';
 
 const LoginForm: React.FC = () => {
     const [loginMethod, setLoginMethod] = useState<'phoneNumber' | 'email' | null>(null);
@@ -13,6 +15,8 @@ const LoginForm: React.FC = () => {
         email: '',
         password: ''
     });
+
+    const { setUser } = useUser();
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -41,6 +45,10 @@ const LoginForm: React.FC = () => {
 
             // Handle successful login
             console.log(response.data);
+
+            const { accessToken, refreshToken, user } = response.data;
+            setTokens(accessToken, refreshToken);
+            setUser(user);
             toast.success('Login successful!');
         } catch (error) {
             // Handle login error

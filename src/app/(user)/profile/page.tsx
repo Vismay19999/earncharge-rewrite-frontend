@@ -1,5 +1,6 @@
 "use client"
 import { useUser } from '@/actions/UserContext/UserContext';
+import UPIFetch from '@/utils/UPIFetch';
 import React from 'react';
 
 const Page = () => {
@@ -22,7 +23,18 @@ const Page = () => {
                 <p className="mt-2 text-gray-600">Email Verification Status: <span className={user.email_verification_status ? 'text-green-500' : 'text-red-500'}>{user.email_verification_status ? 'Verified' : 'Not Verified'}</span></p>
                 <p className="mt-2 text-gray-600">Phone Verification Status: <span className={user.phone_verification_status ? 'text-green-500' : 'text-red-500'}>{user.phone_verification_status ? 'Verified' : 'Not Verified'}</span></p>
             </div>
-        </div>
+            {
+                user.upi ? (
+                    <div>
+                        upi :    {user.upi}
+                    </div>
+                ) : (
+                    <div>
+                        <UPIFetch />
+                    </div>
+                )
+            }
+        </div >
     );
 };
 
