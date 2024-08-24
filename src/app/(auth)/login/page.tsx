@@ -15,7 +15,7 @@ const Page = () => {
   }, [user, router]);
 
   return (
-    <div className="h-screen w-full items-center flex justify-center">
+    <div>
       <LoginForm />
     </div>
   );

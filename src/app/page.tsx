@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       <div>
-        <Recharge />
+        {/* <Recharge /> */}
       </div>
       {user && (
         <div>
