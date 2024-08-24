@@ -22,10 +22,10 @@ const FindOperatorCircleByPH = () => {
                     },
                 }
             );
-
-            const { operator, circle, msg } = response.data;
-            setOperatorInfo({ operator, circle });
-            toast.success(`Success: ${msg}`);
+            const { message } = response.data
+            const { provider_name, state_name } = response.data.details;
+            setOperatorInfo({ operator : provider_name, circle : state_name });
+            toast.success(`Success: ${message}`);
         } catch (error: any) {
             toast.error('Error finding operator: ' + error.message);
         } finally {
