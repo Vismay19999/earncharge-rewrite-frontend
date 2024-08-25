@@ -195,7 +195,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
           <div>
             <p>Already have an account?<Link className='text-blue-600' href={"/login"}> Login now</Link></p>
-            <p>Use<Link className='text-blue-600' href={"/otpless/sendlink"}> OTPless</Link></p>
+            <p>Use<Link className='text-blue-600' href={"/otpless/sendLink"}> OTPless</Link></p>
           </div>
 
           <button

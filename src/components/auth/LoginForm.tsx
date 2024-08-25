@@ -134,7 +134,7 @@ const LoginForm: React.FC = () => {
             <div className="w-full flex-1">
               <div className="my-4 border-b text-center">
                 <Link
-                  href={"/otpless/sendlink"}
+                  href={"/otpless/sendLink"}
                   className="leading-none px-2 inline-block text-md text-gray-600 mb-2 tracking-wide font-medium bg-white transform translate-y-1/2"
                 >
                   Or sign in quickly with OtpLess
