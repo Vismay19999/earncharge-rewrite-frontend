@@ -67,7 +67,7 @@ const RegistrationPage: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-screen">
+    <div className="">
       {step === 1 && <RegisterForm onSubmit={handleFormSubmit} />}
       {step === 2 && contactMethod === 'email' && (
         <OtpHandlerEmail email={contactValue} onSuccess={handleOtpSuccess} onFailure={handleOtpFailure} />

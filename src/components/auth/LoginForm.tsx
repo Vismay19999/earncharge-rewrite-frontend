@@ -83,7 +83,7 @@ const LoginForm: React.FC = () => {
           <div className="flex flex-col items-center">
             <h1 className="text-3xl xl:text-5xl font-extrabold">Sign in</h1>
             <span className="text-gray-600 text-lg mt-2">
-              Don&apos;t have a account?
+              Don&apos;t have an account?
             </span>
             <Link
               href="/register"
@@ -214,7 +214,7 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
         <ToastContainer />
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex items-center justify-center">
+        <div className="flex-1 text-center hidden lg:flex items-center justify-center">
           <div className="">
             <Image src={login} alt="login" />
           </div>
