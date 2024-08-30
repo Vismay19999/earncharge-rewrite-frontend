@@ -132,15 +132,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               </motion.div>
             </div>
             <div className="w-full flex-1">
-              <div className="my-4 border-b text-center">
-                <Link
-                  href={"/otpless/sendLink"}
-                  className="leading-none px-2 inline-block text-md text-gray-600 mb-2 tracking-wide font-medium bg-white transform translate-y-1/2"
-                >
-                  Or sign up quickly with OtpLess
-                </Link>
-              </div>
-
               <div className="mx-auto max-w-xs">
                 <div>
                   <Controller
@@ -278,6 +269,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   </svg>
                   <span className="ml-3">Sign Up</span>
                 </button>
+                <Link href={"/otpless/sendLink"}>
+                  <button
+                    type="button"
+                    className="mt-5 tracking-wide font-semibold border-2 border-blue-600 text-gray-800 hover:text-gray-100 w-full py-4 rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
+                    <span className="ml-3">Sign Up with OtpLess</span>
+                  </button>
+                </Link>
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by earncharge&apos;s
                   <a

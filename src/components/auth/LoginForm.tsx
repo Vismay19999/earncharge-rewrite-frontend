@@ -70,16 +70,12 @@ const LoginForm: React.FC = () => {
   return (
     <div className="rounded-lg text-gray-900 flex justify-center">
       <div className="max-w-screen-xl rounded-lg shadow-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
-        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-          <div>
-            <Image
-              src={logo}
-              alt="logo"
-              className="mx-auto"
-              height={200}
-              width={200}
-            />
+        <div className="flex-1 text-center hidden lg:flex items-center justify-center">
+          <div className="">
+            <Image src={login} alt="login" />
           </div>
+        </div>
+        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className="flex flex-col items-center">
             <h1 className="text-3xl xl:text-5xl font-extrabold">Sign in</h1>
             <span className="text-gray-600 text-lg mt-2">
@@ -132,16 +128,7 @@ const LoginForm: React.FC = () => {
               </motion.div>
             </div>
             <div className="w-full flex-1">
-              <div className="my-4 border-b text-center">
-                <Link
-                  href={"/otpless/sendLink"}
-                  className="leading-none px-2 inline-block text-md text-gray-600 mb-2 tracking-wide font-medium bg-white transform translate-y-1/2"
-                >
-                  Or sign in quickly with OtpLess
-                </Link>
-              </div>
-
-              <div className="mx-auto max-w-xs">
+              <div className="mx-auto max-w-xs pt-8">
                 {loginMethod === "phoneNumber" && (
                   <input
                     type="tel"
@@ -193,6 +180,14 @@ const LoginForm: React.FC = () => {
                   </svg>
                   <span className="ml-3">Sign In</span>
                 </button>
+                <Link href={"/otpless/sendLink"}>
+                  <button
+                    type="button"
+                    className="mt-5 tracking-wide font-semibold border-2 border-blue-600 text-gray-800 hover:text-gray-100 w-full py-4 rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
+                    <span className="ml-3">Sign In with OtpLess</span>
+                  </button>
+                </Link>
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by earncharge&apos;s
                   <a
@@ -214,11 +209,6 @@ const LoginForm: React.FC = () => {
           </div>
         </div>
         <ToastContainer />
-        <div className="flex-1 text-center hidden lg:flex items-center justify-center">
-          <div className="">
-            <Image src={login} alt="login" />
-          </div>
-        </div>
       </div>
     </div>
   );
