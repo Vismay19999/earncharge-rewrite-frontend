@@ -95,41 +95,99 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                       <Label htmlFor="fname" className="font-semibold">
                         First Name
                       </Label>
-                      <Input
-                        type="fname"
-                        id="#"
-                        placeholder="Enter Your First Name"
+                      <Controller
+                        name="firstName"
+                        control={control}
+                        rules={{ required: "First name is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="fname"
+                            id="firstName"
+                            placeholder="Enter Your First Name"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.firstName && (
+                        <p className="text-red-500 text-sm">
+                          {errors.firstName.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="lname" className="font-semibold">
                         Last Name
                       </Label>
-                      <Input
-                        type="lname"
-                        id="#"
-                        placeholder="Enter Your Last Name"
+                      <Controller
+                        name="lastName"
+                        control={control}
+                        rules={{ required: "Last name is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="lname"
+                            id="lastName"
+                            placeholder="Enter Your Last Name"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.lastName && (
+                        <p className="text-red-500 text-sm">
+                          {errors.lastName.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="email" className="font-semibold">
                         Email
                       </Label>
-                      <Input
-                        type="email"
-                        id="#"
-                        placeholder="someone@something.com"
+                      <Controller
+                        name="email"
+                        control={control}
+                        rules={{
+                          required: "Email is required",
+                          pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Invalid email address",
+                          },
+                        }}
+                        render={({ field }) => (
+                          <Input
+                            type="email"
+                            id="email"
+                            placeholder="someone@something.com"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm">
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">
                         Password
                       </Label>
-                      <Input
-                        type="password"
-                        id="#"
-                        placeholder="Choose a Strong Password"
+                      <Controller
+                        name="password"
+                        control={control}
+                        rules={{ required: "Password is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="password"
+                            id="password"
+                            placeholder="Choose a Strong Password"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.password && (
+                        <p className="text-red-500 text-sm">
+                          {errors.password.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
@@ -146,55 +204,117 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                         className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
                         disabled={!method}
                       >
-                        <Link href="/login">I want to register?</Link>
+                        <Link href="/login">I want to login?</Link>
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                      <p className="text-sm text-center">
+                        I agree to abide by EarnCharge{" "}
+                        <Link href="#" className="font-semibold">
+                          {" "}
+                          Terms Conditions
+                        </Link>{" "}
+                        &{" "}
+                        <Link href="#" className="font-semibold">
+                          Privacy Policy
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </TabsContent>
                 <TabsContent value="mobile">
-                <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center">
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="fname" className="font-semibold">
                         First Name
                       </Label>
-                      <Input
-                        type="fname"
-                        id="#"
-                        placeholder="Enter Your First Name"
+                      <Controller
+                        name="firstName"
+                        control={control}
+                        rules={{ required: "First name is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="fname"
+                            id="firstName"
+                            placeholder="Enter Your First Name"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.firstName && (
+                        <p className="text-red-500 text-sm">
+                          {errors.firstName.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="lname" className="font-semibold">
                         Last Name
                       </Label>
-                      <Input
-                        type="lname"
-                        id="#"
-                        placeholder="Enter Your Last Name"
+                      <Controller
+                        name="lastName"
+                        control={control}
+                        rules={{ required: "Last name is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="lname"
+                            id="lastName"
+                            placeholder="Enter Your Last Name"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.lastName && (
+                        <p className="text-red-500 text-sm">
+                          {errors.lastName.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="email" className="font-semibold">
                         Phone
                       </Label>
-                      <Input
-                        type="text"
-                        id="#"
-                        placeholder="8888866666"
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        rules={{ required: "Phone number is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="text"
+                            id="phoneNumber"
+                            placeholder="8888866666"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.phoneNumber && (
+                        <p className="text-red-500 text-sm">
+                          {errors.phoneNumber.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">
                         Password
                       </Label>
-                      <Input
-                        type="password"
-                        id="#"
-                        placeholder="Choose a Strong Password"
+                      <Controller
+                        name="password"
+                        control={control}
+                        rules={{ required: "Password is required" }}
+                        render={({ field }) => (
+                          <Input
+                            type="password"
+                            id="password"
+                            placeholder="Choose a Strong Password"
+                            {...field}
+                          />
+                        )}
                       />
+                      {errors.password && (
+                        <p className="text-red-500 text-sm">
+                          {errors.password.message}
+                        </p>
+                      )}
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
@@ -215,7 +335,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                      <p className="text-sm text-center">
+                        I agree to abide by EarnCharge{" "}
+                        <Link href="#" className="font-semibold">
+                          {" "}
+                          Terms Conditions
+                        </Link>{" "}
+                        &{" "}
+                        <Link href="#" className="font-semibold">
+                          Privacy Policy
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </TabsContent>

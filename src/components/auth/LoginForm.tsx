@@ -2,18 +2,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/../public/logo.png";
 import { setTokens } from "@/utils/auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUser } from "@/actions/UserContext/UserContext";
 import login from "@/../public/log.jpg";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const LoginForm: React.FC = () => {
@@ -23,7 +19,7 @@ const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const { setUser } = useUser();
@@ -32,7 +28,7 @@ const LoginForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -47,13 +43,13 @@ const LoginForm: React.FC = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login`,
         {
           [loginMethod]: formData[loginMethod],
-          password: formData.password
+          password: formData.password,
         },
         {
           headers: {
             Authorization: "Bearer YOUR_TOKEN",
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
@@ -87,10 +83,18 @@ const LoginForm: React.FC = () => {
               <p>Secure Access to Your Personal Dashboard</p>
               <Tabs defaultValue="email" className="w-[400px] mt-8">
                 <TabsList className="w-full">
-                  <TabsTrigger value="email" className="w-full">
+                  <TabsTrigger
+                    value="email"
+                    className="w-full"
+                    onClick={() => handleMethodSelect("email")}
+                  >
                     Email
                   </TabsTrigger>
-                  <TabsTrigger value="mobile" className="w-full">
+                  <TabsTrigger
+                    value="mobile"
+                    className="w-full"
+                    onClick={() => handleMethodSelect("phoneNumber")}
+                  >
                     Mobile
                   </TabsTrigger>
                 </TabsList>
@@ -102,8 +106,11 @@ const LoginForm: React.FC = () => {
                       </Label>
                       <Input
                         type="email"
-                        id="#"
+                        id="email"
+                        name="email"
                         placeholder="someone@something.com"
+                        value={formData.email}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
@@ -112,14 +119,18 @@ const LoginForm: React.FC = () => {
                       </Label>
                       <Input
                         type="password"
-                        id="#"
+                        id="password"
+                        name="password"
                         placeholder="Your Credentials"
+                        value={formData.password}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                        onClick={handleLogin}
                       >
                         Sign In
                       </button>
@@ -133,20 +144,32 @@ const LoginForm: React.FC = () => {
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                      <p className="text-sm text-center">
+                        I agree to abide by EarnCharge{" "}
+                        <Link href="#" className="font-semibold">
+                          Terms Conditions
+                        </Link>{" "}
+                        &{" "}
+                        <Link href="#" className="font-semibold">
+                          Privacy Policy
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </TabsContent>
                 <TabsContent value="mobile">
-                <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center">
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="mobile" className="font-semibold">
                         Mobile
                       </Label>
                       <Input
                         type="text"
-                        id="#"
+                        id="phoneNumber"
+                        name="phoneNumber"
                         placeholder="8888855544"
+                        value={formData.phoneNumber}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
@@ -155,14 +178,18 @@ const LoginForm: React.FC = () => {
                       </Label>
                       <Input
                         type="password"
-                        id="#"
+                        id="password"
+                        name="password"
                         placeholder="Your Credentials"
+                        value={formData.password}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                        onClick={handleLogin}
                       >
                         Sign In
                       </button>
@@ -184,7 +211,16 @@ const LoginForm: React.FC = () => {
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                      <p className="text-sm text-center">
+                        I agree to abide by EarnCharge{" "}
+                        <Link href="#" className="font-semibold">
+                          Terms Conditions
+                        </Link>{" "}
+                        &{" "}
+                        <Link href="#" className="font-semibold">
+                          Privacy Policy
+                        </Link>
+                      </p>
                     </div>
                   </div>
                 </TabsContent>
