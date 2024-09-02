@@ -1,18 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
-import { motion } from "framer-motion";
 import register from "@/../public/reg.jpg";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import logo from "@/../public/logo.png";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 interface RegisterFormProps {
   onSubmit: (
