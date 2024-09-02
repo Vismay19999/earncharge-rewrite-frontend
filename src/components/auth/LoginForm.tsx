@@ -138,6 +138,16 @@ const LoginForm: React.FC = () => {
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
+                        className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                      >
+                        <Link href="/otpless/sendLink">
+                          Sign In without OTP
+                        </Link>
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
                         className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
                       >
                         <Link href="/register">I want to register?</Link>
@@ -199,7 +209,9 @@ const LoginForm: React.FC = () => {
                         type="button"
                         className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
                       >
-                        <Link href="/otpLess">Sign In without OTP</Link>
+                        <Link href="/otpless/sendLink">
+                          Sign In without OTP
+                        </Link>
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
