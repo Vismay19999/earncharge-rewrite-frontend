@@ -8,10 +8,13 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/../public/logo.png";
 import { setTokens } from "@/utils/auth";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useUser } from "@/actions/UserContext/UserContext";
-import login from "@/../public/login.png";
+import login from "@/../public/log.jpg";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const LoginForm: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<
@@ -20,7 +23,7 @@ const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     email: "",
-    password: "",
+    password: ""
   });
 
   const { setUser } = useUser();
@@ -29,7 +32,7 @@ const LoginForm: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -44,13 +47,13 @@ const LoginForm: React.FC = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login`,
         {
           [loginMethod]: formData[loginMethod],
-          password: formData.password,
+          password: formData.password
         },
         {
           headers: {
             Authorization: "Bearer YOUR_TOKEN",
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
@@ -68,149 +71,129 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="rounded-lg text-gray-900 flex justify-center">
-      <div className="max-w-screen-xl rounded-lg shadow-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
-        <div className="flex-1 text-center hidden lg:flex items-center justify-center">
-          <div className="">
-            <Image src={login} alt="login" />
-          </div>
-        </div>
-        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-          <div className="flex flex-col items-center">
-            <h1 className="text-3xl xl:text-5xl font-extrabold">Sign in</h1>
-            <span className="text-gray-600 text-lg mt-2">
-              Don&apos;t have an account?
-            </span>
-            <Link
-              href="/register"
-              className="text-blue-600 text-lg underline hover:no-underline"
-            >
-              Register Now
-            </Link>
-            <div className="flex w-full justify-between mt-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleMethodSelect("phoneNumber")}
-                className={`w-1/2 py-4 border-2 rounded-lg mr-2 cursor-pointer transition-colors duration-200 ${
-                  loginMethod === "phoneNumber"
-                    ? "border-blue-600 text-gray-700"
-                    : "border-gray-600"
-                }`}
-              >
-                <div className="flex items-center px-4">
-                  {loginMethod === "phoneNumber" ? (
-                    <RadioButtonCheckedIcon className="text-blue-600 mr-2" />
-                  ) : (
-                    <RadioButtonUncheckedIcon className="text-gray-600 mr-2" />
-                  )}
-                  Phone Number
-                </div>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleMethodSelect("email")}
-                className={`w-1/2 py-4 border-2 rounded-lg ml-2 cursor-pointer text-sm transition-colors duration-200 ${
-                  loginMethod === "email"
-                    ? "border-blue-600 text-gray-700"
-                    : "border-gray-600"
-                }`}
-              >
-                <div className="flex items-center px-4">
-                  {loginMethod === "email" ? (
-                    <RadioButtonCheckedIcon className="text-blue-600 mr-2" />
-                  ) : (
-                    <RadioButtonUncheckedIcon className="text-gray-600 mr-2" />
-                  )}
-                  Email
-                </div>
-              </motion.div>
+    <>
+      <div className="rounded-lg text-gray-900 flex justify-center">
+        <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
+          <div className="flex-1 text-center hidden lg:flex items-center justify-center">
+            <div className="p-10">
+              <Image src={login} alt="login" className="rounded-3xl" />
             </div>
-            <div className="w-full flex-1">
-              <div className="mx-auto max-w-xs pt-8">
-                {loginMethod === "phoneNumber" && (
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    placeholder="Phone Number"
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange}
-                  />
-                )}
-                {loginMethod === "email" && (
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                )}
-                <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                />
-                <button
-                  type="button"
-                  className="mt-5 tracking-wide font-semibold bg-blue-600 text-gray-100 w-full py-4 rounded-lg hover:bg-blue-800 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                  onClick={handleLogin}
-                  disabled={!loginMethod} // Disable button until a method is selected
-                >
-                  <svg
-                    className="w-6 h-6 -ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path d="M20 8v6M23 11h-6" />
-                  </svg>
-                  <span className="ml-3">Sign In</span>
-                </button>
-                <Link href={"/otpless/sendLink"}>
-                  <button
-                    type="button"
-                    className="mt-5 tracking-wide font-semibold border-2 border-blue-600 text-gray-800 hover:text-gray-100 w-full py-4 rounded-lg hover:bg-blue-600 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                  >
-                    <span className="ml-3">Sign In with OtpLess</span>
-                  </button>
-                </Link>
-                <p className="mt-6 text-xs text-gray-600 text-center">
-                  I agree to abide by earncharge&apos;s
-                  <a
-                    href="/terms"
-                    className="border-b border-gray-500 border-dotted"
-                  >
-                    Terms of Service
-                  </a>
-                  and its
-                  <a
-                    href="/policy"
-                    className="border-b border-gray-500 border-dotted"
-                  >
-                    Privacy Policy
-                  </a>
-                </p>
-              </div>
+          </div>
+          <div className="lg:w-1/3 xl:w-5/12 p-6 sm:p-12">
+            <div className="flex flex-col items-center">
+              <h1 className="text-3xl xl:text-3xl font-extrabold">
+                Login to your account
+              </h1>
+              <p>Secure Access to Your Personal Dashboard</p>
+              <Tabs defaultValue="email" className="w-[400px] mt-8">
+                <TabsList className="w-full">
+                  <TabsTrigger value="email" className="w-full">
+                    Email
+                  </TabsTrigger>
+                  <TabsTrigger value="mobile" className="w-full">
+                    Mobile
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="email">
+                  <div className="flex flex-col items-center">
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="email" className="font-semibold">
+                        Email
+                      </Label>
+                      <Input
+                        type="email"
+                        id="#"
+                        placeholder="someone@something.com"
+                      />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="password" className="font-semibold">
+                        Password
+                      </Label>
+                      <Input
+                        type="password"
+                        id="#"
+                        placeholder="Your Credentials"
+                      />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
+                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                      >
+                        Sign In
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
+                        className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
+                      >
+                        <Link href="/register">I want to register?</Link>
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                    </div>
+                  </div>
+                </TabsContent>
+                <TabsContent value="mobile">
+                <div className="flex flex-col items-center">
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="mobile" className="font-semibold">
+                        Mobile
+                      </Label>
+                      <Input
+                        type="text"
+                        id="#"
+                        placeholder="8888855544"
+                      />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="password" className="font-semibold">
+                        Password
+                      </Label>
+                      <Input
+                        type="password"
+                        id="#"
+                        placeholder="Your Credentials"
+                      />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
+                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                      >
+                        Sign In
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
+                        className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                      >
+                        <Link href="/otpLess">Sign In without OTP</Link>
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                      <button
+                        type="button"
+                        className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
+                      >
+                        <Link href="/register">I want to register?</Link>
+                      </button>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <p className="text-sm text-center">I agree to abide by EarnCharge <Link href="#" className="font-semibold"> Terms Conditions</Link> & <Link href="#" className="font-semibold">Privacy Policy</Link></p>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </div>
-        <ToastContainer />
       </div>
-    </div>
+    </>
   );
 };
 

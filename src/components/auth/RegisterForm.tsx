@@ -146,7 +146,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                         className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
                         disabled={!method}
                       >
-                        Already have account?
+                        <Link href="/login">I want to register?</Link>
                       </button>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
