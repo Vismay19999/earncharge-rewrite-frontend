@@ -200,6 +200,7 @@ const LoginForm: React.FC = () => {
                         type="button"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
                         onClick={handleLogin}
+                        disabled={!loginMethod} // Disable button until a method is selected
                       >
                         Sign In
                       </button>

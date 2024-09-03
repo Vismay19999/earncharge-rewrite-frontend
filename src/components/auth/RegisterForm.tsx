@@ -186,7 +186,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
-                        type="button"
+                        type="submit"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
                         disabled={!method}
                       >
@@ -313,7 +313,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
-                        type="button"
+                        type="submit"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
                         disabled={!method}
                       >
