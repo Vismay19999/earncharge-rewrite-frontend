@@ -47,7 +47,6 @@ const LoginForm: React.FC = () => {
         },
         {
           headers: {
-            Authorization: "Bearer YOUR_TOKEN",
             "Content-Type": "application/json",
           },
         }
