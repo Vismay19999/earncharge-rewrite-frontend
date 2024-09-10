@@ -28,8 +28,8 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
       toast.success("OTP sent successfully!");
@@ -56,8 +56,8 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
       toast.success("OTP verified successfully!");
@@ -70,30 +70,34 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100 p-4">
+    <div className="mt-4">
       <ToastContainer />
-      <div className="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center">Verify KYC</h2>
+      <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E]">
+        <h2 className="text-lg font-bold mb-4">Verify KYC</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Aadhaar Number</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Aadhaar Number
+          </label>
           <input
             type="text"
             value={aadhaarNumber}
             onChange={(e) => setAadhaarNumber(e.target.value)}
-            placeholder="Enter Aadhaar Number"
-            className="mt-1 p-2 w-full border rounded-md"
+            placeholder="UID 12 Digit Number"
+            className="mt-1 p-2 w-full border rounded-md text-sm outline-none"
             disabled={isOtpSent || loading}
           />
         </div>
         {isOtpSent && (
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">OTP</label>
+            <label className="block text-sm font-medium text-gray-700">
+              OTP
+            </label>
             <input
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-sm"
               disabled={loading}
             />
           </div>
@@ -101,7 +105,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
         {!isOtpSent ? (
           <button
             onClick={handleSendOtp}
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            className="transition w-full bg-black text-white p-2 rounded-md text-sm hover:bg-gray-800"
             disabled={loading}
           >
             {loading ? "Sending OTP..." : "Send OTP"}

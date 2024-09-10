@@ -1,36 +1,42 @@
-import { useUser } from '@/actions/UserContext/UserContext';
-import React from 'react'
-import ProfileInfo from './ProfileInfo';
-import VerifyKyc from './profileUtils/VerfiyKyc';
-import UpiBase from './profileTabs/UpiBase';
-import KycBase from './profileTabs/KycBase';
+import { useUser } from "@/actions/UserContext/UserContext";
+import React from "react";
+import ProfileInfo from "./ProfileInfo";
+import VerifyKyc from "./profileUtils/VerfiyKyc";
+
+import KycBase from "./profileTabs/KycBase";
 
 const IndexProfile = () => {
+  const { user } = useUser();
 
-    const { user } = useUser();
-
-    if (!user) {
-        return (
-            <div className="flex justify-center items-center min-h-screen bg-gray-100">
-                <h1 className="text-xl font-semibold text-gray-700">Loading...</h1>
-            </div>
-        );
-    }
-
-
+  if (!user) {
     return (
-        <main>
-            {
-                user && (
-                    <section>
-                        <ProfileInfo user={user} />
-                        <UpiBase user={user} />
-                        <KycBase user={user} />
-                    </section>
-                )
-            }
-        </main>
-    )
-}
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <h1 className="text-xl font-semibold text-gray-700">Loading...</h1>
+      </div>
+    );
+  }
 
-export default IndexProfile
+  return (
+    <main>
+      {user && (
+        <section>
+          <div className="w-full flex flex-wrap flex-col lg:flex-row gap-10">
+            <div className="flex-[3]">
+              <ProfileInfo user={user} />
+              <KycBase user={user} />
+            </div>
+            <div className="flex-[7]">
+              <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
+                <div className="p-4">
+                  <h1 className="font-semibold text-xl">Transactions</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+    </main>
+  );
+};
+
+export default IndexProfile;

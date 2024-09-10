@@ -67,3 +67,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+#sectionBack {
+  background-image: url('../../public/purpleSection.svg');
+  background-size: cover;
+}

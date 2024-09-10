@@ -22,10 +22,9 @@ const FindOperatorCircleByPH = () => {
                     },
                 }
             );
-            const { message } = response.data
-            const { provider_name, state_name } = response.data.details;
-            setOperatorInfo({ operator : provider_name, circle : state_name });
-            toast.success(`Success: ${message}`);
+            const { operator, circle   } = response.data;
+            setOperatorInfo({ operator : operator, circle : circle });
+            toast.success(`Success fetched data.`);
         } catch (error: any) {
             toast.error('Error finding operator: ' + error.message);
         } finally {
@@ -34,7 +33,7 @@ const FindOperatorCircleByPH = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
+        <div className='mt-4'>
             <h2 className="text-xl font-bold mb-4 text-gray-800">Find Operator by Phone Number</h2>
             <input
                 type="text"
@@ -45,7 +44,7 @@ const FindOperatorCircleByPH = () => {
             />
             <button
                 onClick={handleFindOperator}
-                className={`p-2 w-full rounded text-white ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'}`}
+                className={`transition text-sm p-2 w-full rounded text-white ${loading ? 'bg-gray-400' : 'bg-black hover:bg-gray-800'}`}
                 disabled={loading}
             >
                 {loading ? 'Searching...' : 'Find Operator and Circle'}

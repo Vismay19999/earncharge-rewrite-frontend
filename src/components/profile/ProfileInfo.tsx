@@ -1,28 +1,137 @@
-import React from 'react'
+import Image from "next/image";
+import React, { useState } from "react";
+import Default from "@/../public/default_image.png";
+import { FaRegEyeSlash, FaRegEye, FaUser } from "react-icons/fa";
+import UpiBase from "./profileTabs/UpiBase";
+import { toast } from "react-toastify";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+type Wallet = {
+  id: string;
+  amount: number;
+  userDataId: string;
+};
 
-interface User {
-    firstName: string;
-    lastName: string;
-    role: string;
-    referenceID: string;
-    email_verification_status: boolean;
-    phone_verification_status: boolean;
-}
+type ReferralData = {
+  id: string;
+  referralId: string;
+  referralCount: number;
+  userId: string;
+};
 
-const ProfileInfo = ({ user }: { user: User }) => {
-    return (
-        <div>
-            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-                <div className="bg-white shadow-md rounded-lg p-6 max-w-md w-full">
-                    <h1 className="text-2xl font-bold text-gray-800">Welcome, {user.firstName} {user.lastName}!</h1>
-                    <p className="mt-2 text-gray-600">Role: <span className="font-medium">{user.role}</span></p>
-                    <p className="mt-2 text-gray-600">Reference ID: <span className="font-medium">{user.referenceID}</span></p>
-                    <p className="mt-2 text-gray-600">Email Verification Status: <span className={user.email_verification_status ? 'text-green-500' : 'text-red-500'}>{user.email_verification_status ? 'Verified' : 'Not Verified'}</span></p>
-                    <p className="mt-2 text-gray-600">Phone Verification Status: <span className={user.phone_verification_status ? 'text-green-500' : 'text-red-500'}>{user.phone_verification_status ? 'Verified' : 'Not Verified'}</span></p>
-                </div>
-            </div >
+type User = {
+  id: string;
+  phoneNumber: string | null;
+  email: string | null;
+  password: string;
+  createdAt: string;
+  userDataId: string;
+  referralData: ReferralData; // Add referralData to User type
+};
+
+type ProfileUser = {
+  id: string;
+  phoneNumber: string | null;
+  email: string | null;
+  password: string;
+  createdAt: string;
+  userDataId: string;
+  firstName: string;
+  lastName: string;
+  gender: string | null;
+  upi: string | null;
+  phone_verification_status: boolean;
+  email_verification_status: boolean;
+  kyc_verification_status: boolean;
+  role: string;
+  cashbackWalletId: string | null;
+  referralWalletId: string | null;
+  paymentWalletId: string | null;
+  referralWallet: Wallet;
+  paymentWallet: Wallet;
+  cashbackWallet: Wallet;
+  transactions: any[]; // Adjust if you know the specific transaction type
+  cashbackTransactions: any[]; // Adjust if you know the specific cashbackTransaction type
+  user: User;
+};
+
+const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
+  const [showFullPhoneNumber, setShowFullPhoneNumber] = useState(false);
+
+  const {
+    firstName,
+    lastName,
+    user: userDetails,
+    referralWalletId,
+    referralWallet,
+    paymentWallet,
+    cashbackWallet,
+    transactions,
+    cashbackTransactions
+  } = user;
+  const phoneNumber = userDetails.phoneNumber;
+  const referralId = userDetails.referralData.referralId; // Access referralId from referralData
+
+  // Mask phone number if available
+  const maskedPhoneNumber = phoneNumber
+    ? `${phoneNumber.slice(0, 5)}*****`
+    : "N/A";
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        console.log("Copied to clipboard");
+        toast.success("Copied to clipboard!");
+      },
+      (err) => {
+        console.error("Failed to copy: ", err);
+        toast.error("Failed to copy!");
+      }
+    );
+  };
+
+  return (
+    <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E]">
+      <div className="flex flex-wrap gap-5 flex-start">
+        <div className="flex">
+          <Image
+            src={Default}
+            alt="Profile"
+            className="rounded-full w-[80px] h-[80px] border-[2px] border-white"
+          />
         </div>
-    )
-}
+        <div className="flex-[1]">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xl font-regular text-gray-800">
+              {firstName || "First Name"} {lastName || "Last Name"}
+            </h1>
+            <div className="flex flex-wrap gap-2 items-center flex-row">
+              <p className="text-gray-600 font-semibold">
+                {showFullPhoneNumber ? phoneNumber : maskedPhoneNumber}
+              </p>
+              {phoneNumber && (
+                <button
+                  onClick={() => setShowFullPhoneNumber(!showFullPhoneNumber)}
+                >
+                  {showFullPhoneNumber ? <FaRegEye /> : <FaRegEyeSlash />}
+                </button>
+              )}
+            </div>
+            <div className="flex flex-wrap flex-start">
+              <button
+                onClick={() => copyToClipboard(referralId || "N/A")}
+                className="p-2 border-[1px] rounded-xl flex items-center text-xs gap-2 justify-center flex-row"
+              >
+                <FaUser className="text-sm" /> {referralId || "N/A"}
+              </button>
+              <UpiBase user={user} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <ToastContainer />
+    </div>
+  );
+};
 
-export default ProfileInfo
+export default ProfileInfo;
