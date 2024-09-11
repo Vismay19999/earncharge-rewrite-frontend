@@ -1,10 +1,13 @@
-"use client";
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const FindOperatorCircleByPH = () => {
+interface Props {
+    onOperatorData: (operator: string, circle: string) => void; // Callback prop
+}
+
+const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [operatorInfo, setOperatorInfo] = useState<{ operator: string; circle: string } | null>(null);
     const [loading, setLoading] = useState(false);
@@ -22,9 +25,13 @@ const FindOperatorCircleByPH = () => {
                     },
                 }
             );
-            const { operator, circle   } = response.data;
-            setOperatorInfo({ operator : operator, circle : circle });
-            toast.success(`Success fetched data.`);
+            const { operator, circle } = response.data;
+            setOperatorInfo({ operator, circle });
+            toast.success(`Successfully fetched data.`);
+
+            // Call the callback function to pass data to the parent
+            onOperatorData(operator, circle);
+
         } catch (error: any) {
             toast.error('Error finding operator: ' + error.message);
         } finally {
@@ -50,15 +57,15 @@ const FindOperatorCircleByPH = () => {
                 {loading ? 'Searching...' : 'Find Operator and Circle'}
             </button>
 
-            {operatorInfo && (
+            {/* {operatorInfo && (
                 <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                     <h3 className="text-md font-semibold text-gray-700 mb-2">Operator Information:</h3>
                     <p className="text-gray-700"><strong>Operator:</strong> {operatorInfo.operator}</p>
                     <p className="text-gray-700"><strong>Circle:</strong> {operatorInfo.circle}</p>
                 </div>
-            )}
+            )} */}
 
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div>
     );
 };
