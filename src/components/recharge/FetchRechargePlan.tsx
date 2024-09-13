@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { getAccessToken } from "@/utils/auth";
+import PaymentRecharge from "./PaymentRecharge";
 
 interface Plan {
   plan_name: string;
@@ -19,26 +19,33 @@ interface GroupedPlans {
 interface FetchRechargePlanProps {
   operator: string;
   circle: string;
+  providerId: string;
 }
 
-const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({ operator, circle }) => {
+const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({
+  operator,
+  circle,
+  providerId,
+}) => {
   const [plans, setPlans] = useState<GroupedPlans[]>([]);
   const [activeGroupIndex, setActiveGroupIndex] = useState(0); // Default to the first group
   const [loading, setLoading] = useState(false);
+  const accessToken = getAccessToken();
 
   const fetchRechargePlan = async () => {
     setLoading(true);
+
     try {
       const response = await axios.post(
-        'https://api.earncharge.in/v1/recharge/plans',
+        "https://api.earncharge.in/v1/recharge/plans",
         {
           operator,
           circle,
         },
         {
           headers: {
-            Authorization: 'Bearer YOUR_API_KEY_HERE', // Add your Authorization key
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`, // Add your Authorization key
+            "Content-Type": "application/json",
           },
         }
       );
@@ -47,13 +54,11 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({ operator, circle 
       if (data && data.length > 0) {
         setPlans(data); // Assuming data is an array of grouped plans
         setActiveGroupIndex(0); // Set first group as active by default
-        toast.success('Recharge plans fetched successfully!');
       } else {
-        toast.warn('No plans found for the selected operator and circle.');
+        console.warn("No plans found for the selected operator and circle.");
       }
     } catch (error) {
-      toast.error('Failed to fetch recharge plans');
-      console.error(error);
+      console.error("Failed to fetch recharge plans", error);
     } finally {
       setLoading(false);
     }
@@ -61,18 +66,19 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({ operator, circle 
 
   useEffect(() => {
     fetchRechargePlan();
-  }, [operator, circle]); // Fetch plans whenever operator or circle changes
+  }, [operator, circle, providerId]); // Fetch plans whenever operator or circle changes
 
   return (
     <div>
-      {/* <ToastContainer /> */}
       <div className="mb-4">
         <button
           onClick={fetchRechargePlan}
           disabled={loading}
-          className={`px-4 py-2 rounded ${loading ? 'bg-gray-300' : 'bg-blue-500 text-white'}`}
+          className={`px-4 py-2 rounded ${
+            loading ? "bg-gray-300" : "bg-blue-500 text-white"
+          }`}
         >
-          {loading ? 'Fetching...' : 'Fetch Recharge Plan'}
+          {loading ? "Fetching..." : "Fetch Recharge Plan"}
         </button>
       </div>
 
@@ -83,7 +89,9 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({ operator, circle 
             <button
               key={index}
               className={`px-4 py-2 rounded ${
-                index === activeGroupIndex ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+                index === activeGroupIndex
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700"
               }`}
               onClick={() => setActiveGroupIndex(index)}
             >
@@ -104,11 +112,27 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({ operator, circle 
               {plans[activeGroupIndex].plans.map((plan, idx) => (
                 <li key={idx} className="mb-4">
                   <div className="p-4 bg-white rounded-lg shadow">
-                    <p><strong>Plan Name:</strong> {plan.plan_name}</p>
-                    <p><strong>Price:</strong> Rs {plan.price}</p>
-                    <p><strong>Talktime:</strong> {plan.talktime}</p>
-                    <p><strong>Data:</strong> {plan.data}</p>
-                    <p><strong>SMS:</strong> {plan.sms}</p>
+                    <p>
+                      <strong>Plan Name:</strong> {plan.plan_name}
+                    </p>
+                    <p>
+                      <strong>Price:</strong> Rs {plan.price}
+                    </p>
+                    <p>
+                      <strong>Talktime:</strong> {plan.talktime}
+                    </p>
+                    <p>
+                      <strong>Data:</strong> {plan.data}
+                    </p>
+                    <p>
+                      <strong>SMS:</strong> {plan.sms}
+                    </p>
+                    {/* PaymentRecharge Component */}
+                    <PaymentRecharge
+                      planPrice={plan.price}
+                      phoneNumber="8555049359"
+                      providerId={providerId}
+                    />
                   </div>
                 </li>
               ))}
