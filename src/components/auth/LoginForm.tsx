@@ -56,6 +56,7 @@ const LoginForm: React.FC = () => {
       setTokens(accessToken, refreshToken);
       setUser(user);
       toast.success("Login successful!");
+      window.location.reload()
     } catch (error) {
       toast.error("Login failed. Please try again.");
     }

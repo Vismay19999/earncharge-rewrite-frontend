@@ -4,6 +4,7 @@ import ProfileInfo from "./ProfileInfo";
 import VerifyKyc from "./profileUtils/VerfiyKyc";
 
 import KycBase from "./profileTabs/KycBase";
+import GetWallets from "./wallet/getWallets/GetWallets";
 
 const IndexProfile = () => {
   const { user } = useUser();
@@ -19,21 +20,26 @@ const IndexProfile = () => {
   return (
     <main>
       {user && (
-        <section>
-          <div className="w-full flex flex-wrap flex-col lg:flex-row gap-10">
-            <div className="flex-[3]">
-              <ProfileInfo user={user} />
-              <KycBase user={user} />
-            </div>
-            <div className="flex-[7]">
-              <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
-                <div className="p-4">
-                  <h1 className="font-semibold text-xl">Transactions</h1>
+        <div>
+          <section>
+            <div className="w-full flex flex-wrap flex-col lg:flex-row gap-10">
+              <div className="flex-[3]">
+                <ProfileInfo user={user} />
+                <KycBase user={user} />
+              </div>
+              <div className="flex-[7]">
+                <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
+                  <div className="p-4">
+                    <h1 className="font-semibold text-xl">Transactions</h1>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+          <section>
+            <GetWallets />
+          </section>
+        </div>
       )}
     </main>
   );
