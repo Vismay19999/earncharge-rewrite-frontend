@@ -69,7 +69,7 @@
 }
 
 #sectionBack {
-  background-image: url('../../public/purpleSection.svg');
+  background-image: url("../../public/purpleSection.svg");
   background-size: cover;
 }
 
@@ -103,4 +103,23 @@
 .modal-content button {
   margin: 5px;
   padding: 10px;
+}
+
+/* Custom scrollbar for WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #111; /* Darker color when hovered */
 }

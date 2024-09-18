@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import PaymentRecharge from "./PaymentRecharge";
+import { IoMdRefresh } from "react-icons/io";
 
 interface Plan {
   plan_name: string;
@@ -25,7 +26,7 @@ interface FetchRechargePlanProps {
 const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({
   operator,
   circle,
-  providerId,
+  providerId
 }) => {
   const [plans, setPlans] = useState<GroupedPlans[]>([]);
   const [activeGroupIndex, setActiveGroupIndex] = useState(0); // Default to the first group
@@ -40,13 +41,13 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({
         "https://api.earncharge.in/v1/recharge/plans",
         {
           operator,
-          circle,
+          circle
         },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`, // Add your Authorization key
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
@@ -74,37 +75,39 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({
         <button
           onClick={fetchRechargePlan}
           disabled={loading}
-          className={`px-4 py-2 rounded ${
-            loading ? "bg-gray-300" : "bg-blue-500 text-white"
+          className={`px-4 py-2 text-xs rounded ${
+            loading ? "bg-gray-300" : "bg-black text-white"
           }`}
         >
-          {loading ? "Fetching..." : "Fetch Recharge Plan"}
+          {loading ? "Fetching..." : <IoMdRefresh />}
         </button>
       </div>
 
       {/* Group navigation */}
-      {plans.length > 0 && (
-        <div className="flex space-x-4 mb-6">
-          {plans.map((group, index) => (
-            <button
-              key={index}
-              className={`px-4 py-2 rounded ${
-                index === activeGroupIndex
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
-              }`}
-              onClick={() => setActiveGroupIndex(index)}
-            >
-              {group.group_name}
-            </button>
-          ))}
-        </div>
-      )}
-
+      <div className="w-[300px] m-auto lg:w-[400px] overflow-y-hidden mb-5 overflow-x-scroll">
+        {plans.length > 0 && (
+          <div className="flex space-x-2 mb-2">
+            {plans.map((group, index) => (
+              <button
+                key={index}
+                className={`px-2 py-2 rounded text-xs ${
+                  index === activeGroupIndex
+                    ? "bg-white text-black border-[1px] rounded-lg"
+                    : "bg-black text-white border-[1px] border-black rounded-lg"
+                }`}
+                id="scrollbar"
+                onClick={() => setActiveGroupIndex(index)}
+              >
+                {group.group_name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
       {/* Display plans for the active group */}
       {plans.length > 0 && plans[activeGroupIndex] && (
         <div>
-          <div className="mb-4 p-4 bg-gray-100 rounded-lg">
+          <div className="mb-4 p-4 border-[1px] border-gray-200 rounded-lg">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               {plans[activeGroupIndex].group_name} Plans
             </h3>
@@ -112,25 +115,28 @@ const FetchRechargePlan: React.FC<FetchRechargePlanProps> = ({
               {plans[activeGroupIndex].plans.map((plan, idx) => (
                 <li key={idx} className="mb-4">
                   <div className="p-4 bg-white rounded-lg shadow">
-                    <p>
-                      <strong>Plan Name:</strong> {plan.plan_name}
-                    </p>
-                    <p>
-                      <strong>Price:</strong> Rs {plan.price}
-                    </p>
-                    <p>
-                      <strong>Talktime:</strong> {plan.talktime}
-                    </p>
-                    <p>
-                      <strong>Data:</strong> {plan.data}
-                    </p>
-                    <p>
-                      <strong>SMS:</strong> {plan.sms}
-                    </p>
+                    <p className="font-bold block mb-2">{plan.plan_name}</p>
+                    <div className="flex flex-col gap-1">
+                      <p className="flex flex-wrap text-sm">
+                        <strong className="flex-[3]">Price</strong>{" "}
+                        <div className="flex-[7]">Rs {plan.price}</div>
+                      </p>
+                      <p className="flex flex-wrap text-sm">
+                        <strong className="flex-[3]">Talktime</strong>{" "}
+                        <div className="flex-[7]">{plan.talktime}</div>
+                      </p>
+                      <p className="flex flex-wrap text-sm">
+                        <strong className="flex-[3]">Data</strong>{" "}
+                        <div className="flex-[7]">{plan.data}</div>
+                      </p>
+                      <p className="flex flex-wrap text-sm">
+                        <strong className="flex-[3]">SMS</strong>{" "}
+                        <div className="flex-[7]">{plan.sms}</div>
+                      </p>
+                    </div>
                     {/* PaymentRecharge Component */}
                     <PaymentRecharge
                       planPrice={plan.price}
-                      phoneNumber="8555049359"
                       providerId={providerId}
                     />
                   </div>

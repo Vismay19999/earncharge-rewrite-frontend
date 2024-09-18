@@ -25,10 +25,7 @@ const IndexRecharge = () => {
 
       {/* Display collected operator and circle */}
       {operator && circle && (
-        <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-          <h3 className="text-md font-semibold text-gray-700 mb-2">
-            Collected Data:
-          </h3>
+        <div className="mt-6 p-4 bg-gray-100 rounded-lg mb-2">
           <p className="text-gray-700">
             <strong>Operator:</strong> {operator}
           </p>

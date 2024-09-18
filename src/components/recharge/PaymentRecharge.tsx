@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
-
+import { FaArrowRightLong } from "react-icons/fa6";
 interface PaymentRechargeProps {
   planPrice: number;
   providerId: string;
-  onBtn: (btnChange: boolean) => void;
 }
 
 const PaymentRecharge: React.FC<PaymentRechargeProps> = ({
   planPrice,
-  providerId,
-  onBtn
+  providerId
 }) => {
   const [rechargeLoading, setRechargeLoading] = useState(false);
   const [paymentHtml, setPaymentHtml] = useState<string | null>(null);
@@ -45,7 +43,6 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({
       // Check if the response contains HTML
       if (response.status === 200) {
         setPaymentHtml(response.data);
-        onBtn(true); // Set HTML content for rendering
         setShowPopup(false); // Close the popup after successful payment initiation
       }
     } catch (error) {
@@ -62,9 +59,9 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({
         <>
           <button
             onClick={() => setShowPopup(true)}
-            className={`mt-4 px-4 py-2 rounded bg-green-500 text-white`}
+            className={`w-full bg-gradient-to-r from-green-400 to-emerald-500 p-2 rounded-xl mt-4 text-white text-sm flex items-center justify-center gap-2`}
           >
-            Recharge Now
+            Recharge Now <FaArrowRightLong />
           </button>
         </>
       )}
