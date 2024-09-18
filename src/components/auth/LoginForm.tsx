@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useUser } from "@/actions/UserContext/UserContext";
 import login from "@/../public/log.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<
@@ -22,6 +23,7 @@ const LoginForm: React.FC = () => {
     password: "",
   });
 
+  const router = useRouter()
   const { setUser } = useUser();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +58,7 @@ const LoginForm: React.FC = () => {
       setTokens(accessToken, refreshToken);
       setUser(user);
       toast.success("Login successful!");
-      window.location.reload()
+      router.push("/profile")
     } catch (error) {
       toast.error("Login failed. Please try again.");
     }

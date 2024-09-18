@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAccessToken } from '@/utils/auth';
+import Image from 'next/image';
 
 interface FastTagProviderData {
     provider_id: number;
@@ -15,6 +16,7 @@ const FastTagProvider = () => {
     const [providers, setProviders] = useState<FastTagProviderData[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [searchQuery, setSearchQuery] = useState(''); // State for search input
 
     const fetchProviders = async () => {
         setLoading(true);
@@ -41,27 +43,45 @@ const FastTagProvider = () => {
         fetchProviders();
     }, []);
 
+    // Filter the providers based on the search query
+    const filteredProviders = providers.filter((provider) =>
+        provider.provider_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="p-4">
             <ToastContainer />
             <h2 className="text-lg font-semibold mb-4">FastTag Providers</h2>
 
-            {loading && <p>Loading providers...</p>}
+            {/* Search bar */}
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search providers..."
+            />
 
+            {loading && <p>Loading providers...</p>}
             {error && <p className="text-red-500">{error}</p>}
 
-            {/* Display the list of providers */}
+            {/* Display the filtered list of providers */}
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {providers.map((provider) => (
-                    <li key={provider.provider_id} className="flex items-center p-4 bg-white rounded-lg shadow">
-                        <img
-                            src={provider.provider_icon}
-                            alt={provider.provider_name}
-                            className="w-12 h-12 mr-4"
-                        />
-                        <span>{provider.provider_name}</span>
-                    </li>
-                ))}
+                {filteredProviders.length > 0 ? (
+                    filteredProviders.map((provider) => (
+                        <li key={provider.provider_id} className="flex items-center p-4 bg-white rounded-lg shadow">
+                            <Image
+                                width={48}
+                                height={48}
+                                src={provider.provider_icon}
+                                alt={provider.provider_name}
+                                className="w-12 h-12 mr-4"
+                            />
+                            <span>{provider.provider_name}</span>
+                        </li>
+                    ))
+                ) : (
+                    <p>No providers found</p>
+                )}
             </ul>
         </div>
     );
