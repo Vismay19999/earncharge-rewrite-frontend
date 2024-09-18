@@ -1,16 +1,11 @@
 "use client";
-import { useState, useRef } from 'react';
-import { useUser } from "@/actions/UserContext/UserContext";
-import Recharge from "@/components/core/Home/recharge";
-import IndexRecharge from "@/components/recharge/IndexRecharge";
-import IndexElectricityBBPS from "@/components/bbps/Electricity/IndexElectricityBBPS"
-import IndexFastTagBBPS from "@/components/bbps/FastTag/IndexFastTagBBPS"
-import IndexGasBBPS from "@/components/bbps/Gas/IndexGasBBPS"
-import IndexWaterBBPS from "@/components/bbps/Water/IndexWaterBBPS"
+import { useState, useRef } from "react";
 import MobileContent from './MobileContent';
-import Soon from './Soon';
-
-import { AccountBalance, Add, CreditCard, DirectionsCar, ElectricBolt, Favorite, Fax, HomeWork, LocalGasStation, LocalHospital, MenuBook, PhoneAndroid, Propane, PropaneTank, Remove, Router, SatelliteAlt, Tv, UmbrellaOutlined, WaterDrop } from '@mui/icons-material';
+import IndexElectricityBBPS from "@/components/bbps/Electricity/IndexElectricityBBPS";
+import IndexFastTagBBPS from "@/components/bbps/FastTag/IndexFastTagBBPS";
+import IndexGasBBPS from "@/components/bbps/Gas/IndexGasBBPS";
+import IndexWaterBBPS from "@/components/bbps/Water/IndexWaterBBPS";
+import { Add, Remove, PhoneAndroid, ElectricBolt, DirectionsCar, WaterDrop, PropaneTank } from "@mui/icons-material";
 
 // Define a type for the tab content and icons
 interface Tab {
@@ -19,7 +14,7 @@ interface Tab {
 }
 
 const AllTabs = () => {
-  const [currentTab, setCurrentTab] = useState<string>('Mobile');
+  const [currentTab, setCurrentTab] = useState<string>("Mobile");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const tabContentRef = useRef<HTMLDivElement>(null);
 
@@ -34,71 +29,40 @@ const AllTabs = () => {
   // Define the tabs with their respective content and icons
   const tabs: Record<string, Tab> = {
     Mobile: { content: <MobileContent />, icon: <MobileIcon /> },
-    // DTH: { content: <Soon />, icon: <DTHIcon /> },
-    // BroadBand: { content: <Soon />, icon: <BroadBandIcon /> },
-    // Landline: { content: <Soon />, icon: <LandlineIcon /> },
-    // Cable: { content: <Soon />, icon: <CableIcon /> },
     Electricity: { content: <IndexElectricityBBPS />, icon: <ElectricityIcon /> },
     Gas: { content: <IndexGasBBPS />, icon: <GasIcon /> },
     Water: { content: <IndexWaterBBPS />, icon: <WaterIcon /> },
-    // Insurance: { content: <Soon />, icon: <InsuranceIcon /> },
-    // Loan: { content: <Soon />, icon: <LoanIcon /> },
-    // Cylinder: { content: <Soon />, icon: <GasCylinderIcon /> },
-    // Education: { content: <Soon />, icon: <EducationIcon /> },
     FastTag: { content: <IndexFastTagBBPS />, icon: <FastTagIcon /> },
-    // Life: { content: <Soon />, icon: <LifeIcon /> },
-    // Housing: { content: <Soon />, icon: <HousingIcon /> },
-    // LPG: { content: <Soon />, icon: <LPGIcon /> },
-    // Hospital: { content: <Soon />, icon: <HospitalIcon /> },
-    // Credit: { content: <Soon />, icon: <CreditIcon /> },
   };
 
-  const renderTabs = () => {
-    const tabsToRender = showDropdown
-      ? Object.keys(tabs)
-      : Object.keys(tabs).slice(0, 6);
-
-    return tabsToRender.map((tab) => (
+  const renderTabs = (visibleTabs: string[]) => {
+    return visibleTabs.map((tab) => (
       <button
         key={tab}
-        className={`text-left py-3 px-4 rounded-lg lg:rounded-l-lg ${currentTab === tab
-          ? "bg-[#164B60] text-white shadow-lg"
-          : "bg-white-200 text-gray-800"
-          }`}
+        className={`text-left flex flex-1 items-center justify-center p-4 rounded-lg lg:rounded-l-lg transition-all duration-200 ${
+          currentTab === tab
+            ? "bg-[#164B60] text-white shadow-lg"
+            : "bg-white-200 text-gray-800 hover:bg-gray-100 hover:shadow"
+        }`}
         onClick={() => handleTabClick(tab)}
       >
-        {tabs[tab].icon}
-        {tab}
+        <div className="flex flex-col items-center gap-2">
+          {tabs[tab].icon}
+          <span className="text-sm font-medium">{tab}</span>
+        </div>
       </button>
     ));
   };
 
   const renderRemainingTabs = () => {
+    const remainingTabs = Object.keys(tabs).slice(2);
+
     if (!showDropdown) return null;
 
     return (
-      <div className="absolute z-10 bottom-auto top-full left-0 mt-2 w-full bg-white rounded-lg shadow-lg">
-        <div className='grid grid-cols-3 lg:grid-cols-4 gap-10 p-4'>
-          {Object.keys(tabs).slice(6).map((tab) => (
-            <button
-              key={tab}
-              className={`flex-[1] p-4 rounded-lg ${currentTab === tab
-                ? "bg-[#164B60] text-white"
-                : "bg-white text-gray-800"
-                }`}
-              onClick={() => {
-                handleTabClick(tab);
-                if (showDropdown) {
-                  setShowDropdown(!showDropdown);
-                }
-              }}
-            >
-              <div className='flex flex-col gap-2'>
-                {tabs[tab].icon}
-                {tab}
-              </div>
-            </button>
-          ))}
+      <div className="absolute z-10 top-full left-0 mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200">
+        <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          {renderTabs(remainingTabs)}
         </div>
       </div>
     );
@@ -106,57 +70,35 @@ const AllTabs = () => {
 
   return (
     <div className="relative flex flex-col p-4">
-      <div>
-        <div className="relative flex gap-10 lg:hidden">
-          {Object.keys(tabs).slice(0, 2).map((tab) => (
-            <button
-              key={tab}
-              className={`flex-[1] py-4 rounded-t-[10px] ${currentTab === tab
-                ? "bg-[#131c23] text-white shadow-lg"
-                : "bg-black text-gray-800"
-                }`}
-              onClick={() => handleTabClick(tab)}
-            >
-              <div className='flex flex-col gap-2'>
-                {tabs[tab].icon}
-                {tab}
-              </div>
-            </button>
-          ))}
-          <button
-            className=" bg-white-200 text-gray-800"
-            onClick={handleDropdownClick}
-          >
-            {showDropdown ? <Remove /> : <Add />}
-          </button>
-          {renderRemainingTabs()}
-        </div>
-        <div className="relative hidden gap-10 lg:flex">
-          {Object.keys(tabs).slice(0, 6).map((tab) => (
-            <button
-              key={tab}
-              className={`flex-[1] py-4 rounded-t-[10px] ${currentTab === tab
-                ? "bg-[#131c23] text-white shadow-lg"
-                : "border-t-[1px] border-x-[1px] text-gray-800"
-                }`}
-              onClick={() => handleTabClick(tab)}
-            >
-              <div className='flex flex-col gap-2'>
-                {tabs[tab].icon}
-                {tab}
-              </div>
-            </button>
-          ))}
-          <button
-            className=" bg-white-200 text-gray-800"
-            onClick={handleDropdownClick}
-          >
-            {showDropdown ? <Remove /> : <Add />}
-          </button>
-          {renderRemainingTabs()}
-        </div>
+      {/* Mobile View - Show first 2 tabs + dropdown */}
+      <div className="relative flex gap-2 lg:hidden">
+        {renderTabs(Object.keys(tabs).slice(0, 2))}
+        <button
+          className="flex items-center justify-center bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-all duration-200"
+          onClick={handleDropdownClick}
+        >
+          {showDropdown ? <Remove /> : <Add />}
+        </button>
+        {renderRemainingTabs()}
       </div>
-      <div ref={tabContentRef} className="flex-[4] p-4 bg-[#fffbf6] border-[1px] rounded-b-[10px]">
+
+      {/* Desktop View - Show first 6 tabs */}
+      <div className="relative hidden lg:flex gap-10">
+        {renderTabs(Object.keys(tabs).slice(0, 6))}
+        <button
+          className="flex items-center justify-center bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-all duration-200"
+          onClick={handleDropdownClick}
+        >
+          {showDropdown ? <Remove /> : <Add />}
+        </button>
+        {renderRemainingTabs()}
+      </div>
+
+      {/* Tab content */}
+      <div
+        ref={tabContentRef}
+        className="flex-[4] p-4 bg-[#fffbf6] border-[1px] rounded-b-[10px]"
+      >
         {tabs[currentTab].content}
       </div>
     </div>
@@ -164,23 +106,10 @@ const AllTabs = () => {
 };
 
 // Define icons as components
-const MobileIcon = () => <div><PhoneAndroid /></div>;
-// const DTHIcon = () => <div><SatelliteAlt /></div>;
-// const BroadBandIcon = () => <div><Router /></div>;
-// const LandlineIcon = () => <div><Fax /></div>;
-// const CableIcon = () => <div><Tv /></div>;
-const ElectricityIcon = () => <div><ElectricBolt /></div>;
-// const EducationIcon = () => <div><MenuBook /></div>;
-const FastTagIcon = () => <div><DirectionsCar /></div>;
-const WaterIcon = () => <div><WaterDrop /></div>;
-// const LoanIcon = () => <div><AccountBalance /></div>;
-// const InsuranceIcon = () => <div><UmbrellaOutlined /></div>;
-const GasIcon = () => <div><PropaneTank /></div>;
-// const LifeIcon = () => <div><Favorite /></div>;
-// const HousingIcon = () => <div><HomeWork /></div>;
-// const LPGIcon = () => <div><LocalGasStation /></div>;
-// const HospitalIcon = () => <div><LocalHospital /></div>;
-// const CreditIcon = () => <div><CreditCard /></div>;
-// const GasCylinderIcon = () => <div><Propane /></div>;
+const MobileIcon = () => <PhoneAndroid className="text-2xl" />;
+const ElectricityIcon = () => <ElectricBolt className="text-2xl" />;
+const GasIcon = () => <PropaneTank className="text-2xl" />;
+const WaterIcon = () => <WaterDrop className="text-2xl" />;
+const FastTagIcon = () => <DirectionsCar className="text-2xl" />;
 
 export default AllTabs;
