@@ -12,5 +12,5 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 3000:6070
+      - 6070:6070
     logging: *default-logging
