@@ -59,6 +59,12 @@ const MobileSidebar = () => {
               <span>Contact</span>
             </div>
           </Link>
+          <Link href="/aboutus">
+            <div onClick={closeSidebar} className="flex items-center space-x-2">
+              <InfoIcon />
+              <span>About</span>
+            </div>
+          </Link>
           <div
             onClick={closeSidebar}
             className="flex items-center justify-center space-x-2 w-full"

@@ -56,6 +56,11 @@ const PcHeader = () => {
           <Link href="/contact">
             <h1 className="hover:underline">Contact</h1>
           </Link>
+          <span className="text-sm">•</span>
+
+          <Link href="/aboutus">
+            <h1 className="hover:underline">About Us</h1>
+          </Link>
         </div>
 
         {/* Right section: Buttons */}
