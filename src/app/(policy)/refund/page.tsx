@@ -10,12 +10,12 @@ const page = () => {
           </h1>
         </div>
         <p>
-          At EarnCharge, we strive to provide a seamless and efficient platform
-          for accessing a variety of essential services. However, its important
-          to note that as an intermediary service provider, we facilitate
-          transactions between you and the service providers, but we do not own
-          or control the services themselves. Therefore, our ability to cancel
-          or refund services is limited.
+          At <b> EarnCharge </b>, we strive to provide a seamless and efficient
+          platform for accessing a variety of essential services. However, its
+          important to note that as an intermediary service provider, we
+          facilitate transactions between you and the service providers, but we
+          do not own or control the services themselves. Therefore, our ability
+          to cancel or refund services is limited.
         </p>
 
         <h1 className="text-2xl font-bold mt-5 mb-4">Cancellation:</h1>
@@ -37,7 +37,8 @@ const page = () => {
         <p>
           In case of any technical error or payment failure from our server or
           website, resulting in the deduction of an amount from your account, we
-          will return the amount within 7 working days and payment mode will be upi and direct bank account transfer.
+          will return the amount within 7 working days and payment mode will be
+          upi and direct bank account transfer.
         </p>
         <h1 className="text-2xl font-bold mt-5 mb-4">
           Refunds From 3rd Party:
@@ -73,10 +74,17 @@ const page = () => {
           payment method, either through UPI or direct bank account transfer, as
           per your preference.
         </p>
-        <p className="mt-4">
+        <p className="mt-4 mb-2">
           Thank you for choosing EarnCharge. We appreciate your understanding
           and cooperation.
         </p>
+
+        <h1>
+          <b>
+            Earncharge is a fully owned subsidary of Arahant Economy Services
+            Private Limited.
+          </b>
+        </h1>
       </div>
     </div>
   );

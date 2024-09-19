@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const page = () => {
   return (
@@ -11,7 +11,7 @@ const page = () => {
         </div>
         <p>Effective Date: 14-03-2024</p>
         <p>
-          EarnCharge (referred to as &quot;we&quot;, &quot;us&quot;, or
+          <b>EarnCharge </b> (referred to as &quot;we&quot;, &quot;us&quot;, or
           &quot;our&quot;) is committed to protecting the privacy and security
           of your personal information. This Privacy Policy explains how we
           collect, use, and disclose information when you use our services. By
@@ -91,9 +91,16 @@ const page = () => {
           read and understood this Privacy Policy and agree to be bound by its
           terms.
         </p>
+        <br />
+        <h1>
+          <b>
+            Earncharge is a fully owned subsidary of Arahant Economy Services
+            Private Limited.
+          </b>
+        </h1>
       </div>
     </div>
   );
-}
+};
 
-export default page
+export default page;

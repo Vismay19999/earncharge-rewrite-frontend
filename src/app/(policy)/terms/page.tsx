@@ -24,13 +24,13 @@ const page = () => {
         &quot;User&quot; represents and warrants that he/she has the right,
         authority, and hereby accepts that he or she is of legal age to accept
         and abide by the terms and conditions of use of the &apos;site&apos;.
-        And that while using the site, The &quot;User&quot; shall not impersonate any
-        person or entity, or falsely state or otherwise misrepresent identity,
-        age or affiliation with any person or entity. The &quot;Site&quot; may terminate
-        the account of such a visitor, delete the content posted by him/her,
-        prohibit access to the &apos;site&apos; or to any of its related
-        services for any reason without citing or stating any reasons as and
-        when needed and without limitation.
+        And that while using the site, The &quot;User&quot; shall not
+        impersonate any person or entity, or falsely state or otherwise
+        misrepresent identity, age or affiliation with any person or entity. The
+        &quot;Site&quot; may terminate the account of such a visitor, delete the
+        content posted by him/her, prohibit access to the &apos;site&apos; or to
+        any of its related services for any reason without citing or stating any
+        reasons as and when needed and without limitation.
       </p>
 
       <h2 className="text-xl font-bold mt-6 mb-2">Registration</h2>
@@ -48,52 +48,51 @@ const page = () => {
         Use of The Recharge Facility
       </h2>
       <p>
-        EasyMobileREcharge provides Recharge of Prepaid Phones (India) for
-        personal use and not commercial use. The user in using this facility
-        agrees to the following Terms 1. The User is solely responsible for
-        entering the correct information ( phone number, recharge value, etc.)
-        2. EasyMobileREcharge is not responsible for faulty connection on the
-        side of the user while using the Payment Option In case the user has
-        paid and not recieved the recharge amount, the user will have to submit
-        complete transaction details along with contact details to customer
-        support at EasyMobileREcharge. The matter will be resolved after cross
-        checking with the concerned service provider vendor after which refund,
-        if any, will be made to the users account. This process may take 10 days
-        or longer depending on the response from the vendor.EasyMobileRecharge
-        will not be liable for late action in such a case. 3. EasyMobileREcharge
-        will not refund any money oncea sale has taken place. 4. The user hereby
-        agrees that by using the facility of online recharge from
-        EasyMobileREcharge, the user has agreed to pay out of will any extra
-        charges on account of online service/ sale of online recharge.
+        EarnCharge provides Recharge of Prepaid Phones (India) for personal use
+        and not commercial use. The user in using this facility agrees to the
+        following Terms 1. The User is solely responsible for entering the
+        correct information ( phone number, recharge value, etc.) 2. EarnCharge
+        is not responsible for faulty connection on the side of the user while
+        using the Payment Option In case the user has paid and not recieved the
+        recharge amount, the user will have to submit complete transaction
+        details along with contact details to customer support at EarnCharge.
+        The matter will be resolved after cross checking with the concerned
+        service provider vendor after which refund, if any, will be made to the
+        users account. This process may take 10 days or longer depending on the
+        response from the vendor.EarnCharge will not be liable for late action
+        in such a case. 3. EarnCharge will not refund any money oncea sale has
+        taken place. 4. The user hereby agrees that by using the facility of
+        online recharge from EarnCharge, the user has agreed to pay out of will
+        any extra charges on account of online service/ sale of online recharge.
       </p>
 
       <h2 className="text-xl font-bold mt-6 mb-2">Standard of User Conduct</h2>
       <p>
         The &quot;User&quot; agrees that all contents (information, data, text,
         photographs, videos, music, graphics, and/or other materials)
-        hosted/viewed on the &quot;Site&quot; are the sole responsibility of the &quot;User&quot;
-        from whom such content originated.
+        hosted/viewed on the &quot;Site&quot; are the sole responsibility of the
+        &quot;User&quot; from whom such content originated.
       </p>
       <p>
-        &quot;The &quot;Site&quot; does not guarantee the accuracy, integrity, and quality of
-        such contents. The &quot;User&quot; must also understand that it is possible for
-        him/her to receive contents that are offensive, objectionable, or
-        indecent. The &quot;Site&quot; will not be liable for any error or any negative
-        effect/result of such content whatsoever.
+        &quot;The &quot;Site&quot; does not guarantee the accuracy, integrity,
+        and quality of such contents. The &quot;User&quot; must also understand
+        that it is possible for him/her to receive contents that are offensive,
+        objectionable, or indecent. The &quot;Site&quot; will not be liable for
+        any error or any negative effect/result of such content whatsoever.
       </p>
       <p>
-        The &quot;User&quot; represents, warrants, and agrees that no materials of any
-        kind submitted through &quot;User&quot; account or otherwise posted or shared by
-        &quot;User&quot; through the Service will violate or infringe upon the rights of
-        any third party, including copyright, trademark, privacy, publicity, or
-        other personal or proprietary rights; or contain libelous, defamatory,
-        or otherwise unlawful material.
+        The &quot;User&quot; represents, warrants, and agrees that no materials
+        of any kind submitted through &quot;User&quot; account or otherwise
+        posted or shared by &quot;User&quot; through the Service will violate or
+        infringe upon the rights of any third party, including copyright,
+        trademark, privacy, publicity, or other personal or proprietary rights;
+        or contain libelous, defamatory, or otherwise unlawful material.
       </p>
       <p>
-        The &quot;User&quot; further agrees that he/she shall not use the Service or the
-        Site in any unlawful manner or in any other manner that could damage,
-        disable, overburden, impair or disrupt the service, servers, system,
-        site or networks connected to the service.
+        The &quot;User&quot; further agrees that he/she shall not use the
+        Service or the Site in any unlawful manner or in any other manner that
+        could damage, disable, overburden, impair or disrupt the service,
+        servers, system, site or networks connected to the service.
       </p>
       <p>
         Users shall recognize that they have the responsibility of evaluating
@@ -103,8 +102,8 @@ const page = () => {
         entirely depend on the data displayed at the &quot;Site&quot;.
       </p>
       <p>
-        The &quot;User&quot; expressly and impliedly agrees not to use the services or the
-        &quot;Site&quot; to:
+        The &quot;User&quot; expressly and impliedly agrees not to use the
+        services or the &quot;Site&quot; to:
       </p>
       <ul className="list-disc ml-8">
         <li>
@@ -127,23 +126,25 @@ const page = () => {
         </li>
         <li>
           Upload, post, email, transmit or otherwise make available any content
-          that the &quot;User&quot; does not have a right to make available under any law
-          or under contractual relationship (such as inside information,
-          proprietary and confidential information, learned or disclosed as part
-          of non-disclosure agreements);
+          that the &quot;User&quot; does not have a right to make available
+          under any law or under contractual relationship (such as inside
+          information, proprietary and confidential information, learned or
+          disclosed as part of non-disclosure agreements);
         </li>
         <li>
           Upload, post, transmit, share, store or otherwise make available
           content that would constitute, encourage or provide instructions for a
           criminal offence; - Upload, post, transmit, share, store or otherwise
           make available any unsolicited or unauthorized advertising,
-          solicitations, promotional materials, &quot;junk mail,&quot; &quot;spam,&quot; &quot;chain
-          letters,&quot; &quot;pyramid schemes,&quot; or any other form of solicitation
+          solicitations, promotional materials, &quot;junk mail,&quot;
+          &quot;spam,&quot; &quot;chain letters,&quot; &quot;pyramid
+          schemes,&quot; or any other form of solicitation
         </li>
         <li>
-          Disrupt the normal flow of dialogue, cause a screen to &quot;scroll&quot; faster
-          than normal, or otherwise act in a manner that negatively affects the
-          other users ability to engage in real time exchanges;
+          Disrupt the normal flow of dialogue, cause a screen to
+          &quot;scroll&quot; faster than normal, or otherwise act in a manner
+          that negatively affects the other users ability to engage in real time
+          exchanges;
         </li>
         <li>
           Upload, post, transmit, share, store or otherwise make available
@@ -167,31 +168,31 @@ const page = () => {
         </li>
         <li>
           In using this Services, you must comply with all laws, all directions
-          of a Regulator and reasonable directions of EasyMobileRecharge, you
-          must not use, or attempt to use, the services to break any law or to
-          miss-use another person&apos;s rights;
+          of a Regulator and reasonable directions of EarnCharge, you must not
+          use, or attempt to use, the services to break any law or to miss-use
+          another person&apos;s rights;
         </li>
         <li>
-          EasyMobileRecharge is not liable for any changes in talk value by the
-          service provider or validity period by operator. EasyMobileRecharge is
-          not liable for any problem while recharging. If the user finds a
-          problem with the recharge value of a recharge coupon, the user will
-          need to contact respective service provider&apos;s customer care.
+          EarnCharge is not liable for any changes in talk value by the service
+          provider or validity period by operator. EarnCharge is not liable for
+          any problem while recharging. If the user finds a problem with the
+          recharge value of a recharge coupon, the user will need to contact
+          respective service provider&apos;s customer care.
         </li>
         <li>
-          EasyMobileRecharge is not liable for any changes in talk value by the
-          service provider or validity period by operator. EasyMobileRecharge is
-          not liable for any problem while recharging. If the user finds a
-          problem with the recharge value of a recharge coupon, the user will
-          need to contact respective service provider&apos;s customer care.
+          EarnCharge is not liable for any changes in talk value by the service
+          provider or validity period by operator. EarnCharge is not liable for
+          any problem while recharging. If the user finds a problem with the
+          recharge value of a recharge coupon, the user will need to contact
+          respective service provider&apos;s customer care.
         </li>
         <li>
           Disputes arising out of the transactions between the user and the
-          EasyMobileRecharge sites are subject to the jurisdiction of courts
-          situated in Una, HP, India only. EasyMobileRecharge reserves the right
-          to ban the users phone number from recharge on the &apos;site&apos; if
-          EasyMobileRecharge suspects any foul use/ activity/ commercial use of
-          the recharge facility provided by the site.
+          EarnCharge sites are subject to the jurisdiction of courts situated in
+          Una, HP, India only. EarnCharge reserves the right to ban the users
+          phone number from recharge on the &apos;site&apos; if EarnCharge
+          suspects any foul use/ activity/ commercial use of the recharge
+          facility provided by the site.
         </li>
       </ul>
       <p>
@@ -300,10 +301,10 @@ const page = () => {
       <p>
         If this site contains bulletin boards, chat rooms, access to mailing
         lists, or other message or communication facilities (collectively
-        &quot;Forums&quot;), User agrees to use the Forums only to send and receive
-        messages and material that are proper and related to the particular
-        Forum. By way of example, and not as a limitation, User agrees that when
-        using a Forum, User shall not do any of the following:
+        &quot;Forums&quot;), User agrees to use the Forums only to send and
+        receive messages and material that are proper and related to the
+        particular Forum. By way of example, and not as a limitation, User
+        agrees that when using a Forum, User shall not do any of the following:
       </p>
       <ul className="list-disc pl-6">
         <li>
@@ -317,8 +318,8 @@ const page = () => {
         <li>
           Upload or attach files that contain software or other material
           protected by Intellectual Property Laws (or by rights of privacy and
-          publicity) unless &quot;User&quot; owns or controls the rights thereto or has
-          received all necessary consents.
+          publicity) unless &quot;User&quot; owns or controls the rights thereto
+          or has received all necessary consents.
         </li>
         <li>
           Upload or attach files that contain viruses, corrupted files, or any
@@ -338,29 +339,30 @@ const page = () => {
           forward surveys, contests, or chain letters.
         </li>
         <li>
-          Download any file posted by another user of a Forum that the &quot;User&quot;
-          may know, or reasonably should know, cannot be legally distributed in
-          such manner.
+          Download any file posted by another user of a Forum that the
+          &quot;User&quot; may know, or reasonably should know, cannot be
+          legally distributed in such manner.
         </li>
       </ul>
       <p>
-        The &quot;User&quot; acknowledges that all Forums or Discussion Groups are public,
-        not private communication. Further, the &quot;User&quot; acknowledges that chats,
-        postings, conferences, emails, and other communication by other users
-        are not endorsed by the &quot;Site&quot; and such communication shall not be
-        considered reviewed, screened, or approved by the &quot;Site&quot;. The &quot;Site&quot;
-        reserves the right for any reason to remove without notice any contents
-        of the Forums received from users, including without limitation email
-        and bulletin board postings.
+        The &quot;User&quot; acknowledges that all Forums or Discussion Groups
+        are public, not private communication. Further, the &quot;User&quot;
+        acknowledges that chats, postings, conferences, emails, and other
+        communication by other users are not endorsed by the &quot;Site&quot;
+        and such communication shall not be considered reviewed, screened, or
+        approved by the &quot;Site&quot;. The &quot;Site&quot; reserves the
+        right for any reason to remove without notice any contents of the Forums
+        received from users, including without limitation email and bulletin
+        board postings.
       </p>
 
       <h2 className="text-xl font-bold mt-6 mb-2">Disclaimer</h2>
       <p>
-        This site and the contents hereof are provided &quot;as is&quot; and without
-        warranties of any kind either expressed or implied to the fullest extent
-        permissible pursuant to applicable law. The Site disclaims all
-        warranties, express or implied, and conditions including, but not
-        limited to, implied warranties of merchantability, fitness for a
+        This site and the contents hereof are provided &quot;as is&quot; and
+        without warranties of any kind either expressed or implied to the
+        fullest extent permissible pursuant to applicable law. The Site
+        disclaims all warranties, express or implied, and conditions including,
+        but not limited to, implied warranties of merchantability, fitness for a
         particular purpose, title, and non-infringement. Nor does multimedia
         warrant that the functions of this site or the functions contained in
         the materials of in this site will be interrupted or error-free, that
@@ -371,12 +373,13 @@ const page = () => {
         whatsoever resulting from loss of use, data, or profits, whether in an
         action of contract, negligence, or other wrongful actions, arising out
         of or in connection with the use or performance of any products,
-        materials, or information available from this server. This &quot;Site&quot; in
-        whole or in part could include technical inaccuracies or typographical
-        errors. Changes are periodically added to the information herein.
-        User&apos;s continued use of this &quot;Site&quot; following the posting of any
-        change or modification of the terms will mean the &quot;User&quot; to accept those
-        changes or modifications.
+        materials, or information available from this server. This
+        &quot;Site&quot; in whole or in part could include technical
+        inaccuracies or typographical errors. Changes are periodically added to
+        the information herein. User&apos;s continued use of this
+        &quot;Site&quot; following the posting of any change or modification of
+        the terms will mean the &quot;User&quot; to accept those changes or
+        modifications.
       </p>
 
       <h2 className="text-xl font-bold mt-6 mb-2">
@@ -431,6 +434,13 @@ const page = () => {
         time. The User is responsible for regularly reviewing these Terms of
         Service so that you will be apprised of any changes.
       </p>
+
+      <h1>
+        <b>
+          Earncharge is a fully owned subsidary of Arahant Economy Services
+          Private Limited.
+        </b>
+      </h1>
     </div>
   );
 };
