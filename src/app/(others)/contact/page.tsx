@@ -1,105 +1,84 @@
 "use client"
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-  subject: string;
+import { motion } from "framer-motion";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useInView } from "react-intersection-observer";
+import ContactForm from "./ContactForm";
+const Contact = () => {
+    const [ref] = useInView({
+        triggerOnce: true,
+      });
+  return (
+    <>
+      <div className="m-auto max-w-[1200px] mt-[100px] mb-[100px]">
+      <div id="sectionBack" className="rounded-[20px] p-10 flex flex-wrap justify-end flex-col gap-10 lg:flex-row items-center">
+          <motion.div
+            ref={ref}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { opacity: 1, x: 0 },
+              hidden: { opacity: 0, x: -100 },
+            }}
+            transition={{ duration: 1.3 }}
+            className="flex-[1]"
+          >
+            <h1 className="text-4xl lg:text-6xl text-white font-semibold">
+            Got a question? We are here to help!
+            </h1>
+            <p className="mt-5 text-sm text-white lg:text-2xl">
+            Feel free to reach out with any inquiries or feedback. We look forward to hearing from you!
+            </p>
+            <br />
+            <div className="font-semibold text-white block mt-10">
+              Find Out More <FontAwesomeIcon icon={faArrowDown} />
+            </div>
+          </motion.div>
+          <motion.div
+            ref={ref}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0, y: -100 },
+            }}
+            transition={{ duration: 1.3 }}
+            className="flex-[1]"
+          >
+            <iframe width="100%" height="350" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=350&amp;hl=en&amp;q=505%20near%20traffic%20park%20dharampeth%20extension%20nagpur%C2%A0440010+(PlentyCred)&amp;t=p&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" className="rounded-lg"></iframe>
+          </motion.div>
+        </div>
+            <motion.div className="flex flex-col xl:flex-row p-3 lg:p-0 gap-10 mt-10">
+                <div className="flex-[1]">
+                <motion.div
+        className="flex flex-col flex-wrap gap-5"
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
+        border-[#131c23] border-b-[10px]">
+          <h1 className="text-4xl font-semibold">Mobile</h1>
+          <p>+91-7058111852</p>
+        </motion.div>
+        <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
+        border-[#131c23] border-b-[10px]">
+          <h1 className="text-4xl font-semibold">Email</h1>
+          <p>assist@plentycred.co.in</p>
+        </motion.div>
+        <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
+        border-[#131c23] border-b-[10px]">
+          <h1 className="text-4xl font-semibold">Address</h1>
+            <center>505 near traffic park dharampeth extension nagpur 440010.</center>
+        </motion.div>
+      </motion.div>
+                </div>
+                <div className="flex-[1]">
+                    <ContactForm />
+                </div>
+            </motion.div>
+          </div>
+    </>
+  )
 }
 
-const ContactPage: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-
-
-  const onSubmit = async (data: FormData) => {
-    try {
-      const response = await axios.post(
-        'https://api.earncharge.in/v1/contact/send',
-        data,
-        {
-          headers: {
-            Authorization: 'Bearer YOUR_ACCESS_TOKEN', // Replace with your actual token
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log('Response:', response.data);
-      alert('Message sent successfully!');
-    } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Failed to send message.');
-    }
-  };
-
-  return (
-    <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium">
-            Name
-          </label>
-          <input
-            id="name"
-            {...register('name', { required: 'Name is required' })}
-            className="border p-2 w-full"
-            placeholder="Enter your name"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email
-          </label>
-          <input
-            id="email"
-            {...register('email', { required: 'Email is required' })}
-            className="border p-2 w-full"
-            placeholder="Enter your email"
-          />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="subject" className="block text-sm font-medium">
-            Subject
-          </label>
-          <input
-            id="subject"
-            {...register('subject', { required: 'Subject is required' })}
-            className="border p-2 w-full"
-            placeholder="Enter the subject"
-          />
-          {errors.subject && <p className="text-red-500 text-sm">{errors.subject.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="message" className="block text-sm font-medium">
-            Message
-          </label>
-          <textarea
-            id="message"
-            {...register('message', { required: 'Message is required' })}
-            className="border p-2 w-full"
-            placeholder="Enter your message"
-            rows={5}
-          />
-          {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
-        </div>
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded"
-        >
-          Send Message
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default ContactPage;
+export default Contact
