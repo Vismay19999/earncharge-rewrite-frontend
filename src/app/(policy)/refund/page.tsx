@@ -37,7 +37,7 @@ const page = () => {
         <p>
           In case of any technical error or payment failure from our server or
           website, resulting in the deduction of an amount from your account, we
-          will return the amount within 7 working days.
+          will return the amount within 7 working days and payment mode will be upi and direct bank account transfer.
         </p>
         <h1 className="text-2xl font-bold mt-5 mb-4">
           Refunds From 3rd Party:
@@ -68,7 +68,8 @@ const page = () => {
         </p>
         <p>
           Refunds will be processed within 7 working days from the date of
-          approval and payment mode will be upi and direct bank account transfer. The refund amount will be credited using the original
+          approval and payment mode will be upi and direct bank account
+          transfer. The refund amount will be credited using the original
           payment method, either through UPI or direct bank account transfer, as
           per your preference.
         </p>
