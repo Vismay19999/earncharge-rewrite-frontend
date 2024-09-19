@@ -62,6 +62,12 @@ const page = () => {
           providers. If you have any questions or concerns about a transaction,
           please contact our customer support team for assistance.
         </p>
+        <p>
+          Refunds will be processed within 7 working days from the date of
+          approval. The refund amount will be credited using the original
+          payment method, either through UPI or direct bank account transfer, as
+          per your preference.
+        </p>
         <p className="mt-4">
           Thank you for choosing EarnCharge. We appreciate your understanding
           and cooperation.
