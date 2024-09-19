@@ -27,6 +27,10 @@ const page = () => {
           reviewing your transaction details carefully before proceeding to
           ensure accuracy.
         </p>
+        <p className="mb-2 mt-2">
+          We dont have any cancellation policy as it is a prepaid service also
+          we dont provide any kind of postpaid billing or subscriptions.
+        </p>
         <h1 className="text-2xl font-bold mt-5 mb-4">
           Refunds Technical Errors and Payment Failures:
         </h1>
@@ -64,7 +68,7 @@ const page = () => {
         </p>
         <p>
           Refunds will be processed within 7 working days from the date of
-          approval. The refund amount will be credited using the original
+          approval and payment mode will be upi and direct bank account transfer. The refund amount will be credited using the original
           payment method, either through UPI or direct bank account transfer, as
           per your preference.
         </p>

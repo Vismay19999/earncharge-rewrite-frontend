@@ -75,9 +75,8 @@ const Footer = () => {
             </div>
             <div className="flex-[1]">
               <p className="text-xs leading-1 text-white">
-                EarnCharge, a subsidiary of Arihant Economy Services Pvt. Ltd.,
-                is a digital platform facilitating quick borrowing. © 2024
-                Arihant Economy Services Pvt. Ltd.
+                Earncharge is a fully owned subsidary of Arahant Economy
+                Services Private Limited. It is a digital platform providing recharge and BBPS services.
               </p>
             </div>
           </div>

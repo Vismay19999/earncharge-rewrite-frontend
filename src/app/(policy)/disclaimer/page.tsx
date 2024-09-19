@@ -33,8 +33,8 @@ const page = () => {
 
       <h3 className="p-2">
         For assistance, please go on contact us page and write to us at
-        assist@plentycred.co.in Kindly note that here is no other help
-        channel available
+        assist@earncharge.in Kindly note that here is no other help
+        channel available
       </h3>
     </div>
   );
