@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import Modal from "../Modal";
+import { FaWallet } from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
 
 interface Wallets {
   referralWallet: { amount: number };
@@ -79,35 +81,65 @@ const GetWallets: React.FC = () => {
   }
 
   return (
-    <div>
-      <h2>Wallets</h2>
-      <div>
-        <h3>Referral Wallet</h3>
-        <p>Amount: {wallets.referralWallet.amount}</p>
-        <button
-          onClick={() => {
-            setModalType("referral");
-            setIsModalOpen(true);
-          }}
-          className="bg-blue-400 p-2"
-        >
-          Withdraw Referral
-        </button>
-      </div>
-      <div>
-        <h3>Cashback Wallet</h3>
-        <p>Amount: {wallets.cashbackWallet.amount}</p>
-        <button
-          onClick={() => {
-            setModalType("cashback");
-            setIsModalOpen(true);
-          }}
-          className="bg-blue-400 p-2"
-        >
-          Withdraw Cashback
-        </button>
+    <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
+      <h2 className="text-lg font-bold mb-4">Wallets</h2>
+      <div className="flex flex-row justify-between py-2">
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
+            <div className="flex">
+              <div className="bg-gray-100 p-2 rounded-full">
+                <FaWallet />
+              </div>
+            </div>
+            <div className="flex-[1] font-semibold text-sm">Referral</div>
+          </div>
+        </div>
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
+            <div className="flex">₹ {wallets.referralWallet.amount}</div>
+            <div className="flex">
+              <button
+                onClick={() => {
+                  setModalType("referral");
+                  setIsModalOpen(true);
+                }}
+                className="rounded-xl bg-black p-2"
+              >
+                <FiPlus className="text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
+      <div className="flex flex-row justify-between py-2">
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
+            <div className="flex">
+              <div className="bg-gray-100 p-2 rounded-full">
+                <FaWallet />
+              </div>
+            </div>
+            <div className="flex-[1] font-semibold text-sm">Cashback</div>
+          </div>
+        </div>
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
+            <div className="flex">₹ {wallets.referralWallet.amount}</div>
+            <div className="flex">
+              <button
+                onClick={() => {
+                  setModalType("cashback");
+                  setIsModalOpen(true);
+                }}
+                className="rounded-xl bg-black p-2"
+              >
+                <FiPlus className="text-white" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

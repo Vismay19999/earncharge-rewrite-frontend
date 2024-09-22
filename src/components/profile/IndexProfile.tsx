@@ -26,6 +26,7 @@ const IndexProfile = () => {
               <div className="flex-[3]">
                 <ProfileInfo user={user} />
                 <KycBase user={user} />
+                <GetWallets />
               </div>
               <div className="flex-[7]">
                 <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
@@ -36,9 +37,7 @@ const IndexProfile = () => {
               </div>
             </div>
           </section>
-          <section>
-            <GetWallets />
-          </section>
+          <section></section>
         </div>
       )}
     </main>
