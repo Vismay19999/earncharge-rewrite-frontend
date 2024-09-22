@@ -12,7 +12,11 @@ interface WaterProviderData {
     provider_icon: string;
 }
 
-const WaterProvider = () => {
+interface WaterProviderProps {
+    onProviderSelect: (id: string) => void; // New prop for selecting provider
+}
+
+const WaterProvider: React.FC<WaterProviderProps> = ({ onProviderSelect }) => {
     const [waterProviders, setWaterProviders] = useState<WaterProviderData[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -69,7 +73,11 @@ const WaterProvider = () => {
                 <ul>
                     {filteredWaterProviders.length > 0 ? (
                         filteredWaterProviders.map((provider) => (
-                            <li key={provider.provider_id} className="p-2 border-b flex items-center">
+                            <li
+                                key={provider.provider_id}
+                                className="p-2 border-b flex items-center cursor-pointer"
+                                onClick={() => onProviderSelect(provider.provider_id.toString())} // Handle provider click
+                            >
                                 <Image
                                     src={provider.provider_icon}
                                     alt={provider.provider_name}

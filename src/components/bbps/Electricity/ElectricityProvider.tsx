@@ -12,7 +12,11 @@ interface Provider {
   provider_icon: string;
 }
 
-const ElectricityProvider = () => {
+interface ElectricityProviderProps {
+  onProviderSelect: (id: string) => void; 
+}
+
+const ElectricityProvider: React.FC<ElectricityProviderProps> = ({ onProviderSelect }) => {
   const [providers, setProviders] = useState<Provider[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -66,7 +70,11 @@ const ElectricityProvider = () => {
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProviders.length > 0 ? (
           filteredProviders.map((provider) => (
-            <li key={provider.provider_id} className="flex items-center p-4 bg-white rounded-lg shadow">
+            <li
+              key={provider.provider_id}
+              className="flex items-center p-4 bg-white rounded-lg shadow cursor-pointer"
+              onClick={() => onProviderSelect(provider.provider_id.toString())} // Trigger the callback on click
+            >
               <Image
                 width={40}
                 height={40}

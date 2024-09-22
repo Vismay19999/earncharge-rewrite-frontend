@@ -4,7 +4,7 @@ import { getAccessToken } from "@/utils/auth";
 import Image from "next/image";
 
 interface GasProviderData {
-  provider_id: number;
+  provider_id: string; // Changed to string
   provider_name: string;
   service_id: number;
   service_name: string;
@@ -12,7 +12,11 @@ interface GasProviderData {
   provider_icon: string;
 }
 
-const GasProvider = () => {
+interface GasProviderProps {
+  onProviderSelect: (id: string) => void; // Changed to string
+}
+
+const GasProvider: React.FC<GasProviderProps> = ({ onProviderSelect }) => {
   const [gasProviders, setGasProviders] = useState<GasProviderData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +63,7 @@ const GasProvider = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search providers..."
+        className="mb-4 p-2 border rounded"
       />
 
       {loading ? (
@@ -71,7 +76,8 @@ const GasProvider = () => {
             filteredGasProviders.map((provider) => (
               <li
                 key={provider.provider_id}
-                className="p-2 border-b flex items-center"
+                className="p-2 border-b flex items-center cursor-pointer"
+                onClick={() => onProviderSelect(provider.provider_id)} // Pass provider ID as a string
               >
                 <Image
                   width={40}
@@ -84,7 +90,7 @@ const GasProvider = () => {
               </li>
             ))
           ) : (
-            <p>No gas providers found.</p>
+            <p></p>
           )}
         </ul>
       )}

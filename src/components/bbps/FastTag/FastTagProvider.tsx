@@ -1,18 +1,22 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAccessToken } from '@/utils/auth';
 import Image from 'next/image';
 
 interface FastTagProviderData {
-    provider_id: number;
+    provider_id: string; // Changed from number to string
     provider_name: string;
     provider_icon: string;
 }
 
-const FastTagProvider = () => {
+interface FastTagProviderProps {
+    onProviderSelect: (id: string) => void; // Changed to string
+}
+
+const FastTagProvider: React.FC<FastTagProviderProps> = ({ onProviderSelect }) => {
     const [providers, setProviders] = useState<FastTagProviderData[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -68,7 +72,11 @@ const FastTagProvider = () => {
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProviders.length > 0 ? (
                     filteredProviders.map((provider) => (
-                        <li key={provider.provider_id} className="flex items-center p-4 bg-white rounded-lg shadow">
+                        <li
+                            key={provider.provider_id}
+                            className="flex items-center p-4 bg-white rounded-lg shadow cursor-pointer"
+                            onClick={() => onProviderSelect(provider.provider_id)} // Pass selected provider ID as a string
+                        >
                             <Image
                                 width={48}
                                 height={48}
