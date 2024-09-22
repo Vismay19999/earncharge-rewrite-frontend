@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
-import BillDetails from "./BillDetails"; // Adjust the import path as needed
 
 interface ValidationParam {
   name: string;
@@ -38,13 +37,16 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
           }
         );
 
-        if (response.data.params[0].dataType === "NUMERIC") {
+        if (
+          response.data.status === "success" &&
+          response.data.params[0].dataType === "NUMERIC"
+        ) {
           setFailureResponse(true);
-        }
-        if (response.data.status === "success") {
-          setParams(response.data.params || []);
+        } else if (response.data.status === "success") {
+          console.log("Else IF Working")
+          setParams(response.data.params);
         } else {
-          setError("Validation failed");
+          setError("Validation failed"); 
         }
       } catch (err: any) {
         setError("Error fetching validation params: " + err.message);
@@ -131,12 +133,33 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
 
       {failureResponse && (
         <div className="text-red-500 font-semibold mt-2">
-          The requested information is not available. Please check the details
-          provided.
+          The requested information is not available.
         </div>
       )}
 
-      {billData && <BillDetails billData={billData} />}
+      {billData && (
+        <div className="mt-4 p-4 border border-green-500">
+          <h3 className="text-lg font-bold">Bill Details:</h3>
+          <div className="mt-2">
+            <p>
+              <strong>Provider Name:</strong> {billData.provider_name}
+            </p>
+            <p>
+              <strong>Number:</strong> {billData.number}
+            </p>
+            <p>
+              <strong>Amount:</strong> ₹{billData.amount}
+            </p>
+            <p>
+              <strong>Name:</strong> {billData.name}
+            </p>
+            <p>
+              <strong>Due Date:</strong>{" "}
+              {new Date(billData.duedate).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
