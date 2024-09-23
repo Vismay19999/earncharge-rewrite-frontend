@@ -5,6 +5,7 @@ import VerifyKyc from "./profileUtils/VerfiyKyc";
 
 import KycBase from "./profileTabs/KycBase";
 import GetWallets from "./wallet/getWallets/GetWallets";
+import IndexTransactions from "./transactions/IndexTransactions";
 
 const IndexProfile = () => {
   const { user } = useUser();
@@ -32,6 +33,7 @@ const IndexProfile = () => {
                 <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
                   <div className="p-4">
                     <h1 className="font-semibold text-xl">Transactions</h1>
+                    <IndexTransactions />
                   </div>
                 </div>
               </div>
