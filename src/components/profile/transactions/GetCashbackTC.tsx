@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { getAccessToken } from '@/utils/auth';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getAccessToken } from "@/utils/auth";
+import { FaWallet } from "react-icons/fa6";
 
 interface CashbackHistory {
   id: string;
@@ -21,18 +22,21 @@ const GetCashbackTC = () => {
         const accessToken = getAccessToken();
 
         if (!accessToken) {
-          throw new Error('No token found');
+          throw new Error("No token found");
         }
 
-        const response = await axios.get('https://api.earncharge.in/v1/user/wallet/withdraw/history/cashback', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await axios.get(
+          "https://api.earncharge.in/v1/user/wallet/withdraw/history/cashback",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
+        );
 
         setCashbackHistory(response.data.data);
       } catch (err: any) {
-        setError(err.message || 'Something went wrong');
+        setError(err.message || "Something went wrong");
       } finally {
         setLoading(false);
       }
@@ -45,20 +49,26 @@ const GetCashbackTC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h1>Cashback Transaction History</h1>
+    <div className="p-2">
       {cashbackHistory.length === 0 ? (
         <p>No cashback transactions found</p>
       ) : (
-        <ul>
+        <>
           {cashbackHistory.map((transaction) => (
-            <li key={transaction.id}>
-              <p>Amount: {transaction.amount}</p>
-              <p>Status: {transaction.status ? 'Completed' : 'Pending'}</p>
-              <p>Wallet Type: {transaction.walletType}</p>
-            </li>
+            <div
+              key={transaction.id}
+              className="border-b-white flex flex-wrap flex-row gap-2 items-center justify-between"
+            >
+              <div className="flex p-2">
+                <div className="bg-gray-100 p-2 rounded-full">
+                  <FaWallet />
+                </div>
+              </div>
+              <div className="flex-[1] p-2">{transaction.amount} {transaction.walletType}</div>
+              <div className="flex p-2">{transaction.status ? <><p>Completed</p></> : 'Pending'}</div>
+            </div>
           ))}
-        </ul>
+        </>
       )}
     </div>
   );
