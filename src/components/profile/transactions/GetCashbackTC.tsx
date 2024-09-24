@@ -50,25 +50,39 @@ const GetCashbackTC = () => {
 
   return (
     <div className="p-2">
-      {cashbackHistory.length === 0 ? (
-        <p>No cashback transactions found</p>
-      ) : (
-        <>
-          {cashbackHistory.map((transaction) => (
-            <div
-              key={transaction.id}
-              className="border-b-white flex flex-wrap flex-row gap-2 items-center justify-between"
-            >
-              <div className="flex p-2">
-                <div className="bg-gray-100 p-2 rounded-full">
-                  <FaWallet />
+      {cashbackHistory && (
+        <div>
+          {cashbackHistory.length === 0 ? (
+            <p>No cashback transactions found</p>
+          ) : (
+            <>
+              {cashbackHistory.map((transaction) => (
+                <div
+                  key={transaction.id}
+                  className="border-b-white flex flex-wrap flex-row gap-2 items-center justify-between"
+                >
+                  <div className="flex p-2">
+                    <div className="bg-gray-100 p-2 rounded-full">
+                      <FaWallet />
+                    </div>
+                  </div>
+                  <div className="flex-[1] p-2">
+                    {transaction.amount} {transaction.walletType}
+                  </div>
+                  <div className="flex p-2">
+                    {transaction.status ? (
+                      <>
+                        <p>Completed</p>
+                      </>
+                    ) : (
+                      "Pending"
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="flex-[1] p-2">{transaction.amount} {transaction.walletType}</div>
-              <div className="flex p-2">{transaction.status ? <><p>Completed</p></> : 'Pending'}</div>
-            </div>
-          ))}
-        </>
+              ))}
+            </>
+          )}
+        </div>
       )}
     </div>
   );

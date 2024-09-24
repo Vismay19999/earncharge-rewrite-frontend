@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 
-interface ReferralHistory {
+interface PaymentHistory {
   id: string;
   amount: number;
   status: boolean;
@@ -10,13 +10,13 @@ interface ReferralHistory {
   walletType: string;
 }
 
-const GetRefferalTC = () => {
-  const [referralHistory, setReferralHistory] = useState<ReferralHistory[]>([]);
+const GetPaymentsTC = () => {
+  const [paymentHistory, setPaymentHistory] = useState<PaymentHistory[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchReferralHistory = async () => {
+    const fetchPaymentHistory = async () => {
       try {
         const accessToken = getAccessToken();
 
@@ -25,7 +25,7 @@ const GetRefferalTC = () => {
         }
 
         const response = await axios.get(
-          "https://api.earncharge.in/v1/user/wallet/withdraw/history/referral",
+          "https://api.earncharge.in/v1/recharge/payment/transactions",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`
@@ -33,7 +33,7 @@ const GetRefferalTC = () => {
           }
         );
 
-        setReferralHistory(response.data.data);
+        setPaymentHistory(response.data.data);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -41,7 +41,7 @@ const GetRefferalTC = () => {
       }
     };
 
-    fetchReferralHistory();
+    fetchPaymentHistory();
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -49,14 +49,14 @@ const GetRefferalTC = () => {
 
   return (
     <div>
-      <h1>Referral Transaction History</h1>
-      {referralHistory && (
+      <h1>Payments Transaction History</h1>
+      {paymentHistory && (
         <div>
-          {referralHistory.length === 0 ? (
-            <p>No referral transactions found</p>
+          {paymentHistory.length === 0 ? (
+            <p>No payment transactions found</p>
           ) : (
             <ul>
-              {referralHistory.map((transaction) => (
+              {paymentHistory.map((transaction) => (
                 <li key={transaction.id}>
                   <p>Amount: {transaction.amount}</p>
                   <p>Status: {transaction.status ? "Completed" : "Pending"}</p>
@@ -71,4 +71,4 @@ const GetRefferalTC = () => {
   );
 };
 
-export default GetRefferalTC;
+export default GetPaymentsTC;
