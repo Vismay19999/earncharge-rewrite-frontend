@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import { FaWallet } from "react-icons/fa6";
+import Image from "next/image";
+import EmptyWallet from "@/../../public/wallet-empty.png";
 
 interface CashbackHistory {
   id: string;
@@ -53,29 +55,55 @@ const GetCashbackTC = () => {
       {cashbackHistory && (
         <div>
           {cashbackHistory.length === 0 ? (
-            <p>No cashback transactions found</p>
+            <>
+              <div className="w-full flex flex-wrap justify-center flex-col gap-5 items-center h-[200px]">
+                <Image
+                  src={EmptyWallet}
+                  alt="Empty Wallet"
+                  width={100}
+                  height={100}
+                  className="opacity-20"
+                />
+                <span className="font-semibold text-sm text-gray-400">
+                  No Cashback Transactions!
+                </span>
+              </div>
+            </>
           ) : (
             <>
               {cashbackHistory.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="border-b-white flex flex-wrap flex-row gap-2 items-center justify-between"
+                  className="flex flex-wrap flex-row gap-2 items-center justify-between"
                 >
                   <div className="flex p-2">
                     <div className="bg-gray-100 p-2 rounded-full">
-                      <FaWallet />
+                      <FaWallet className="text-[#0AA87E]" />
                     </div>
                   </div>
                   <div className="flex-[1] p-2">
-                    {transaction.amount} {transaction.walletType}
+                    <p className="inline font-semibold">
+                      ₹{transaction.amount}
+                    </p>{" "}
+                    <span className="text-xs text-gray-600">
+                      {transaction.walletType}
+                    </span>
                   </div>
                   <div className="flex p-2">
                     {transaction.status ? (
                       <>
-                        <p>Completed</p>
+                        <p className="text-xs font-semibold text-green-700 py-1 px-2 border-green-200 border-[1px] bg-green-100 rounded-sm">
+                          Completed
+                        </p>
                       </>
                     ) : (
-                      "Pending"
+                      <>
+                        <>
+                          <p className="text-xs font-semibold text-red-700 py-1 px-2 border-red-200 border-[1px] bg-red-100 rounded-sm">
+                            Pending
+                          </p>
+                        </>
+                      </>
                     )}
                   </div>
                 </div>
