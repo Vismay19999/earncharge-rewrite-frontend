@@ -6,11 +6,13 @@ import Logo from "@/../public/logo.png";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import HomeIcon from "@mui/icons-material/Home";
-import ExploreIcon from "@mui/icons-material/Explore";
-import InfoIcon from "@mui/icons-material/Info";
+import { FaArrowRight } from "react-icons/fa6";
+import { logout as RemoveToken } from "@/utils/auth";
+import { useUser } from "@/actions/UserContext/UserContext";
+import { FaUser } from "react-icons/fa";
 
 const MobileSidebar = () => {
+  const { user, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -21,76 +23,105 @@ const MobileSidebar = () => {
     setIsOpen(false);
   };
 
+  const logoutHandler = () => {
+    RemoveToken();
+    logout();
+    closeSidebar(); // Close sidebar on logout
+  };
+
   return (
     <>
-      <div className="md:hidden z-50 backdrop-blur-md shadow-md flex justify-between items-center p-2">
-        <div className="flex items-center justify-center">
+      <div className="md:hidden z-50 backdrop-blur-md shadow-md flex justify-between items-center p-4">
+        <Link href="/">
           <Image src={Logo} alt="Logo" width={150} height={40} />
-        </div>
+        </Link>
         <IconButton onClick={toggleSidebar}>
-          <MenuIcon fontSize="large" className="text-[#131c23]" />
+          <MenuIcon fontSize="medium" className="text-black" />
         </IconButton>
       </div>
 
       <div
-        className={`fixed inset-0 z-40 transform ${
+        className={`fixed inset-0 z-40 transition-transform duration-300 ease-in-out bg-gray-950 p-4 text-white font-Primary w-3/4 shadow-lg ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out bg-[#131c23] text-white font-Primary w-3/4`}
+        }`}
       >
-        <IconButton onClick={closeSidebar}>
-          <CloseIcon fontSize="large" className="text-white" />
-        </IconButton>
-        <nav className="flex flex-col space-y-4 p-4">
-          <Link href="/">
-            <div onClick={closeSidebar} className="flex items-center space-x-2">
-              <HomeIcon />
-              <span>Home</span>
-            </div>
-          </Link>
-          <Link href="#service">
-            <div onClick={closeSidebar} className="flex items-center space-x-2">
-              <ExploreIcon />
-              <span>Blog</span>
-            </div>
-          </Link>
-          <Link href="#about">
-            <div onClick={closeSidebar} className="flex items-center space-x-2">
-              <InfoIcon />
-              <span>Contact</span>
-            </div>
-          </Link>
-          <Link href="/aboutus">
-            <div onClick={closeSidebar} className="flex items-center space-x-2">
-              <InfoIcon />
-              <span>About</span>
-            </div>
-          </Link>
-          <div
+        <div className="flex justify-between items-center p-4">
+          <h2 className="text-xl font-bold">EarnCharge</h2>
+          <IconButton onClick={closeSidebar}>
+            <CloseIcon fontSize="medium" className="text-white" />
+          </IconButton>
+        </div>
+        <nav className="flex flex-col space-y-2 p-4">
+          <Link
+            href="/"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
-            className="flex items-center justify-center space-x-2 w-full"
           >
-            <div className="flex flex-rows justify-center items-center space-x-2 mx-4">
-              <button className="border rounded-md px-4 py-2 border-white">
-                Get Started
-              </button>
-              <button className="border rounded-md px-4 py-2 border-white">
-                Log In
-              </button>
-            </div>
-          </div>
-          <div className="mt-6 border-t border-gray-200 pt-4 text-center text-gray-200 text-sm">
-            <p className="mb-2 flex items-center justify-center font-Secondary">
-              EarnCharge, a subsidiary of Arihant Economy Services Pvt. Ltd., is
-              a digital platform facilitating quick borrowing. 2024 Arihant
-              Economy Services Pvt. Ltd.
-            </p>
+            <FaArrowRight /> <span className="font-semibold text-lg">Home</span>
+          </Link>
+          <Link
+            href="/blog"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
+            onClick={closeSidebar}
+          >
+            <FaArrowRight /> <span className="font-semibold text-lg">Blog</span>
+          </Link>
+          <Link
+            href="/aboutus"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
+            onClick={closeSidebar}
+          >
+            <FaArrowRight /> <span className="font-semibold text-lg">About</span>
+          </Link>
+          <Link
+            href="/contact"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
+            onClick={closeSidebar}
+          >
+            <FaArrowRight /> <span className="font-semibold text-lg">Contact</span>
+          </Link>
+          <div className="flex flex-col items-center space-y-4 pt-4">
+            {user ? (
+              <>
+                <Link
+                  href="/profile"
+                  className="w-full p-2 flex gap-2 items-center justify-center rounded-xl bg-white text-black"
+                  onClick={closeSidebar}
+                >
+                  <FaUser /> User Name
+                </Link>
+                <button
+                  onClick={logoutHandler}
+                  className="w-full p-2 rounded-xl bg-white text-black"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  className="w-full p-2 flex gap-2 items-center justify-center rounded-xl bg-white text-black"
+                  onClick={closeSidebar}
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="/login"
+                  className="w-full p-2 flex gap-2 items-center justify-center rounded-xl bg-white text-black"
+                  onClick={closeSidebar}
+                >
+                  Log In
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </div>
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black opacity-50"
+          className="fixed inset-0 z-30 bg-black opacity-70"
           onClick={closeSidebar}
         />
       )}
