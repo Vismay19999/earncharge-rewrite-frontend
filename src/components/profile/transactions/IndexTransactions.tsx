@@ -13,7 +13,7 @@ const IndexTransactions = () => {
       <div className="flex border-b border-gray-300 mb-4">
         <button
           className={`w-1/3 text-center py-2 focus:outline-none ${
-            activeTab === 'cashback' ? 'border-b-2 border-blue-500 text-blue-500 font-semibold' : 'text-gray-600'
+            activeTab === 'cashback' ? 'border-b-2 border-[#0AA87E] text-[#0AA87E] font-semibold' : 'text-gray-600'
           }`}
           onClick={() => setActiveTab('cashback')}
         >
@@ -21,7 +21,7 @@ const IndexTransactions = () => {
         </button>
         <button
           className={`w-1/3 text-center py-2 focus:outline-none ${
-            activeTab === 'referral' ? 'border-b-2 border-blue-500 text-blue-500 font-semibold' : 'text-gray-600'
+            activeTab === 'referral' ? 'border-b-2 border-[#0AA87E] text-[#0AA87E] font-semibold' : 'text-gray-600'
           }`}
           onClick={() => setActiveTab('referral')}
         >
@@ -29,7 +29,7 @@ const IndexTransactions = () => {
         </button>
         <button
           className={`w-1/3 text-center py-2 focus:outline-none ${
-            activeTab === 'payments' ? 'border-b-2 border-blue-500 text-blue-500 font-semibold' : 'text-gray-600'
+            activeTab === 'payments' ? 'border-b-2 border-[#0AA87E] text-[#0AA87E] font-semibold' : 'text-gray-600'
           }`}
           onClick={() => setActiveTab('payments')}
         >
