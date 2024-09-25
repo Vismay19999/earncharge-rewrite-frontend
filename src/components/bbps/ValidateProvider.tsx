@@ -45,6 +45,7 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
         } else if (response.data.status === "success") {
           console.log("Else IF Working")
           setParams(response.data.params);
+          window.scrollTo(0, 0);
         } else {
           setError("Validation failed"); 
         }
@@ -86,6 +87,7 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
 
       if (response.data.status === "success") {
         setBillData(response.data);
+        window.scrollTo(0, 0);
       } else {
         setError("Failed to fetch bill details");
       }

@@ -1,6 +1,5 @@
 import React from "react";
 import ValidateProvider from "./ValidateProvider";
-import FetchBill from "./FetchBill";
 
 const IndexBillFlow = ({ providerId }: { providerId: string }) => {
   return (
@@ -8,7 +7,6 @@ const IndexBillFlow = ({ providerId }: { providerId: string }) => {
       {providerId && (
         <div>
           <ValidateProvider providerId={providerId} />
-          {/* <FetchBill providerId={providerId} /> */}
         </div>
       )}
     </div>
