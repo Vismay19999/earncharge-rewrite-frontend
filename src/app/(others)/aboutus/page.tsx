@@ -2,7 +2,7 @@ import React from 'react';
 
 const page = () => {
   return (
-    <div className="p-6 m-auto w-[800px]">
+    <div className="p-6 m-auto max-w-[800px]">
       <h1 className="text-3xl font-bold mb-4">About Us</h1>
       <p className="mb-4">
         <strong>EarnCharge</strong> is dedicated to simplifying the way you manage your mobile recharges and bill payments. 

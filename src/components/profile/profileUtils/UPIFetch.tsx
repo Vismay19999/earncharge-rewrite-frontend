@@ -36,7 +36,7 @@ const UPIFetch = () => {
 
     return (
         <div>
-            <button onClick={fetchUPIData} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button onClick={fetchUPIData} className="text-sm font-semibold bg-black px-4 py-2 rounded-lg text-white">
                 Fetch UPI Data
             </button>
             {loading && <p>Loading...</p>}
