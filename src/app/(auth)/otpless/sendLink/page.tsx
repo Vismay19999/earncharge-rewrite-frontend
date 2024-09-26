@@ -1,50 +1,49 @@
 "use client";
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useUser } from '@/actions/UserContext/UserContext';
-import { useRouter } from 'next/navigation';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Link from 'next/link';
-import iconLogo from "@/../../public/icon.png"
-import Social from "@/../../public/Social.png"
-import Image from 'next/image';
+import React, { useState } from "react";
+import axios from "axios";
+import { useUser } from "@/actions/UserContext/UserContext";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+import iconLogo from "@/../../public/icon.png";
+import Social from "@/../../public/Social.png";
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 const Page = () => {
-    const { user } = useUser();
-    const router = useRouter();
-    const [phoneNumber, setPhoneNumber] = useState("");
+  const { user } = useUser();
+  const router = useRouter();
+  const [phoneNumber, setPhoneNumber] = useState("");
 
-    React.useEffect(() => {
-        if (user) {
-            router.push("/profile");
-        }
-    }, [user, router]);
-
-
-    const handleSendLink = async () => {
-        try {
-            const response = await axios.post(
-                'https://api.earncharge.in/v1/auth/otpless/sendlink',
-                {
-                    phoneNumber: phoneNumber,
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            toast.success('Link sent successfully!');
-            window.location.href = response.data.requestIds[0].destinationUri
-        } catch (error: any) {
-            toast.error('Error sending link: ' + error.message);
-        }
-    };
-
+  React.useEffect(() => {
     if (user) {
-        router.push('/profile');
+      router.push("/profile");
     }
+  }, [user, router]);
+
+  const handleSendLink = async () => {
+    try {
+      const response = await axios.post(
+        "https://api.earncharge.in/v1/auth/otpless/sendlink",
+        {
+          phoneNumber: phoneNumber
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      toast.success("Link sent successfully!");
+      window.location.href = response.data.requestIds[0].destinationUri;
+    } catch (error: any) {
+      toast.error("Error sending link: " + error.message);
+    }
+  };
+
+  if (user) {
+    router.push("/profile");
+  }
 
   return (
     <>
@@ -52,8 +51,11 @@ const Page = () => {
         <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1 items-center">
           <div className="flex-1 hidden lg:flex items-center">
             <div className="p-20">
-              <Image src={iconLogo} alt='Icon' width={64} />
-              <h1 className='p-2 text-5xl font-semibold pb-4 leading-[60px]'>Sign in without <span className='font-bold'>Passwords/OTPs.</span></h1>
+              <Image src={iconLogo} alt="Icon" width={64} />
+              <h1 className="p-2 text-5xl font-semibold pb-4 leading-[60px]">
+                Sign in without{" "}
+                <span className="font-bold">Passwords/OTPs.</span>
+              </h1>
               <Image src={Social} alt="login" width={400} />
             </div>
           </div>
@@ -65,16 +67,23 @@ const Page = () => {
 
               <Input
                 type="text"
+                maxLength={10}
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={(e) => {
+                  const numericValue = e.target.value.replace(/[^0-9]/g, ""); 
+                  setPhoneNumber(numericValue);
+                }}
                 placeholder="Enter your phone number"
                 className="border p-2 rounded mt-4 w-full"
-            />
-   
-            <button onClick={handleSendLink} className="mt-4 bg-black p-2 border-[1px] rounded-xl w-full text-white">
+              />
+
+              <button
+                onClick={handleSendLink}
+                className="mt-4 bg-black p-2 border-[1px] rounded-xl w-full text-white"
+              >
                 Continue
-            </button>
-            <ToastContainer />
+              </button>
+              <ToastContainer />
 
               <div className="flex flex-col items-center">
                 <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
@@ -90,10 +99,10 @@ const Page = () => {
                   </p>
                 </div>
               </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+      </div>
     </>
   );
 };

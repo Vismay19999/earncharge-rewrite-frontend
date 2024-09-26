@@ -49,7 +49,12 @@ const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
       <input
         type="text"
         value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value.replace(/[^0-9]/g, ""); // Allow only numbers
+          if (value.length <= 10) {
+            setPhoneNumber(value); // Set phone number if length is 10 or less
+          }
+        }}
         placeholder="Enter phone number"
         className="border p-2 rounded w-full mb-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
@@ -63,15 +68,6 @@ const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
         {loading ? "Searching..." : "Find Operator and Circle"}
       </button>
 
-      {/* {operatorInfo && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-                    <h3 className="text-md font-semibold text-gray-700 mb-2">Operator Information:</h3>
-                    <p className="text-gray-700"><strong>Operator:</strong> {operatorInfo.operator}</p>
-                    <p className="text-gray-700"><strong>Circle:</strong> {operatorInfo.circle}</p>
-                </div>
-            )} */}
-
-      {/* <ToastContainer /> */}
     </div>
   );
 };

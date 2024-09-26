@@ -60,6 +60,7 @@ const ElectricityProvider: React.FC<ElectricityProviderProps> = ({ onProviderSel
       <input
         type="text"
         value={searchQuery}
+        maxLength={30}
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder="Search provider..."
       />

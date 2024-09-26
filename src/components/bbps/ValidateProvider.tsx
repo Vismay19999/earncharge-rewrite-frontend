@@ -43,11 +43,11 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
         ) {
           setFailureResponse(true);
         } else if (response.data.status === "success") {
-          console.log("Else IF Working")
+          console.log("Else IF Working");
           setParams(response.data.params);
           window.scrollTo(0, 0);
         } else {
-          setError("Validation failed"); 
+          setError("Validation failed");
         }
       } catch (err: any) {
         setError("Error fetching validation params: " + err.message);
@@ -117,6 +117,7 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
               <input
                 type="text"
                 value={formData[param.name] || ""}
+                maxLength={30}
                 onChange={(e) => handleInputChange(param.name, e.target.value)}
                 placeholder={param.placeholder}
                 className="border border-gray-300 p-2 w-full"

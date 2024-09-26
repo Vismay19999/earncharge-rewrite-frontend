@@ -98,6 +98,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             <Input
                               type="fname"
                               id="firstName"
+                              maxLength={12}
                               placeholder="Enter Your First Name"
                               {...field}
                             />
@@ -121,6 +122,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             <Input
                               type="lname"
                               id="lastName"
+                              maxLength={12}
                               placeholder="Enter Your Last Name"
                               {...field}
                             />
@@ -143,13 +145,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             required: "Email is required",
                             pattern: {
                               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                              message: "Invalid email address",
-                            },
+                              message: "Invalid email address"
+                            }
                           }}
                           render={({ field }) => (
                             <Input
                               type="email"
                               id="email"
+                              maxLength={25}
                               placeholder="someone@something.com"
                               {...field}
                             />
@@ -173,6 +176,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             <Input
                               type="password"
                               id="password"
+                              maxLength={30}
                               placeholder="Choose a Strong Password"
                               {...field}
                             />
@@ -232,6 +236,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                               type="fname"
                               id="firstName"
                               placeholder="Enter Your First Name"
+                              maxLength={12}
                               {...field}
                             />
                           )}
@@ -255,6 +260,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                               type="lname"
                               id="lastName"
                               placeholder="Enter Your Last Name"
+                              maxLength={12}
                               {...field}
                             />
                           )}
@@ -272,13 +278,26 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                         <Controller
                           name="phoneNumber"
                           control={control}
-                          rules={{ required: "Phone number is required" }}
+                          rules={{
+                            required: "Phone number is required",
+                            pattern: {
+                              value: /^[0-9]*$/,
+                              message: "Only numbers are allowed"
+                            }
+                          }}
                           render={({ field }) => (
                             <Input
                               type="text"
                               id="phoneNumber"
                               placeholder="8888866666"
+                              maxLength={10}
                               {...field}
+                              onInput={(e: any) => {
+                                e.target.value = e.target.value.replace(
+                                  /[^0-9]/g,
+                                  ""
+                                ); // Allows only numbers
+                              }}
                             />
                           )}
                         />
@@ -300,6 +319,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             <Input
                               type="password"
                               id="password"
+                              maxLength={30}
                               placeholder="Choose a Strong Password"
                               {...field}
                             />
@@ -345,7 +365,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                   </TabsContent>
                 </Tabs>
               </form>
-
             </div>
           </div>
           <div className="flex-1 text-center hidden lg:flex items-center justify-center">

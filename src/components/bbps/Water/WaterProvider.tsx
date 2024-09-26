@@ -60,6 +60,7 @@ const WaterProvider: React.FC<WaterProviderProps> = ({ onProviderSelect }) => {
             {/* Search bar */}
             <input
                 type="text"
+                maxLength={30}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search providers..."

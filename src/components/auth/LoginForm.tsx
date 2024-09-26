@@ -34,6 +34,18 @@ const LoginForm: React.FC = () => {
     }));
   };
 
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+  
+    // Validate if the input value is a number (can also allow empty string)
+    if (/^\d*$/.test(value)) { // This regex checks for digits only
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value ? Number(value) : '', // Convert to number or keep as empty string
+      }));
+    }
+  };
+
   const handleLogin = async () => {
     if (!loginMethod) {
       toast.error("Please select a login method.");
@@ -109,6 +121,7 @@ const LoginForm: React.FC = () => {
                       <Input
                         type="email"
                         id="email"
+                        maxLength={30}
                         name="email"
                         placeholder="someone@something.com"
                         value={formData.email}
@@ -123,6 +136,7 @@ const LoginForm: React.FC = () => {
                         type="password"
                         id="password"
                         name="password"
+                        maxLength={30}
                         placeholder="Your Credentials"
                         value={formData.password}
                         onChange={handleInputChange}
@@ -181,7 +195,8 @@ const LoginForm: React.FC = () => {
                         name="phoneNumber"
                         placeholder="8888855544"
                         value={formData.phoneNumber}
-                        onChange={handleInputChange}
+                        maxLength={10}
+                        onChange={handleNumberInputChange}
                       />
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
@@ -194,6 +209,7 @@ const LoginForm: React.FC = () => {
                         name="password"
                         placeholder="Your Credentials"
                         value={formData.password}
+                        maxLength={30}
                         onChange={handleInputChange}
                       />
                     </div>

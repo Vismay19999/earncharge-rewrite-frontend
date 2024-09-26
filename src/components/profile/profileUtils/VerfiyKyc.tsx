@@ -83,6 +83,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
             value={aadhaarNumber}
             onChange={(e) => setAadhaarNumber(e.target.value)}
             placeholder="UID 12 Digit Number"
+            maxLength={12}
             className="mt-1 p-2 w-full border rounded-md text-sm outline-none"
             disabled={isOtpSent || loading}
           />
@@ -97,6 +98,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
+              maxLength={8}
               className="mt-1 p-2 w-full border rounded-md text-sm"
               disabled={loading}
             />
