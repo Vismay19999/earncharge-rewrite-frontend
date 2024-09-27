@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
@@ -10,9 +9,21 @@ interface ValidationParam {
 
 interface ValidateProviderProps {
   providerId: string;
+  onOptionalData: (
+    data: {
+      optional1: string | null;
+      optional2: string | null;
+      optional3: string | null;
+      optional4: string | null;
+    },
+    amount: string // Pass the amount to the parent component
+  ) => void;
 }
 
-const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
+const ValidateProvider: React.FC<ValidateProviderProps> = ({
+  providerId,
+  onOptionalData
+}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [params, setParams] = useState<ValidationParam[]>([]);
@@ -43,7 +54,6 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
         ) {
           setFailureResponse(true);
         } else if (response.data.status === "success") {
-          console.log("Else IF Working");
           setParams(response.data.params);
           window.scrollTo(0, 0);
         } else {
@@ -87,6 +97,20 @@ const ValidateProvider: React.FC<ValidateProviderProps> = ({ providerId }) => {
 
       if (response.data.status === "success") {
         setBillData(response.data);
+
+        // Pass optional fields and amount back to IndexBillFlow
+        const { optional1, optional2, optional3, optional4, amount } =
+          response.data;
+        onOptionalData(
+          {
+            optional1,
+            optional2,
+            optional3,
+            optional4
+          },
+          amount // Pass the amount here
+        );
+
         window.scrollTo(0, 0);
       } else {
         setError("Failed to fetch bill details");
