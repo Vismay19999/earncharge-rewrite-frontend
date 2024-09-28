@@ -41,7 +41,7 @@ const LoginForm: React.FC = () => {
     if (/^\d*$/.test(value)) { // This regex checks for digits only
       setFormData((prevData) => ({
         ...prevData,
-        [name]: value ? Number(value) : '', // Convert to number or keep as empty string
+        [name]: value ? String(value) : '', // Convert to number or keep as empty string
       }));
     }
   };

@@ -26,7 +26,7 @@ const Page = () => {
       const response = await axios.post(
         "https://api.earncharge.in/v1/auth/otpless/sendlink",
         {
-          phoneNumber: phoneNumber
+          phoneNumber: phoneNumber.toString()
         },
         {
           headers: {
@@ -70,7 +70,7 @@ const Page = () => {
                 maxLength={10}
                 value={phoneNumber}
                 onChange={(e) => {
-                  const numericValue = e.target.value.replace(/[^0-9]/g, ""); 
+                  const numericValue = e.target.value.replace(/[^0-9]/g, "");
                   setPhoneNumber(numericValue);
                 }}
                 placeholder="Enter your phone number"
