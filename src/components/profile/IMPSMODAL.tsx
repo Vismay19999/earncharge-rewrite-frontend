@@ -4,6 +4,9 @@ import axios from "axios";
 import { getAccessToken } from "@/utils/auth"; // Assuming this is your function
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { FiPlus } from "react-icons/fi";
+import { IoMdClose } from "react-icons/io";
+import { ArrowRight } from "@mui/icons-material";
 
 interface Wallets {
   paymentWallet: { amount: number };
@@ -86,11 +89,13 @@ const IMPSPage = () => {
   };
 
   return (
-    <div>
-      {/* Button to open modal */}
-      <button onClick={() => setIsModalOpen(true)}>Open Payment Request</button>
-
-      {error && <div>Error: {error}</div>}
+    <>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="rounded-xl bg-black p-2"
+      >
+        <FiPlus className="text-white" />
+      </button>
       {wallets && (
         <>
           {/* Modal */}
@@ -98,62 +103,91 @@ const IMPSPage = () => {
             <div
               style={{
                 position: "fixed",
+                borderRadius: "10px",
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 backgroundColor: "white",
-                padding: "20px",
+                padding: "40px",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                 zIndex: 1000
               }}
             >
               {/* Close button */}
-              <button onClick={() => setIsModalOpen(false)}>Close</button>
-
-              <div>₹ {wallets.paymentWallet.amount}</div>
+              <div className="flex flex-wrap justify-between">
+                <div className="flex-[1]">
+                  <h1>
+                    Add <span className="font-semibold">Amount</span>
+                  </h1>
+                  <span className="text-xs border-[1px] px-2">
+                    Balance ₹ {wallets.paymentWallet.amount}
+                  </span>
+                </div>
+                <div className="flex flex-wrap justify-end flex-[1]">
+                  <button onClick={() => setIsModalOpen(false)}>
+                    <IoMdClose />
+                  </button>
+                </div>
+              </div>
 
               {/* Input for UTR number */}
-              <div>
-                <label>UTR Number</label>
-                <input
-                  type="text"
-                  value={utrNo}
-                  onChange={(e) => setUtrNo(e.target.value)}
-                />
-              </div>
-
-              {/* Input for Amount */}
-              <div>
-                <label>Amount</label>
-                <input
-                  type="text"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-              </div>
-
-              {/* File input for Image */}
-              <div>
-                <label>Upload Image</label>
-                <input type="file" onChange={handleFileChange} />
-              </div>
-
-              {/* Image Preview */}
-              {imagePreview && (
+              <div className="flex flex-wrap flex-col gap-4 mt-4">
                 <div>
-                  <Image
-                    width={300}
-                    height={400}
-                    src={imagePreview}
-                    alt="Preview"
-                    style={{ width: "100px" }}
+                  <input
+                    type="text"
+                    placeholder="UTR Number"
+                    value={utrNo}
+                    className="w-full border-[1px] p-2 text-sm rounded-lg"
+                    onChange={(e) => setUtrNo(e.target.value)}
                   />
                 </div>
-              )}
 
-              {/* Button to send request */}
-              <div>
-                <button onClick={handleSubmit}>Send Request</button>
+                {/* Input for Amount */}
+                <div>
+                  <input
+                    type="number"
+                    placeholder="Amount"
+                    className="w-full border-[1px] p-2 text-sm rounded-lg"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </div>
+
+                {/* File input for Image */}
+                <div className="flex flex-wrap gap-2 flex-col text-sm">
+                  <label className="text-xs">
+                    Transaction{" "}
+                    <span className="font-semibold">Screenshot</span>
+                  </label>
+                  <input
+                    type="file"
+                    className="text-sm"
+                    onChange={handleFileChange}
+                  />
+                </div>
+
+                {/* Image Preview */}
+                {imagePreview && (
+                  <div>
+                    <Image
+                      width={300}
+                      height={400}
+                      src={imagePreview}
+                      alt="Preview"
+                      style={{ width: "100px" }}
+                    />
+                  </div>
+                )}
+
+                {/* Button to send request */}
+                <div>
+                  <button
+                    onClick={handleSubmit}
+                    className="w-full bg-black p-2 rounded-xl text-white text-sm hover:bg-white border-[1px] hover:text-black transition"
+                  >
+                    Send Request <ArrowRight />
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -175,7 +209,7 @@ const IMPSPage = () => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

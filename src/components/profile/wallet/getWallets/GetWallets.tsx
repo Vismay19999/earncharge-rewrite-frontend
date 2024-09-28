@@ -163,10 +163,11 @@ const GetWallets: React.FC = () => {
         </div>
         <div className="flex-[1]">
           <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
-            <div className="flex">₹ {wallets.paymentWallet.amount}</div>
             <div className="flex">
-                <IMPSPage />
-            </div>  
+              <div className="flex items-center gap-5">
+              ₹ {wallets.paymentWallet.amount} <IMPSPage />
+              </div>
+            </div>
           </div>
         </div>
       </div>
