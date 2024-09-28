@@ -1,9 +1,11 @@
 import { getAccessToken } from "@/utils/auth";
+import { ArrowRightAlt } from "@mui/icons-material";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import payment from "@/../../public/payment.gif";
+import Image from "next/image";
 const PaymentsIndex = ({
   amount,
   provider
@@ -82,40 +84,39 @@ const PaymentsIndex = ({
   };
 
   return (
-    <>s
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <>
+    <div>
       <ToastContainer />
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+      <div className="bg-white shadow-md rounded-lg p-10 flex-[1]">
         {/* Tabs for PayU and LightspeedPay */}
-        <div className="flex space-x-4 border-b mb-4">
+        <div className="space-x-4 border-b mb-4 flex">
           <button
-            className={`flex-1 py-2 text-lg font-semibold transition duration-200 ${
-              activeTab === "payu" 
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-blue-500"
-            }`}
+            className={`flex-[1] py-2 text-lg font-semibold transition duration-200 ${
+                activeTab === "payu" 
+                ? "border-b-2 border-black text-black"
+                : "text-gray-600 hover:text-black"
+                }`}
             onClick={() => handleTabChange("payu")}
             disabled={isPaymentInitiated}
           >
             PayU
           </button>
           <button
-            className={`flex-1 py-2 text-lg font-semibold transition duration-200 ${
+            className={`flex-[1] py-2 text-lg font-semibold transition duration-200 ${
               activeTab === "lightspeedpay" 
-                ? "border-b-2 border-blue-500 text-blue-500"
-                : "text-gray-600 hover:text-blue-500"
-            }`}
+              ? "border-b-2 border-black text-black"
+              : "text-gray-600 hover:text-black"
+              }`}
             onClick={() => handleTabChange("lightspeedpay")}
             disabled={isPaymentInitiated}
           >
             LightspeedPay
           </button>
         </div>
-
+              <Image src={payment} alt="Payment" height={350} width={350} />
         {/* Input fields for the selected tab */}
         <div className="mt-4">
           <div className="mb-4">
-            <label className="block mb-2 text-gray-700">Phone Number:</label>
             <input
               type="text"
               value={phoneNumber}
@@ -133,9 +134,6 @@ const PaymentsIndex = ({
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-gray-700">
-              VPA (Virtual Payment Address):
-            </label>
             <input
               type="text"
               value={vpa}
@@ -154,9 +152,9 @@ const PaymentsIndex = ({
           {!isPaymentInitiated && (
             <button
               onClick={initiatePayment}
-              className="bg-blue-500 text-white px-4 py-2 rounded transition duration-200 hover:bg-blue-600"
+              className="w-full bg-black py-2 rounded-lg text-white"
             >
-              Pay Now
+              Verify <ArrowRightAlt />
             </button>
           )}
 

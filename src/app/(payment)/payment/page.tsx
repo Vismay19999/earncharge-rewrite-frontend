@@ -35,16 +35,14 @@ const Page: React.FC = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <SearchParamsFetcher onParamsFetched={handleParamsFetched} />
-      <div className="flex flex-row justify-center items-start w-full">
-        <div>
+      <div className="max-w-[450px] m-auto mt-10 mb-10">
+      <div className="flex flex-wrap gap-10 w-full">
+        <div className="flex-[2]">
           {amount && providerId && (
             <PaymentsIndex amount={amount} provider={providerId} />
           )}
         </div>
-        <div>
-          <p>Amount: {amount}</p>
-          <p>Provider ID: {providerId}</p>
-        </div>
+      </div>
       </div>
     </Suspense>
   );
