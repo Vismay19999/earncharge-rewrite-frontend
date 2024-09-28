@@ -2,7 +2,7 @@
 const nextConfig = {
     images : {
         domains : [
-            "cdn.mroa.in",
+            "cdn.mroa.in", "fcpress.freecharge.in"
         ]
     }
 };

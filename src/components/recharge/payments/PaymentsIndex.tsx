@@ -15,13 +15,16 @@ const PaymentsIndex = ({
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [vpa, setVpa] = useState<string>("");
   const accessToken = getAccessToken();
-  const [isPaymentInitiated, setIsPaymentInitiated] = useState(false); // State to track if payment is initiated
+  const [isPaymentInitiated, setIsPaymentInitiated] = useState(false);
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
+
   const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    setPhoneNumber(""); // Reset input fields when switching tabs
-    setVpa("");
-    setIsPaymentInitiated(false); // Reset payment initiated state
+    if (!isPaymentInitiated) {
+      setActiveTab(tab);
+      setPhoneNumber(""); 
+      setVpa(""); 
+      setHtmlContent(null);
+    }
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,21 +64,16 @@ const PaymentsIndex = ({
 
       if (response.status === 200) {
         if (activeTab === "payu") {
-          // For PayU, show payment form
           setHtmlContent(response.data);
         } else if (activeTab === "lightspeedpay") {
-          // For Lightspeed, redirect to payment link
           const paymentLink = response.data.paymentLink;
-          window.location.href = paymentLink; // Redirect user to payment link
+          window.location.href = paymentLink;
         }
         setIsPaymentInitiated(true);
-        setIsPaymentInitiated(true);
       } else {
-        console.error("Payment error:", response.data);
         toast.error("Payment failed. Please try again.");
       }
     } catch (error: any) {
-      console.error("Request error:", error);
       toast.error(
         error.response?.data?.message ||
           "An error occurred during the payment process."
@@ -84,83 +82,91 @@ const PaymentsIndex = ({
   };
 
   return (
-    <div className="p-4">
+    <>s
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <ToastContainer />
-      {/* Tabs for PayU and LightspeedPay */}
-      <div className="flex space-x-4 border-b mb-4">
-        <button
-          className={`p-2 ${
-            activeTab === "payu" ? "border-b-2 border-blue-500" : ""
-          }`}
-          onClick={() => handleTabChange("payu")}
-        >
-          PayU
-        </button>
-        <button
-          className={`p-2 ${
-            activeTab === "lightspeedpay" ? "border-b-2 border-blue-500" : ""
-          }`}
-          onClick={() => handleTabChange("lightspeedpay")}
-        >
-          LightspeedPay
-        </button>
-      </div>
-
-      {/* Input fields for the selected tab */}
-      <div className="mt-4">
-        <div className="mb-4">
-          <label className="block mb-2 text-gray-700">Phone Number:</label>
-          <input
-            type="text"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            placeholder="Enter Phone Number"
-            className="block w-full p-2 border border-gray-300 rounded"
-            maxLength={10}
-            pattern="[0-9]*"
-          />
-          {phoneNumber.length > 0 && phoneNumber.length < 10 && (
-            <p className="text-red-500 text-sm">
-              Phone number must be 10 digits.
-            </p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label className="block mb-2 text-gray-700">
-            VPA (Virtual Payment Address):
-          </label>
-          <input
-            type="text"
-            value={vpa}
-            onChange={handleVpaChange}
-            placeholder="Enter VPA"
-            className="block w-full p-2 border border-gray-300 rounded"
-            maxLength={22}
-          />
-          {vpa.length > 0 && vpa.length < 22 && (
-            <p className="text-gray-500 text-sm">
-              Max length for VPA is 22 characters.
-            </p>
-          )}
-        </div>
-
-        {!isPaymentInitiated && (
+      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
+        {/* Tabs for PayU and LightspeedPay */}
+        <div className="flex space-x-4 border-b mb-4">
           <button
-            onClick={initiatePayment}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className={`flex-1 py-2 text-lg font-semibold transition duration-200 ${
+              activeTab === "payu" 
+                ? "border-b-2 border-blue-500 text-blue-500"
+                : "text-gray-600 hover:text-blue-500"
+            }`}
+            onClick={() => handleTabChange("payu")}
+            disabled={isPaymentInitiated}
           >
-            Pay Now
+            PayU
           </button>
-        )}
+          <button
+            className={`flex-1 py-2 text-lg font-semibold transition duration-200 ${
+              activeTab === "lightspeedpay" 
+                ? "border-b-2 border-blue-500 text-blue-500"
+                : "text-gray-600 hover:text-blue-500"
+            }`}
+            onClick={() => handleTabChange("lightspeedpay")}
+            disabled={isPaymentInitiated}
+          >
+            LightspeedPay
+          </button>
+        </div>
 
-        {htmlContent && (
-          <>
-            <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-          </>
-        )}
+        {/* Input fields for the selected tab */}
+        <div className="mt-4">
+          <div className="mb-4">
+            <label className="block mb-2 text-gray-700">Phone Number:</label>
+            <input
+              type="text"
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+              placeholder="Enter Phone Number"
+              className="block w-full p-2 border border-gray-300 rounded"
+              maxLength={10}
+              pattern="[0-9]*"
+            />
+            {phoneNumber.length > 0 && phoneNumber.length < 10 && (
+              <p className="text-red-500 text-sm">
+                Phone number must be 10 digits.
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block mb-2 text-gray-700">
+              VPA (Virtual Payment Address):
+            </label>
+            <input
+              type="text"
+              value={vpa}
+              onChange={handleVpaChange}
+              placeholder="Enter VPA"
+              className="block w-full p-2 border border-gray-300 rounded"
+              maxLength={22}
+            />
+            {vpa.length > 0 && vpa.length < 22 && (
+              <p className="text-gray-500 text-sm">
+                Max length for VPA is 22 characters.
+              </p>
+            )}
+          </div>
+
+          {!isPaymentInitiated && (
+            <button
+              onClick={initiatePayment}
+              className="bg-blue-500 text-white px-4 py-2 rounded transition duration-200 hover:bg-blue-600"
+            >
+              Pay Now
+            </button>
+          )}
+
+          {htmlContent && (
+            <div className="mt-4" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+          )}
+        </div>
       </div>
     </div>
+    </>
   );
 };
 
