@@ -4,12 +4,14 @@ interface FormData {
   name: string;
   email: string;
   message: string;
+  subject: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
   message?: string;
+  subject?: string;
 }
 
 const ContactForm: React.FC = () => {
@@ -17,6 +19,7 @@ const ContactForm: React.FC = () => {
     name: '',
     email: '',
     message: '',
+    subject: '',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -38,6 +41,13 @@ const ContactForm: React.FC = () => {
       newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
+    }
+
+    // Subject validation (minimum length of 3)
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    } else if (formData.subject.length < 3) {
+      newErrors.subject = "Subject must be at least 3 characters";
     }
 
     // Message validation (minimum length of 10)
@@ -74,7 +84,7 @@ const ContactForm: React.FC = () => {
             name: formData.name,
             email: formData.email,
             message: formData.message,
-            subject: 'Contact Form Submission', // You can modify this or add a new subject input if needed
+            subject: formData.subject,
           }),
         });
 
@@ -84,6 +94,7 @@ const ContactForm: React.FC = () => {
             name: '',
             email: '',
             message: '',
+            subject: '',
           });
           setIsSubmitted(true);
           setErrors({});
@@ -129,6 +140,18 @@ const ContactForm: React.FC = () => {
             className={`border ${errors.email ? 'border-red-500' : 'border-[#eee]'} rounded px-4 py-2 w-full focus:outline-none focus:border-[#eee]`}
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+        </div>
+        <div className="mb-4">
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            placeholder="Subject of Your Query"
+            value={formData.subject}
+            onChange={handleInputChange}
+            className={`border ${errors.subject ? 'border-red-500' : 'border-[#eee]'} rounded px-4 py-2 w-full focus:outline-none focus:border-[#eee]`}
+          />
+          {errors.subject && <p className="text-red-500 text-sm">{errors.subject}</p>}
         </div>
         <div className="mb-4">
           <textarea
