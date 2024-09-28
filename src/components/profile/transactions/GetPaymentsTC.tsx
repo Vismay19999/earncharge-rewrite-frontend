@@ -4,12 +4,14 @@ import { getAccessToken } from "@/utils/auth";
 import Image from "next/image";
 import EmptyWallet from "@/../../public/wallet-empty.png";
 import { FaWallet } from "react-icons/fa6";
+
 interface PaymentHistory {
   id: string;
   amount: number;
   status: boolean;
+  description: string;
+  txnID: string;
   userDataId: string;
-  walletType: string;
 }
 
 const GetPaymentsTC = () => {
@@ -35,7 +37,7 @@ const GetPaymentsTC = () => {
           }
         );
 
-        setPaymentHistory(response.data.data);
+        setPaymentHistory(response.data.transactions);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -71,7 +73,7 @@ const GetPaymentsTC = () => {
               {paymentHistory.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex flex-wrap flex-row gap-2 items-center justify-between"
+                  className="flex flex-wrap flex-row gap-2 items-center justify-between p-3 border-b"
                 >
                   <div className="flex p-2">
                     <div className="bg-gray-100 p-2 rounded-full">
@@ -83,24 +85,18 @@ const GetPaymentsTC = () => {
                       ₹{transaction.amount}
                     </p>{" "}
                     <span className="text-xs text-gray-600">
-                      {transaction.walletType}
+                      {transaction.description}
                     </span>
                   </div>
                   <div className="flex p-2">
                     {transaction.status ? (
-                      <>
-                        <p className="text-xs font-semibold text-green-700 py-1 px-2 border-green-200 border-[1px] bg-green-100 rounded-sm">
-                          Completed
-                        </p>
-                      </>
+                      <p className="text-xs font-semibold text-green-700 py-1 px-2 border-green-200 border-[1px] bg-green-100 rounded-sm">
+                        Completed
+                      </p>
                     ) : (
-                      <>
-                        <>
-                          <p className="text-xs font-semibold text-red-700 py-1 px-2 border-red-200 border-[1px] bg-red-100 rounded-sm">
-                            Pending
-                          </p>
-                        </>
-                      </>
+                      <p className="text-xs font-semibold text-red-700 py-1 px-2 border-red-200 border-[1px] bg-red-100 rounded-sm">
+                        Pending
+                      </p>
                     )}
                   </div>
                 </div>
