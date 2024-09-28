@@ -2,25 +2,31 @@ import React, { useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import { FaArrowRightLong } from "react-icons/fa6";
+import Link from "next/link";
 
 interface PaymentRechargeProps {
   planPrice: number;
   providerId: string;
 }
 
-const PaymentRecharge: React.FC<PaymentRechargeProps> = ({ planPrice, providerId }) => {
+const PaymentRecharge: React.FC<PaymentRechargeProps> = ({
+  planPrice,
+  providerId
+}) => {
   const [rechargeLoading, setRechargeLoading] = useState(false);
   const [paymentHtml, setPaymentHtml] = useState<string | null>(null);
   const [vpa, setVpa] = useState<string>(""); // UPI ID
   const [phoneNumber, setPhoneNumber] = useState<string>(""); // Phone Number
-  const [errors, setErrors] = useState<{ vpa?: string; phoneNumber?: string }>({}); // Error messages
+  const [errors, setErrors] = useState<{ vpa?: string; phoneNumber?: string }>(
+    {}
+  ); // Error messages
   const [showPopup, setShowPopup] = useState(false); // Control modal visibility
   const accessToken = getAccessToken();
 
   // Validate UPI ID and Phone Number
   const validateInputs = () => {
     const newErrors: { vpa?: string; phoneNumber?: string } = {};
-    
+
     // VPA validation: Check if it's not empty
     if (!vpa.trim()) {
       newErrors.vpa = "UPI ID is required";
@@ -47,7 +53,7 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({ planPrice, providerId
         amount: planPrice.toFixed(2),
         vpa,
         phoneNumber,
-        providerID: providerId,
+        providerID: providerId
       };
 
       const response = await axios.post(
@@ -56,8 +62,8 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({ planPrice, providerId
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
@@ -79,12 +85,12 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({ planPrice, providerId
       {/* Button to show popup modal */}
       {!paymentHtml && (
         <>
-          <button
-            onClick={() => setShowPopup(true)}
+          <Link
+            href={`payment?amount=${planPrice}&providerId=${providerId}`}
             className={`w-full bg-gradient-to-r from-green-400 to-emerald-500 p-2 rounded-xl mt-4 text-white text-sm flex items-center justify-center gap-2`}
           >
             Recharge Now <FaArrowRightLong />
-          </button>
+          </Link>
         </>
       )}
 
@@ -105,7 +111,9 @@ const PaymentRecharge: React.FC<PaymentRechargeProps> = ({ planPrice, providerId
                 } rounded-md`}
                 placeholder="Enter your UPI ID"
               />
-              {errors.vpa && <p className="text-red-500 text-sm">{errors.vpa}</p>}
+              {errors.vpa && (
+                <p className="text-red-500 text-sm">{errors.vpa}</p>
+              )}
             </div>
 
             <div className="mt-4">
