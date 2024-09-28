@@ -1,5 +1,5 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,15 +52,13 @@ const OtpHandlerEmail: React.FC<OtpHandlerEmailProps> = ({ email, onSuccess, onF
         }
     };
 
+    // Use useEffect to send OTP when the component mounts
+    useEffect(() => {
+        sendOtp();
+    }, []); // Empty dependency array ensures this runs only once when the component mounts
+
     return (
         <div className="flex flex-col items-center justify-center">
-            <button
-                className="px-4 py-2 mb-4 text-white bg-blue-500 rounded hover:bg-blue-600"
-                onClick={sendOtp}
-                disabled={otpSent}
-            >
-                {otpSent ? 'OTP Sent' : 'Send OTP'}
-            </button>
             {otpSent && (
                 <div className="w-64">
                     <input
@@ -84,3 +82,4 @@ const OtpHandlerEmail: React.FC<OtpHandlerEmailProps> = ({ email, onSuccess, onF
 };
 
 export default OtpHandlerEmail;
+    

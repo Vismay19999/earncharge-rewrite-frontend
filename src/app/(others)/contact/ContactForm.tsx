@@ -58,21 +58,41 @@ const ContactForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      console.log(formData);
+      try {
+        // Make the API call to submit the contact form data
+        const response = await fetch('https://api.earncharge.in/v1/contact/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: 'Contact Form Submission', // You can modify this or add a new subject input if needed
+          }),
+        });
 
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
-      });
-      setIsSubmitted(true);
-      setErrors({});
+        if (response.ok) {
+          // Reset form after successful submission
+          setFormData({
+            name: '',
+            email: '',
+            message: '',
+          });
+          setIsSubmitted(true);
+          setErrors({});
+        } else {
+          console.error('Failed to submit the form');
+        }
+      } catch (error) {
+        console.error('Error submitting the form', error);
+      }
     } else {
       setErrors(validationErrors);
       setIsSubmitted(false);
@@ -124,8 +144,7 @@ const ContactForm: React.FC = () => {
         <button
           type="submit"
           className="transition bg-[#28d066] text-block rounded-full border-black w-full border-[1px] font-semibold px-6 py-4 hover:text-white hover:bg-[#131c23] 
-          focus:outline-none focus:bg-[#131c23]"
-        >
+          focus:outline-none focus:bg-[#131c23]">
           Send
         </button>
       </form>
