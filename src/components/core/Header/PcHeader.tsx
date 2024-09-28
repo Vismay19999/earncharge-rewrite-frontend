@@ -72,7 +72,7 @@ const PcHeader = () => {
                 href={"/profile"}
                 className="px-4 py-2 font-semibold bg-[#0AA87E] text-white border-dashed border-[1px] border-black flex flex-wrap gap-2 items-center rounded-md hover:bg-[ #0a0f13]"
               >
-                <FaUser /> User Name
+                <FaUser /> {user.firstName}
               </Link>
               <div
                 onClick={logoutHandler}

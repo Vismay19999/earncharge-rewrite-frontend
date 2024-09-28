@@ -5,19 +5,22 @@ import { getAccessToken } from "@/utils/auth";
 import Modal from "../Modal";
 import { FaWallet } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
+import Link from "next/link";
+import IMPSPage from "../../IMPSMODAL";
 
 interface Wallets {
   referralWallet: { amount: number };
   cashbackWallet: { amount: number };
+  paymentWallet: { amount: number };
 }
 
 const GetWallets: React.FC = () => {
   const [wallets, setWallets] = useState<Wallets | null>(null);
   const [error, setError] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<"cashback" | "referral">(
-    "cashback"
-  );
+  const [modalType, setModalType] = useState<
+    "cashback" | "referral" | "payment"
+  >("cashback");
 
   useEffect(() => {
     const fetchWallets = async () => {
@@ -46,7 +49,9 @@ const GetWallets: React.FC = () => {
       const url =
         modalType === "cashback"
           ? "https://api.earncharge.in/v1/user/wallet/withdraw/cashback"
-          : "https://api.earncharge.in/v1/user/wallet/withdraw/referral";
+          : modalType === "referral"
+          ? "https://api.earncharge.in/v1/user/wallet/withdraw/referral"
+          : "https://api.earncharge.in/v1/user/wallet/withdraw/payment";
       await axios.post(
         url,
         { amount },
@@ -83,6 +88,8 @@ const GetWallets: React.FC = () => {
   return (
     <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
       <h2 className="text-lg font-bold mb-4">Wallets</h2>
+
+      {/* Referral Wallet */}
       <div className="flex flex-row justify-between py-2">
         <div className="flex-[1]">
           <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
@@ -112,6 +119,7 @@ const GetWallets: React.FC = () => {
         </div>
       </div>
 
+      {/* Cashback Wallet */}
       <div className="flex flex-row justify-between py-2">
         <div className="flex-[1]">
           <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
@@ -140,6 +148,29 @@ const GetWallets: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Wallet */}
+      <div className="flex flex-row justify-between py-2">
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
+            <div className="flex">
+              <div className="bg-gray-100 p-2 rounded-full">
+                <FaWallet />
+              </div>
+            </div>
+            <div className="flex-[1] font-semibold text-sm">Payment</div>
+          </div>
+        </div>
+        <div className="flex-[1]">
+          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
+            <div className="flex">₹ {wallets.paymentWallet.amount}</div>
+            <div className="flex">
+                <IMPSPage />
+            </div>  
+          </div>
+        </div>
+      </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
