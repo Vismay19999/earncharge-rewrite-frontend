@@ -1,39 +1,52 @@
 "use client";
 import PaymentsIndex from "@/components/recharge/payments/PaymentsIndex";
 import { usePathname, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
-const Page = () => {
+// Define the type for the fetched parameters
+type SearchParamsFetcherProps = {
+  onParamsFetched: (amount: string | null, providerId: string | null) => void;
+};
+
+// Create a separate component for fetching search params
+const SearchParamsFetcher: React.FC<SearchParamsFetcherProps> = ({ onParamsFetched }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [amount, setAmount] = useState<string | null>(null);
-  const [providerId, setProviderId] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchedAmount = searchParams.get("amount");
     const fetchedProviderId = searchParams.get("providerId");
 
-    if (fetchedAmount) {
-      setAmount(fetchedAmount);
-    }
-    if (fetchedProviderId) {
-      setProviderId(fetchedProviderId);
-    }
-  }, [pathname, searchParams]);
+    onParamsFetched(fetchedAmount, fetchedProviderId);
+  }, [pathname, searchParams, onParamsFetched]);
+
+  return null; // This component doesn't render anything
+};
+
+const Page: React.FC = () => {
+  const [amount, setAmount] = useState<string | null>(null);
+  const [providerId, setProviderId] = useState<string | null>(null);
+
+  const handleParamsFetched = (fetchedAmount: string | null, fetchedProviderId: string | null) => {
+    setAmount(fetchedAmount);
+    setProviderId(fetchedProviderId);
+  };
 
   return (
-    <div className="flex flex-row justify-center items-start w-full">
-      <div>
-        {amount && providerId && (
-          <PaymentsIndex amount={amount} provider={providerId} />
-        )}
-        {/* <PaymentsIndex amount={amount} provider={providerId} />  */}
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchParamsFetcher onParamsFetched={handleParamsFetched} />
+      <div className="flex flex-row justify-center items-start w-full">
+        <div>
+          {amount && providerId && (
+            <PaymentsIndex amount={amount} provider={providerId} />
+          )}
+        </div>
+        <div>
+          <p>Amount: {amount}</p>
+          <p>Provider ID: {providerId}</p>
+        </div>
       </div>
-      <div>
-        <p>Amount: {amount}</p>
-        <p>Provider ID: {providerId}</p>
-      </div>
-    </div>
+    </Suspense>
   );
 };
 
