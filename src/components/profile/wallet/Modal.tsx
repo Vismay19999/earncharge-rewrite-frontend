@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     isOpen && (
-      <div className="modal">
+      <div className="modal z-[5]">
         <div className="p-6 w-[400px] bg-white shadow-xl rounded-lg">
           <div className="flex flex-wrap justify-between">
             <div className="flex-[1]">

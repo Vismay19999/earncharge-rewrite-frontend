@@ -26,12 +26,6 @@ const Footer = () => {
               >
                 Blog
               </Link>
-              <Link
-                href="/"
-                className="cursor-pointer block text-white mt-4 text-lg"
-              >
-                Help
-              </Link>
             </div>
             <div className="flex-[1]">
               <span className="text-xs font-bold text-white">Legal</span>

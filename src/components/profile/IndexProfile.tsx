@@ -2,18 +2,19 @@ import { useUser } from "@/actions/UserContext/UserContext";
 import React from "react";
 import ProfileInfo from "./ProfileInfo";
 import VerifyKyc from "./profileUtils/VerfiyKyc";
-
+import loading from "@/../../public/loading.gif";
 import KycBase from "./profileTabs/KycBase";
 import GetWallets from "./wallet/getWallets/GetWallets";
 import IndexTransactions from "./transactions/IndexTransactions";
+import Image from "next/image";
 
 const IndexProfile = () => {
   const { user } = useUser();
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <h1 className="text-xl font-semibold text-gray-700">Loading...</h1>
+      <div className="flex justify-center items-center min-h-screen bg-transparent">
+        <Image src={loading} alt="Width" width={60} height={60}  />
       </div>
     );
   }
