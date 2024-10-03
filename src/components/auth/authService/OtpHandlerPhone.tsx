@@ -14,7 +14,7 @@ interface OtpHandlerPhoneProps {
 const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSuccess, onFailure }) => {
     const [otp, setOtp] = useState<string>('');
     const [otpSent, setOtpSent] = useState<boolean>(false);
-    const [timer, setTimer] = useState<number>(30);  // Timer set to 30 seconds
+    const [timer, setTimer] = useState<number>(30); // Timer set to 30 seconds
     const { setUser } = useUser();
 
     const sendOtp = async () => {
@@ -28,6 +28,7 @@ const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSucces
             });
             setOtpSent(true);
             setTimer(30); // Reset the timer on OTP send
+            toast.success('OTP sent successfully!');
         } catch (error) {
             console.error(error);
             toast.error('Failed to send OTP. Please try again.');
@@ -61,7 +62,7 @@ const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSucces
     // Send OTP when the component mounts
     useEffect(() => {
         sendOtp();
-    }, []);  // Empty dependency array ensures this runs only once when the component mounts
+    }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     // Timer countdown effect
     useEffect(() => {
@@ -100,7 +101,7 @@ const OtpHandlerPhone: React.FC<OtpHandlerPhoneProps> = ({ phoneNumber, onSucces
                     <button
                         className={`mt-2 px-4 py-2 text-white bg-blue-500 rounded ${timer > 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
                         onClick={sendOtp}
-                        disabled={timer > 0}  // Disable resend button until timer runs out
+                        disabled={timer > 0} // Disable resend button until timer runs out
                     >
                         Resend OTP
                     </button>
