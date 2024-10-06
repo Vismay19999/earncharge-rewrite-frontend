@@ -72,7 +72,6 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
 
   return (
     <div className="mt-4">
-      <ToastContainer />
       <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E]">
         <h2 className="text-lg font-bold mb-4">Verify KYC</h2>
         <div className="mb-4">
