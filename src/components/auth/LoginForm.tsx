@@ -12,7 +12,7 @@ import { useUser } from "@/actions/UserContext/UserContext";
 import login from "@/../public/log.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
-
+import IND from "@/../../public/IND.webp";
 const LoginForm: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<
     "phoneNumber" | "email" | null
@@ -189,15 +189,19 @@ const LoginForm: React.FC = () => {
                       <Label htmlFor="mobile" className="font-semibold">
                         Mobile
                       </Label>
+                      <div className="relative">
+                      <Image src={IND} alt="Flag" className="absolute top-3.5 left-3" width={20} height={100} />
                       <Input
                         type="text"
                         id="phoneNumber"
+                        className="pl-10"
                         name="phoneNumber"
                         placeholder="8888855544"
                         value={formData.phoneNumber}
                         maxLength={10}
                         onChange={handleNumberInputChange}
                       />
+                      </div>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">

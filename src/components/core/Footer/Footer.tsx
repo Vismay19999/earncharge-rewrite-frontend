@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Logo from "@/../public/footer logo.png";
 import Link from "next/link";
+import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
 
 const Footer = () => {
   return (
@@ -9,9 +10,17 @@ const Footer = () => {
       <div className="w-full py-12 p-6 bg-[#131c23]">
         <div className="max-w-[1000px] m-auto">
           <div className="flex flex-col lg:flex-row gap-10">
-            <Link href="/" className="flex-[1]">
+            <div className="flex-[1]">
+            <Link href="/">
               <Image src={Logo} alt="Logo" width={200} height={200} />
             </Link>
+            <div className="flex justify-start gap-4 p-5 text-white">
+              <Facebook />
+              <Instagram />
+              <YouTube />
+              <LinkedIn />
+            </div>
+            </div>
             <div className="flex-[1]">
               <span className="text-xs font-bold text-white">Our Company</span>
               <Link
@@ -70,7 +79,8 @@ const Footer = () => {
             <div className="flex-[1]">
               <p className="text-xs leading-1 text-white">
                 Earncharge is a fully owned subsidary of Arahant Economy
-                Services Private Limited. It is a digital platform providing recharge and BBPS services.
+                Services Private Limited. It is a digital platform providing
+                recharge and BBPS services.
               </p>
             </div>
           </div>

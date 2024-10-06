@@ -10,6 +10,7 @@ import iconLogo from "@/../../public/icon.png";
 import Social from "@/../../public/Social.png";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import IND from "@/../../public/IND.webp";
 const Page = () => {
   const { user } = useUser();
   const router = useRouter();
@@ -64,7 +65,8 @@ const Page = () => {
               <h1 className="text-3xl xl:text-3xl font-extrabold">
                 Lets Sign In...
               </h1>
-
+              <div className="relative">
+              <Image src={IND} alt="Flag" className="absolute top-7 left-3" width={20} height={100} />
               <Input
                 type="text"
                 maxLength={10}
@@ -74,9 +76,9 @@ const Page = () => {
                   setPhoneNumber(numericValue);
                 }}
                 placeholder="Enter your phone number"
-                className="border p-2 rounded mt-4 w-full"
+                className="border p-2 pl-10 rounded mt-4 w-full"
               />
-
+              </div>
               <button
                 onClick={handleSendLink}
                 className="mt-4 bg-black p-2 border-[1px] rounded-xl w-full text-white"
@@ -84,7 +86,6 @@ const Page = () => {
                 Continue
               </button>
               <ToastContainer />
-
               <div className="flex flex-col items-center">
                 <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                   <p className="text-sm text-center">

@@ -55,7 +55,7 @@ const PcHeader = () => {
             <h1 className="hover:underline">About Us</h1>
           </Link>
           <span className="text-sm">•</span>
-          <Link href="/aboutus">
+          <Link href="/offers">
             <h1 className="hover:underline">Offers</h1>
           </Link>
           <span className="text-sm">•</span>

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import IND from "@/../../public/IND.webp";
 
 interface RegisterFormProps {
   onSubmit: (
@@ -286,10 +287,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             }
                           }}
                           render={({ field }) => (
+                            <>
+                            <div className="relative">
+                            <Image src={IND} alt="Flag" className="absolute top-3.5 left-3" width={20} height={100} />
                             <Input
                               type="text"
                               id="phoneNumber"
                               placeholder="8888866666"
+                              className="pl-10"
                               maxLength={10}
                               {...field}
                               onInput={(e: any) => {
@@ -299,6 +304,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                                 ); // Allows only numbers
                               }}
                             />
+                            </div>
+                            </>
                           )}
                         />
                         {errors.phoneNumber && (
