@@ -71,7 +71,7 @@ const IMPSPage = () => {
       formData.append("image", image);
 
       await axios.post(
-        "https://api.earncharge.in/v1/payment/imps/initiate",
+        "https://api.earncharge.in/v1/imps/initiate",
         formData,
         {
           headers: {
