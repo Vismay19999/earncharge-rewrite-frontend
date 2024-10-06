@@ -79,7 +79,7 @@ const ContactForm: React.FC = () => {
       try {
         // Make the API call to submit the contact form data using axios
         const response = await axios.post(
-          "https://api.earncharge.in/v1/contact/send",
+          "https://api.earncharge.in/v1/contact/contact/send",
           {
             name: formData.name,
             email: formData.email,
