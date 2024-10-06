@@ -4,6 +4,7 @@ import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import { FaWallet } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
+import Modal from "../Modal";
 import IMPSPage from "../../IMPSMODAL";
 
 interface Wallets {
@@ -198,6 +199,17 @@ const GetWallets: React.FC = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleWithdraw}
+        balance={
+          modalType === "cashback"
+            ? wallets.cashbackWallet.amount
+            : wallets.referralWallet.amount
+        }
+        walletType={modalType === "cashback" ? "Cashback" : "Referral"}
+      />
     </div>
   );
 };
