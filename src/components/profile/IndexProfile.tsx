@@ -1,3 +1,4 @@
+"use client";
 import { useUser } from "@/actions/UserContext/UserContext";
 import React from "react";
 import ProfileInfo from "./ProfileInfo";
@@ -14,7 +15,7 @@ const IndexProfile = () => {
   if (!user) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-transparent">
-        <Image src={loading} alt="Width" width={60} height={60}  />
+        <Image src={loading} alt="Width" width={60} height={60} />
       </div>
     );
   }

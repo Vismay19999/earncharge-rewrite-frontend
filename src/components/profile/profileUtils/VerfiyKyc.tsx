@@ -67,6 +67,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
       toast.error("Failed to verify OTP. Please try again.");
     } finally {
       setLoading(false);
+      window.location.reload();
     }
   };
 
