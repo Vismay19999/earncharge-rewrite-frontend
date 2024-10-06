@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
-import Modal from "../Modal";
 import { FaWallet } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
-import Link from "next/link";
+import Modal from "../Modal";
 import IMPSPage from "../../IMPSMODAL";
 
 interface Wallets {
@@ -21,6 +20,7 @@ const GetWallets: React.FC = () => {
   const [modalType, setModalType] = useState<
     "cashback" | "referral" | "payment"
   >("cashback");
+  const [isHelpPopupOpen, setIsHelpPopupOpen] = useState<boolean>(false); // Help popup state
 
   useEffect(() => {
     const fetchWallets = async () => {
@@ -30,8 +30,8 @@ const GetWallets: React.FC = () => {
           "https://api.earncharge.in/v1/user/wallets",
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
         );
         setWallets(response.data);
@@ -58,8 +58,8 @@ const GetWallets: React.FC = () => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
       // Refresh wallets after withdrawal
@@ -67,8 +67,8 @@ const GetWallets: React.FC = () => {
         "https://api.earncharge.in/v1/user/wallets",
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
       setWallets(response.data);
@@ -87,7 +87,35 @@ const GetWallets: React.FC = () => {
 
   return (
     <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
-      <h2 className="text-lg font-bold mb-4">Wallets</h2>
+      <div className="flex flex-wrap justify-between items-center">
+        <h2 className="text-lg font-bold mb-4 flex-[1]">Wallets</h2>
+        <button
+          className="text-sm font-regular mb-4 flex-[1] text-right"
+          onClick={() => setIsHelpPopupOpen(true)} // Open help popup
+        >
+          Help?
+        </button>
+      </div>
+
+      {/* Help Popup */}
+      {isHelpPopupOpen && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[480px] relative">
+            <h3 className="font-semibold mb-2">How to Use Your Wallets</h3>
+            <p className="text-sm">
+              You can manage your Referral, Cashback, and Payment wallets here. To
+              withdraw funds, click the button next to each wallet. For any further
+              assistance, contact our support.
+            </p>
+            <button
+              className="text-blue-500 underline mt-4"
+              onClick={() => setIsHelpPopupOpen(false)} // Close the help popup
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Referral Wallet */}
       <div className="flex flex-row justify-between py-2">
@@ -165,13 +193,12 @@ const GetWallets: React.FC = () => {
           <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
             <div className="flex">
               <div className="flex items-center gap-5">
-              ₹ {wallets.paymentWallet.amount} <IMPSPage />
+                ₹ {wallets.paymentWallet.amount} <IMPSPage />
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
