@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAccessToken } from "@/utils/auth";
 
 interface VerifyKycProps {}
 
@@ -12,7 +13,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const token = "YOUR_ACCESS_TOKEN"; // Replace with actual token fetching logic
+  const token = getAccessToken();
 
   const handleSendOtp = async () => {
     if (!aadhaarNumber.match(/^\d{12}$/)) {
