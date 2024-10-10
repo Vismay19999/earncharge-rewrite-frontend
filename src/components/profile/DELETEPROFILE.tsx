@@ -36,6 +36,10 @@ const DELETEPROFILE: React.FC = () => {
       toast.success("Profile deleted successfully");
       logout();
       setIsOpen(false);
+
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
     } catch (error) {
       toast.error("Error deleting profile");
     } finally {
