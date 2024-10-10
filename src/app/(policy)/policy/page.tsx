@@ -1,6 +1,10 @@
+import DELETEPROFILE from "@/components/profile/DELETEPROFILE";
+import { getAccessToken } from "@/utils/auth";
 import React from "react";
 
 const page = () => {
+  const token = getAccessToken();
+
   return (
     <div id="overflow" className="container mx-auto p-4">
       <div className="max-w-[1200px] mx-auto mt-8">
@@ -65,6 +69,9 @@ const page = () => {
           2.4 To comply with legal and regulatory requirements, including
           fulfilling our obligations under applicable laws and regulations.
         </p>
+        <div className="mt-4 mb-4">
+          <DELETEPROFILE />
+        </div>
         <h1 className="text-2xl font-bold mt-5 mb-4">Your Choices</h1>
         <p>
           You may choose not to provide certain information to us, but this may

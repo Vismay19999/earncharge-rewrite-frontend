@@ -75,7 +75,7 @@ const LoginForm: React.FC = () => {
       router.push("/profile");
     } catch (error: any) {
       toast.error(
-        `Login failed. ${error.response?.data?.message || error.message}`
+        `Login failed. ${error.response?.data?.error || error.message}`
       );
     }
   };
