@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
@@ -20,28 +20,29 @@ const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     phoneNumber: "",
     email: "",
-    password: "",
+    password: ""
   });
 
-  const router = useRouter()
+  const router = useRouter();
   const { setUser } = useUser();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
   };
 
   const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-  
+
     // Validate if the input value is a number (can also allow empty string)
-    if (/^\d*$/.test(value)) { // This regex checks for digits only
+    if (/^\d*$/.test(value)) {
+      // This regex checks for digits only
       setFormData((prevData) => ({
         ...prevData,
-        [name]: value ? String(value) : '', // Convert to number or keep as empty string
+        [name]: value ? String(value) : "" // Convert to number or keep as empty string
       }));
     }
   };
@@ -57,12 +58,12 @@ const LoginForm: React.FC = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login`,
         {
           [loginMethod]: formData[loginMethod],
-          password: formData.password,
+          password: formData.password
         },
         {
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
@@ -70,9 +71,9 @@ const LoginForm: React.FC = () => {
       setTokens(accessToken, refreshToken);
       setUser(user);
       toast.success("Login successful!");
-      router.push("/profile")
-    } catch (error) {
-      toast.error("Login failed. Please try again.");
+      router.push("/profile");
+    } catch (error: any) {
+      toast.error(`Login failed.  ${error.response.data.message}`);
     }
   };
 
@@ -190,17 +191,23 @@ const LoginForm: React.FC = () => {
                         Mobile
                       </Label>
                       <div className="relative">
-                      <Image src={IND} alt="Flag" className="absolute top-3.5 left-3" width={20} height={100} />
-                      <Input
-                        type="text"
-                        id="phoneNumber"
-                        className="pl-10"
-                        name="phoneNumber"
-                        placeholder="8888855544"
-                        value={formData.phoneNumber}
-                        maxLength={10}
-                        onChange={handleNumberInputChange}
-                      />
+                        <Image
+                          src={IND}
+                          alt="Flag"
+                          className="absolute top-3.5 left-3"
+                          width={20}
+                          height={100}
+                        />
+                        <Input
+                          type="text"
+                          id="phoneNumber"
+                          className="pl-10"
+                          name="phoneNumber"
+                          placeholder="8888855544"
+                          value={formData.phoneNumber}
+                          maxLength={10}
+                          onChange={handleNumberInputChange}
+                        />
                       </div>
                     </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">

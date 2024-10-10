@@ -3,6 +3,7 @@ import { useUser } from "@/actions/UserContext/UserContext";
 import LoginForm from "@/components/auth/LoginForm";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 
 const Page = () => {
   const { user } = useUser();
@@ -16,6 +17,7 @@ const Page = () => {
 
   return (
     <div>
+      <ToastContainer />
       <LoginForm />
     </div>
   );
