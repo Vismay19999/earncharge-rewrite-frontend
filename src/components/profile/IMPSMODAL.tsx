@@ -156,13 +156,13 @@ const IMPSPage = () => {
                 {/* File input for Image */}
                 <div className="flex flex-wrap gap-2 flex-col text-sm">
                   <label className="text-xs">
-                    Transaction{" "}
-                    <span className="font-semibold">Screenshot</span>
+                  Transaction <span className="font-semibold">Screenshot</span>
                   </label>
                   <input
-                    type="file"
-                    className="text-sm"
-                    onChange={handleFileChange}
+                  type="file"
+                  accept="image/jpeg, image/jpg, image/png"
+                  className="text-sm"
+                  onChange={handleFileChange}
                   />
                 </div>
 
