@@ -84,7 +84,7 @@ const IMPSPage = () => {
       setIsModalOpen(false); // Close modal on success
     } catch (err: any) {
       setError(err.message);
-      toast.error("Failed to send payment request");
+      toast.error(`Failed to send payment request ${err.message}`);
     }
   };
 
