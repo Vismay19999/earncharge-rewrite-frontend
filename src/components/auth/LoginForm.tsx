@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
@@ -13,10 +13,11 @@ import login from "@/../public/log.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import IND from "@/../../public/IND.webp";
+
 const LoginForm: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<
     "phoneNumber" | "email" | null
-  >(null);
+  >("email");
   const [formData, setFormData] = useState({
     phoneNumber: "",
     email: "",
@@ -36,13 +37,11 @@ const LoginForm: React.FC = () => {
 
   const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    // Validate if the input value is a number (can also allow empty string)
+    // Validate number input to ensure only digits are allowed
     if (/^\d*$/.test(value)) {
-      // This regex checks for digits only
       setFormData((prevData) => ({
         ...prevData,
-        [name]: value ? String(value) : "" // Convert to number or keep as empty string
+        [name]: value
       }));
     }
   };
@@ -53,13 +52,15 @@ const LoginForm: React.FC = () => {
       return;
     }
 
+    const payload = {
+      [loginMethod]: formData[loginMethod],
+      password: formData.password
+    };
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login`,
-        {
-          [loginMethod]: formData[loginMethod],
-          password: formData.password
-        },
+        payload,
         {
           headers: {
             "Content-Type": "application/json"
@@ -73,16 +74,24 @@ const LoginForm: React.FC = () => {
       toast.success("Login successful!");
       router.push("/profile");
     } catch (error: any) {
-      toast.error(`Login failed.  ${error.response.data.message}`);
+      toast.error(
+        `Login failed. ${error.response?.data?.message || error.message}`
+      );
     }
   };
 
   const handleMethodSelect = (selectedMethod: "phoneNumber" | "email") => {
     setLoginMethod(selectedMethod);
+    setFormData({
+      phoneNumber: "",
+      email: "",
+      password: ""
+    }); // Reset form data when switching login methods
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="rounded-lg text-gray-900 flex justify-center">
         <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
           <div className="flex-1 text-center hidden lg:flex items-center justify-center">
@@ -113,6 +122,8 @@ const LoginForm: React.FC = () => {
                     Mobile
                   </TabsTrigger>
                 </TabsList>
+
+                {/* Email Login Tab */}
                 <TabsContent value="email">
                   <div className="flex flex-col items-center">
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
@@ -122,94 +133,14 @@ const LoginForm: React.FC = () => {
                       <Input
                         type="email"
                         id="email"
-                        maxLength={30}
                         name="email"
                         placeholder="someone@something.com"
                         value={formData.email}
                         onChange={handleInputChange}
+                        maxLength={60}
                       />
                     </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <Label htmlFor="password" className="font-semibold">
-                        Password
-                      </Label>
-                      <Input
-                        type="password"
-                        id="password"
-                        name="password"
-                        maxLength={30}
-                        placeholder="Your Credentials"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
-                        onClick={handleLogin}
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
-                      >
-                        <Link href="/otpless/sendLink">
-                          Sign In without OTP
-                        </Link>
-                      </button>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
-                      >
-                        <Link href="/register">I want to register?</Link>
-                      </button>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">
-                        I agree to abide by EarnCharge{" "}
-                        <Link href="#" className="font-semibold">
-                          Terms Conditions
-                        </Link>{" "}
-                        &{" "}
-                        <Link href="#" className="font-semibold">
-                          Privacy Policy
-                        </Link>
-                      </p>
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="mobile">
-                  <div className="flex flex-col items-center">
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <Label htmlFor="mobile" className="font-semibold">
-                        Mobile
-                      </Label>
-                      <div className="relative">
-                        <Image
-                          src={IND}
-                          alt="Flag"
-                          className="absolute top-3.5 left-3"
-                          width={20}
-                          height={100}
-                        />
-                        <Input
-                          type="text"
-                          id="phoneNumber"
-                          className="pl-10"
-                          name="phoneNumber"
-                          placeholder="8888855544"
-                          value={formData.phoneNumber}
-                          maxLength={10}
-                          onChange={handleNumberInputChange}
-                        />
-                      </div>
-                    </div>
+
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">
                         Password
@@ -220,16 +151,16 @@ const LoginForm: React.FC = () => {
                         name="password"
                         placeholder="Your Credentials"
                         value={formData.password}
-                        maxLength={30}
                         onChange={handleInputChange}
+                        maxLength={30}
                       />
                     </div>
+
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
                         className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
                         onClick={handleLogin}
-                        disabled={!loginMethod} // Disable button until a method is selected
                       >
                         Sign In
                       </button>
@@ -264,6 +195,89 @@ const LoginForm: React.FC = () => {
                         </Link>
                       </p>
                     </div>
+                  </div>
+                </TabsContent>
+
+                {/* Mobile Login Tab */}
+                <TabsContent value="mobile">
+                  <div className="flex flex-col items-center">
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="phoneNumber" className="font-semibold">
+                        Mobile
+                      </Label>
+                      <div className="relative">
+                        <Image
+                          src={IND}
+                          alt="Flag"
+                          className="absolute top-3.5 left-3"
+                          width={20}
+                          height={100}
+                        />
+                        <Input
+                          type="text"
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          className="pl-10"
+                          placeholder="8888855544"
+                          value={formData.phoneNumber}
+                          onChange={handleNumberInputChange}
+                          maxLength={10}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="password" className="font-semibold">
+                        Password
+                      </Label>
+                      <Input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Your Credentials"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        maxLength={30}
+                      />
+                    </div>
+
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="button"
+                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                        onClick={handleLogin}
+                      >
+                        Sign In
+                      </button>
+                    </div>
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <button
+                      type="button"
+                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                    >
+                      <Link href="/otpless/sendLink">Sign In without OTP</Link>
+                    </button>
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                    <button
+                      type="button"
+                      className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
+                    >
+                      <Link href="/register">I want to register?</Link>
+                    </button>
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <p className="text-sm text-center">
+                      I agree to abide by EarnCharge{" "}
+                      <Link href="#" className="font-semibold">
+                        Terms Conditions
+                      </Link>{" "}
+                      &{" "}
+                      <Link href="#" className="font-semibold">
+                        Privacy Policy
+                      </Link>
+                    </p>
                   </div>
                 </TabsContent>
               </Tabs>

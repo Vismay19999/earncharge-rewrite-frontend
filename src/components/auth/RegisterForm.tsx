@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import IND from "@/../../public/IND.webp";
+import { ToastContainer } from "react-toastify";
 
 interface RegisterFormProps {
   onSubmit: (
@@ -24,9 +25,7 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
-  const [method, setMethod] = useState<"email" | "phoneNumber" | null>(
-    "phoneNumber"
-  );
+  const [method, setMethod] = useState<"email" | "phoneNumber">("phoneNumber");
   const [isMethodLocked, setIsMethodLocked] = useState<boolean>(false);
   const {
     control,
@@ -54,7 +53,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   }, [watchEmail, watchPhoneNumber]);
 
   const handleMethodSelect = (selectedMethod: "email" | "phoneNumber") => {
-    if (!isMethodLocked) {
+    if (!isMethodLocked || selectedMethod === method) {
       setMethod(selectedMethod);
     }
   };
@@ -76,17 +75,31 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               </h1>
               <p>Secure Access to Your Personal Dashboard</p>
               <form action="" onSubmit={handleSubmit(onSubmitHandler)}>
-                <Tabs defaultValue="email" className="w-[400px] mt-8">
+                <Tabs
+                  defaultValue={method === "phoneNumber" ? "mobile" : "email"}
+                  className="w-[400px] mt-8"
+                >
                   <TabsList className="w-full">
-                    <TabsTrigger value="email" className="w-full">
+                    <TabsTrigger
+                      value="email"
+                      className="w-full"
+                      onClick={() => handleMethodSelect("email")}
+                    >
                       Email
                     </TabsTrigger>
-                    <TabsTrigger value="mobile" className="w-full">
+                    <TabsTrigger
+                      value="mobile"
+                      className="w-full"
+                      onClick={() => handleMethodSelect("phoneNumber")}
+                    >
                       Mobile
                     </TabsTrigger>
                   </TabsList>
+
+                  {/* Email Registration */}
                   <TabsContent value="email">
                     <div className="flex flex-col items-center">
+                      {/* First Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="fname" className="font-semibold">
                           First Name
@@ -97,7 +110,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           rules={{ required: "First name is required" }}
                           render={({ field }) => (
                             <Input
-                              type="fname"
                               id="firstName"
                               maxLength={12}
                               placeholder="Enter Your First Name"
@@ -111,6 +123,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Last Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="lname" className="font-semibold">
                           Last Name
@@ -121,7 +135,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           rules={{ required: "Last name is required" }}
                           render={({ field }) => (
                             <Input
-                              type="lname"
                               id="lastName"
                               maxLength={12}
                               placeholder="Enter Your Last Name"
@@ -135,6 +148,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Email */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="email" className="font-semibold">
                           Email
@@ -153,7 +168,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                             <Input
                               type="email"
                               id="email"
-                              maxLength={25}
+                              maxLength={60}
                               placeholder="someone@something.com"
                               {...field}
                             />
@@ -165,6 +180,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Password */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="password" className="font-semibold">
                           Password
@@ -189,41 +206,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <button
-                          type="submit"
-                          className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
-                          disabled={!method}
-                        >
-                          Sign Up
-                        </button>
-                      </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <button
-                          type="button"
-                          className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
-                          disabled={!method}
-                        >
-                          <Link href="/login">I want to login?</Link>
-                        </button>
-                      </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <p className="text-sm text-center">
-                          I agree to abide by EarnCharge{" "}
-                          <Link href="#" className="font-semibold">
-                            {" "}
-                            Terms Conditions
-                          </Link>{" "}
-                          &{" "}
-                          <Link href="#" className="font-semibold">
-                            Privacy Policy
-                          </Link>
-                        </p>
-                      </div>
                     </div>
                   </TabsContent>
+
+                  {/* Mobile Registration */}
                   <TabsContent value="mobile">
                     <div className="flex flex-col items-center">
+                      {/* First Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="fname" className="font-semibold">
                           First Name
@@ -234,7 +223,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           rules={{ required: "First name is required" }}
                           render={({ field }) => (
                             <Input
-                              type="fname"
                               id="firstName"
                               placeholder="Enter Your First Name"
                               maxLength={12}
@@ -248,6 +236,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Last Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="lname" className="font-semibold">
                           Last Name
@@ -258,7 +248,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           rules={{ required: "Last name is required" }}
                           render={({ field }) => (
                             <Input
-                              type="lname"
                               id="lastName"
                               placeholder="Enter Your Last Name"
                               maxLength={12}
@@ -272,9 +261,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Phone Number */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <Label htmlFor="email" className="font-semibold">
-                          Phone
+                        <Label htmlFor="phoneNumber" className="font-semibold">
+                          Phone Number
                         </Label>
                         <Controller
                           name="phoneNumber"
@@ -282,30 +273,28 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           rules={{
                             required: "Phone number is required",
                             pattern: {
-                              value: /^[0-9]*$/,
-                              message: "Only numbers are allowed"
+                              value: /^[0-9]{10}$/,
+                              message: "Phone number must be exactly 10 digits"
                             }
                           }}
                           render={({ field }) => (
-                            <>
                             <div className="relative">
-                            <Image src={IND} alt="Flag" className="absolute top-3.5 left-3" width={20} height={100} />
-                            <Input
-                              type="text"
-                              id="phoneNumber"
-                              placeholder="8888866666"
-                              className="pl-10"
-                              maxLength={10}
-                              {...field}
-                              onInput={(e: any) => {
-                                e.target.value = e.target.value.replace(
-                                  /[^0-9]/g,
-                                  ""
-                                ); // Allows only numbers
-                              }}
-                            />
+                              <Image
+                                src={IND}
+                                alt="Flag"
+                                className="absolute top-3.5 left-3"
+                                width={20}
+                                height={100}
+                              />
+                              <Input
+                                type="tel"
+                                maxLength={10}
+                                id="phoneNumber"
+                                placeholder="Enter Your Phone Number"
+                                className="pl-10"
+                                {...field}
+                              />
                             </div>
-                            </>
                           )}
                         />
                         {errors.phoneNumber && (
@@ -314,6 +303,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
+
+                      {/* Password */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="password" className="font-semibold">
                           Password
@@ -338,47 +329,57 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                           </p>
                         )}
                       </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <button
-                          className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
-                          disabled={!method} // Button is disabled if no method is provided
-                        >
-                          Sign Up
-                        </button>
-                      </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <button
-                          type="button"
-                          className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
-                          disabled={!method}
-                        >
-                          Already have account?
-                        </button>
-                      </div>
-                      <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                        <p className="text-sm text-center">
-                          I agree to abide by EarnCharge{" "}
-                          <Link href="#" className="font-semibold">
-                            {" "}
-                            Terms Conditions
-                          </Link>{" "}
-                          &{" "}
-                          <Link href="#" className="font-semibold">
-                            Privacy Policy
-                          </Link>
-                        </p>
-                      </div>
                     </div>
                   </TabsContent>
                 </Tabs>
+
+                {/* Submit Button */}
+                <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                  <button
+                    className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                    disabled={!method}
+                    type="submit"
+                  >
+                    Register
+                  </button>
+                </div>
+                <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                  <button
+                    type="button"
+                    className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                  >
+                    <Link href="/otpless/sendLink">Sign In without OTP</Link>
+                  </button>
+                </div>
+                <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                  <button
+                    type="button"
+                    className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
+                  >
+                    <Link href="/register">I want to register?</Link>
+                  </button>
+                </div>
               </form>
+
+              <p className="mt-6 text-xs text-gray-600">
+                Already have an account?&nbsp;
+                <Link href="/auth/login" className="text-purple-600 underline">
+                  Login Here
+                </Link>
+              </p>
             </div>
           </div>
-          <div className="flex-1 text-center hidden lg:flex items-center justify-center">
-            <div className="p-10">
-              <Image src={register} alt="login" className="rounded-3xl" />
-            </div>
+
+          {/* Register Image */}
+          <div className="flex-1 text-center hidden lg:flex">
+            <Image
+              src={register}
+              alt="Register"
+              className="w-full h-full rounded-l-lg object-cover"
+            />
           </div>
+
+          <ToastContainer />
         </div>
       </div>
     </>

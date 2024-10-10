@@ -8,6 +8,7 @@ import Success from '@/components/auth/authExtras/AuthSuccess';
 import Failure from '@/components/auth/authExtras/AuthFailure';
 import { useUser } from '@/actions/UserContext/UserContext';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 
 const RegistrationPage: React.FC = () => {
@@ -47,9 +48,11 @@ const RegistrationPage: React.FC = () => {
       setContactValue(method === 'email' ? formData.email : formData.phoneNumber);
       setStep(2);
       setRegistrationSuccess(true);
-    } catch (error) {
+    } catch (error : any) {
       console.error(error);
-      setRegistrationSuccess(false);
+      // setRegistrationSuccess(false); 
+      toast.error(`Registration failed. Please try again. ${error.response.data.message}`);
+      setStep(4)
     }
   };
 
