@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
-import { FaWallet } from "react-icons/fa";
+import { FaRegCheckCircle, FaWallet } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import Modal from "../Modal";
 import IMPSPage from "../../IMPSMODAL";
@@ -30,8 +30,8 @@ const GetWallets: React.FC = () => {
           "https://api.earncharge.in/v1/user/wallets",
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+              Authorization: `Bearer ${accessToken}`
+            }
           }
         );
         setWallets(response.data);
@@ -58,8 +58,8 @@ const GetWallets: React.FC = () => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
       // Refresh wallets after withdrawal
@@ -67,8 +67,8 @@ const GetWallets: React.FC = () => {
         "https://api.earncharge.in/v1/user/wallets",
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+            Authorization: `Bearer ${accessToken}`
+          }
         }
       );
       setWallets(response.data);
@@ -100,18 +100,45 @@ const GetWallets: React.FC = () => {
       {/* Help Popup */}
       {isHelpPopupOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[480px] relative">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[480px] max-h-[80vh] overflow-y-auto relative">
             <h3 className="font-semibold mb-2">How to Use Your Wallets</h3>
-            <p className="text-sm">
-              You can manage your Referral, Cashback, and Payment wallets here. To
-              withdraw funds, click the button next to each wallet. For any further
-              assistance, contact our support.
-            </p>
+            <div className="text-sm overflow-y-auto max-h-[200px]">
+              <p className="mb-4">
+                <span className="font-semibold">Referral:</span> Earn rewards
+                effortlessly by entering the amount in the input field. Your
+                referral rewards will be credited to your account within
+                minutes.
+              </p>
+              <p className="mb-4">
+                <span className="font-semibold">Cashback:</span> Get instant
+                cashback by inputting your amount. The cashback will be credited
+                directly to your verified account in a flash.
+              </p>
+              <p className="mb-4">
+                <span className="font-semibold">My Wallet:</span> To initiate
+                BBPS transactions, enter the UTR number and amount, along with a
+                transaction screenshot, to earn even more cashback quickly and
+                easily.
+              </p>
+            </div>
+
+            <iframe
+              width="100%"
+              height="315"
+              className="w-full mt-4"
+              src="https://www.youtube.com/embed/DYusH9Ixfm8?si=RI2myA7XIoVAZshj"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+
             <button
-              className="text-blue-500 underline mt-4"
-              onClick={() => setIsHelpPopupOpen(false)} // Close the help popup
+              className="w-full p-2 bg-black text-white rounded-xl mt-4 flex items-center justify-center hover:bg-gray-800"
+              onClick={() => setIsHelpPopupOpen(false)}
             >
-              Close
+              Understood <FaRegCheckCircle className="ml-2" />
             </button>
           </div>
         </div>

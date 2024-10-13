@@ -3,6 +3,7 @@ import Image from "next/image";
 import Logo from "@/../public/footer logo.png";
 import Link from "next/link";
 import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
+import { FaThreads } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -15,10 +16,10 @@ const Footer = () => {
               <Image src={Logo} alt="Logo" width={200} height={200} />
             </Link>
             <div className="flex justify-start gap-4 p-5 text-white">
-              <Facebook />
-              <Instagram />
-              <YouTube />
-              <LinkedIn />
+              <Link href="https://www.facebook.com/profile.php?id=61567165222175&mibextid=JRoKGi" target="_blank"><Facebook /></Link>
+              <Link href="https://www.instagram.com/earncharge?igsh=dWxkYWg0NGl6N2R0" target="_blank"><Instagram /></Link>
+              <Link href="https://www.youtube.com/@EarnChargeIndia" target="_blank"><YouTube /></Link>
+              <Link href="https://www.threads.net/@earncharge?glyph_type=SELF_PROFILE" target="_blank"><FaThreads /></Link>
             </div>
             </div>
             <div className="flex-[1]">
