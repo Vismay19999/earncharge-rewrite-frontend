@@ -356,17 +356,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     type="button"
                     className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
                   >
-                    <Link href="/register">I want to register?</Link>
+                    <Link href="/login">Already have an account?</Link>
                   </button>
                 </div>
               </form>
-
-              <p className="mt-6 text-xs text-gray-600">
-                Already have an account?&nbsp;
-                <Link href="/auth/login" className="text-purple-600 underline">
-                  Login Here
-                </Link>
-              </p>
             </div>
           </div>
 
