@@ -40,65 +40,71 @@ const AuthorizationClientSide = () => {
                 <p>Secure Access to Your Personal Dashboard</p>
                 <div className="flex flex-col items-center">
                   <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                  <div className="flex justify-center items-center">
-        {code ? (
-          <div className="w-full max-w-md bg-white rounded-lg">
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                First Name
-              </label>
-              <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none"
-                placeholder="Enter first name"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Last Name
-              </label>
-              <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none"
-                placeholder="Enter last name"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none"
-                placeholder="Enter password"
-              />
-            </div>
-            {isLoading ? (
-              <p className="text-center text-gray-500">Authorizing...</p>
-            ) : (
-              <>
-                {errorMessage && (
-                  <p className="text-center text-red-500">{errorMessage}</p>
-                )}
-                <button
-                   className="p-2.5 rounded-2xl bg-[#0AA87E] text-white focus:bg-black font-semibold w-full"
-                  onClick={handleAuthorization}
-                >
-                  Authorize
-                </button>
-              </>
-            )}
-          </div>
-        ) : (
-          <p className="text-center text-gray-700">No code found in the URL.</p>
-        )}
-      </div>
+                    <div className="flex justify-center items-center">
+                      {code ? (
+                        <div className="w-full max-w-md bg-white rounded-lg">
+                          <div className="mb-4">
+                            <label className="block text-gray-700 font-bold mb-2">
+                              First Name
+                            </label>
+                            <input
+                              type="text"
+                              value={firstName}
+                              onChange={(e) => setFirstName(e.target.value)}
+                              className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+                              placeholder="Enter first name"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700 font-bold mb-2">
+                              Last Name
+                            </label>
+                            <input
+                              type="text"
+                              value={lastName}
+                              onChange={(e) => setLastName(e.target.value)}
+                              className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+                              placeholder="Enter last name"
+                            />
+                          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700 font-bold mb-2">
+                              Password
+                            </label>
+                            <input
+                              type="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+                              placeholder="Enter password"
+                            />
+                          </div>
+                          {isLoading ? (
+                            <p className="text-center text-gray-500">
+                              Authorizing...
+                            </p>
+                          ) : (
+                            <>
+                              {errorMessage && (
+                                <p className="text-center text-red-500">
+                                  {errorMessage}
+                                </p>
+                              )}
+                              <button
+                                className="p-2.5 rounded-2xl bg-[#0AA87E] text-white focus:bg-black font-semibold w-full"
+                                onClick={handleAuthorization}
+                              >
+                                Authorize
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-center text-gray-700">
+                          No code found in the URL.
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                     <button

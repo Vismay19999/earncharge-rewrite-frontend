@@ -90,11 +90,10 @@ const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
     );
   };
 
-  // Simulate a loading delay (e.g., fetching user data from an API)
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false); // Set loading to false after data has been fetched
-    }, 1000); // Simulate a 1-second delay
+      setLoading(false); 
+    }, 1000); 
   }, []);
 
   if (loading) {

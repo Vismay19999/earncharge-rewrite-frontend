@@ -2,10 +2,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
-import { FaRegCheckCircle, FaWallet } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import Modal from "../Modal";
 import IMPSPage from "../../IMPSMODAL";
+import { toast } from "react-toastify";
+import WalletSuccessPopup from "./WalletSuccessPopup";
+import WalletFailurePopup from "./WalletFailurePopup";
+import HelpPopup from "./HelpPopup";
 
 interface Wallets {
   referralWallet: { amount: number };
@@ -15,54 +19,23 @@ interface Wallets {
 
 const GetWallets: React.FC = () => {
   const [wallets, setWallets] = useState<Wallets | null>(null);
-  const [error, setError] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalType, setModalType] = useState<
     "cashback" | "referral" | "payment"
   >("cashback");
-  const [isHelpPopupOpen, setIsHelpPopupOpen] = useState<boolean>(false); // Help popup state
+  const [isHelpPopupOpen, setIsHelpPopupOpen] = useState<boolean>(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState<boolean>(false);
+  const [isFailurePopupOpen, setIsFailurePopupOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   useEffect(() => {
-    const fetchWallets = async () => {
-      try {
-        const accessToken = getAccessToken();
-        const response = await axios.get<Wallets>(
-          "https://api.earncharge.in/v1/user/wallets",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`
-            }
-          }
-        );
-        setWallets(response.data);
-      } catch (err: any) {
-        setError(err.message);
-      }
-    };
-
     fetchWallets();
   }, []);
 
-  const handleWithdraw = async (amount: string) => {
+  const fetchWallets = async () => {
     try {
       const accessToken = getAccessToken();
-      const url =
-        modalType === "cashback"
-          ? "https://api.earncharge.in/v1/user/wallet/withdraw/cashback"
-          : modalType === "referral"
-          ? "https://api.earncharge.in/v1/user/wallet/withdraw/referral"
-          : "https://api.earncharge.in/v1/user/wallet/withdraw/payment";
-      await axios.post(
-        url,
-        { amount },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      // Refresh wallets after withdrawal
       const response = await axios.get<Wallets>(
         "https://api.earncharge.in/v1/user/wallets",
         {
@@ -73,13 +46,37 @@ const GetWallets: React.FC = () => {
       );
       setWallets(response.data);
     } catch (err: any) {
-      setError(err.message);
+      toast.error("Failed to fetch wallets. Please try again.");
     }
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleWithdraw = async (amount: string) => {
+    try {
+      const accessToken = getAccessToken();
+      const url =
+        modalType === "cashback"
+          ? "https://api.earncharge.in/v1/user/wallet/withdraw/cashback"
+          : modalType === "referral"
+          ? "https://api.earncharge.in/v1/user/wallet/withdraw/referral"
+          : "https://api.earncharge.in/v1/user/wallet/withdraw/payment";
+      const response = await axios.post(
+        url,
+        { amount },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      setSuccessMessage(response.data?.message || `Your ${modalType} withdrawal was successful.`);
+      await fetchWallets();
+      setIsSuccessPopupOpen(true);
+    } catch (err: any) {
+      setErrorMessage(err.response?.data?.message || "An unexpected error occurred. Please try again.");
+      setIsFailurePopupOpen(true);
+    }
+  };
 
   if (!wallets) {
     return <div>Loading...</div>;
@@ -91,58 +88,11 @@ const GetWallets: React.FC = () => {
         <h2 className="text-lg font-bold mb-4 flex-[1]">Wallets</h2>
         <button
           className="text-sm font-regular mb-4 flex-[1] text-right"
-          onClick={() => setIsHelpPopupOpen(true)} // Open help popup
+          onClick={() => setIsHelpPopupOpen(true)}
         >
           Help?
         </button>
       </div>
-
-      {/* Help Popup */}
-      {isHelpPopupOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[480px] max-h-[80vh] overflow-y-auto relative">
-            <h3 className="font-semibold mb-2">How to Use Your Wallets</h3>
-            <div className="text-sm overflow-y-auto max-h-[200px]">
-              <p className="mb-4">
-                <span className="font-semibold">Referral:</span> Earn rewards
-                effortlessly by entering the amount in the input field. Your
-                referral rewards will be credited to your account within
-                minutes.
-              </p>
-              <p className="mb-4">
-                <span className="font-semibold">Cashback:</span> Get instant
-                cashback by inputting your amount. The cashback will be credited
-                directly to your verified account in a flash.
-              </p>
-              <p className="mb-4">
-                <span className="font-semibold">My Wallet:</span> To initiate
-                BBPS transactions, enter the UTR number and amount, along with a
-                transaction screenshot, to earn even more cashback quickly and
-                easily.
-              </p>
-            </div>
-
-            <iframe
-              width="100%"
-              height="315"
-              className="w-full mt-4"
-              src="https://www.youtube.com/embed/DYusH9Ixfm8?si=RI2myA7XIoVAZshj"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
-
-            <button
-              className="w-full p-2 bg-black text-white rounded-xl mt-4 flex items-center justify-center hover:bg-gray-800"
-              onClick={() => setIsHelpPopupOpen(false)}
-            >
-              Understood <FaRegCheckCircle className="ml-2" />
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Referral Wallet */}
       <div className="flex flex-row justify-between py-2">
@@ -226,6 +176,7 @@ const GetWallets: React.FC = () => {
           </div>
         </div>
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -236,6 +187,25 @@ const GetWallets: React.FC = () => {
             : wallets.referralWallet.amount
         }
         walletType={modalType === "cashback" ? "Cashback" : "Referral"}
+      />
+
+      <WalletSuccessPopup
+        isOpen={isSuccessPopupOpen}
+        onClose={() => setIsSuccessPopupOpen(false)}
+        walletType={modalType}
+        successMessage={successMessage}
+      />
+
+      <WalletFailurePopup
+        isOpen={isFailurePopupOpen}
+        onClose={() => setIsFailurePopupOpen(false)}
+        walletType={modalType}
+        errorMessage={errorMessage}
+      />
+
+      <HelpPopup
+        isOpen={isHelpPopupOpen}
+        onClose={() => setIsHelpPopupOpen(false)}
       />
     </div>
   );

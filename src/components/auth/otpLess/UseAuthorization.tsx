@@ -47,7 +47,7 @@ const UseAuthorization = () => {
       setTokens(response.data.accessToken, response.data.refreshToken);
       setUser(response.data.data);
       setTimeout(() => {
-        window.location.reload();
+        router.push("/login/success");
       }, 1500);
       console.log("API Response:", response.data);
     } catch (error) {

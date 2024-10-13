@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,9 +12,20 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
   const [otp, setOtp] = useState<string>("");
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(0);
 
   const token = getAccessToken();
   console.log("Token fetched:", token);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isOtpSent && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isOtpSent, timer]);
 
   const handleSendOtp = async () => {
     console.log("Send OTP clicked, Aadhaar:", aadhaarNumber);
@@ -41,12 +52,12 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
       console.log("OTP sent response:", response);
       toast.success("OTP sent successfully!");
       setIsOtpSent(true);
+      setTimer(30); // Start the 30-second timer
     } catch (error) {
       console.error("Error sending OTP:", error);
       toast.error("Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
-      console.log("OTP send operation finished.");
     }
   };
 
@@ -120,6 +131,11 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
               className="mt-1 p-2 w-full border rounded-md text-sm"
               disabled={loading}
             />
+            {timer > 0 && (
+              <p className="text-sm text-gray-500 mt-1">
+                Resend OTP in {timer} seconds
+              </p>
+            )}
           </div>
         )}
         {!isOtpSent ? (
@@ -131,13 +147,22 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
             {loading ? "Sending OTP..." : "Send OTP"}
           </button>
         ) : (
-          <button
-            onClick={handleVerifyOtp}
-            className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600"
-            disabled={loading}
-          >
-            {loading ? "Verifying OTP..." : "Verify OTP"}
-          </button>
+          <>
+            <button
+              onClick={handleVerifyOtp}
+              className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 mb-2"
+              disabled={loading}
+            >
+              {loading ? "Verifying OTP..." : "Verify OTP"}
+            </button>
+            <button
+              onClick={handleSendOtp}
+              className="w-full bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300"
+              disabled={loading || timer > 0}
+            >
+              Resend OTP
+            </button>
+          </>
         )}
       </div>
     </div>
