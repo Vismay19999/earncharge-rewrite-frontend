@@ -8,7 +8,6 @@ import { FaArrowRightFromBracket } from "react-icons/fa6";
 const Page = () => {
   return (
     <>
-      <Header />
       <div className="flex flex-col justify-center items-center min-h-[800px]">
         <div className="flex justify-center items-center">
           <Image
