@@ -19,7 +19,7 @@ const Page = () => {
           />
         </div>
         <h1 className="text-3xl font-semibold mt-4">
-          Your Payment has been done Successfully
+          Welcome to the EarnCharge Family! Your Payment has been done Successfully
         </h1>
         <p className="text-gray-600 text-lg mt-2">
           Congratulations! You have earned your cashback successfully.
