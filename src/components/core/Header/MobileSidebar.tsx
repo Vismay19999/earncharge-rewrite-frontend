@@ -81,6 +81,13 @@ const MobileSidebar = () => {
             <FaArrowRight /> <span className="font-semibold text-lg">Offers</span>
           </Link>
           <Link
+            href="/bbps"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
+            onClick={closeSidebar}
+          >
+            <FaArrowRight /> <span className="font-semibold text-lg">BBPS</span>
+          </Link>
+          <Link
             href="/contact"
             className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
