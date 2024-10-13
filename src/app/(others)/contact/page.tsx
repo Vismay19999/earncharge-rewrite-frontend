@@ -63,7 +63,7 @@ const Contact = () => {
         <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
         border-[#131c23] border-b-[10px]">
           <h1 className="text-4xl font-semibold">Email</h1>
-          <p>assist@plentycred.co.in</p>
+          <p className="inline">assist@earncharge.in</p>
         </motion.div>
         <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
         border-[#131c23] border-b-[10px]">
