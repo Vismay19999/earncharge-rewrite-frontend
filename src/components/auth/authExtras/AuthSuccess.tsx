@@ -20,7 +20,7 @@ const Success = () => {
           />
         </svg>
         <h1 className="text-2xl font-semibold text-gray-800 mb-2">Success!</h1>
-        <p className="text-gray-600 mb-4">Your registration was completed successfully.</p>
+        <p className="text-gray-600 mb-4">Welcome to the Earn Charge Smart Community!</p>
         <Link
           href="/"
           className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
