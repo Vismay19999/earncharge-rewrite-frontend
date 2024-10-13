@@ -11,6 +11,7 @@ import { logout as RemoveToken } from "@/utils/auth";
 import { useUser } from "@/actions/UserContext/UserContext";
 import { FaUser } from "react-icons/fa";
 
+
 const MobileSidebar = () => {
   const { user, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
@@ -102,7 +103,7 @@ const MobileSidebar = () => {
                   className="w-full p-2 flex gap-2 items-center justify-center rounded-xl bg-white text-black"
                   onClick={closeSidebar}
                 >
-                  <FaUser /> User Name
+                  <FaUser /> {user.firstName}
                 </Link>
                 <button
                   onClick={logoutHandler}

@@ -213,7 +213,7 @@ const GetWallets: React.FC = () => {
                 <FaWallet />
               </div>
             </div>
-            <div className="flex-[1] font-semibold text-sm">Payment</div>
+            <div className="flex-[1] font-semibold text-sm">My Wallet</div>
           </div>
         </div>
         <div className="flex-[1]">
