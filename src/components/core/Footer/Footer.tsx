@@ -81,7 +81,7 @@ const Footer = () => {
               <p className="text-xs leading-1 text-white">
                 Earncharge is a fully owned subsidary of Arahant Economy
                 Services Private Limited. It is a digital platform providing
-                recharge and BBPS services.
+                Mobile Recharge and BBPS services.
               </p>
             </div>
           </div>
