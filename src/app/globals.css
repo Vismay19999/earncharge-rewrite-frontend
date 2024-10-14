@@ -73,7 +73,8 @@
   background-size: cover;
 }
 body {
-  background: #fffbf6;
+  background-image: url("../../public/doodle.jpg");
+  background-size: 600px;
 }
 /* styles.css */
 .modal {
