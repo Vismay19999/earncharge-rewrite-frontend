@@ -4,6 +4,7 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useInView } from "react-intersection-observer";
 import ContactForm from "./ContactForm";
+
 const Contact = () => {
     const [ref] = useInView({
         triggerOnce: true,
@@ -23,9 +24,17 @@ const Contact = () => {
             transition={{ duration: 1.3 }}
             className="flex-[1]"
           >
-            <h1 className="text-4xl lg:text-6xl text-white font-semibold">
-            Got a question? We are here to help!
-            </h1>
+            <motion.h1 
+              className="text-4xl lg:text-6xl font-semibold text-left"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="text-green-400">Need Assistance?</span>{" "}
+              <span className="text-green-400">We are Here</span>{" "}
+              <span className="text-green-400">for You</span>{" "}
+              <span className="text-green-400">24/7!</span>
+            </motion.h1>
             <p className="mt-5 text-sm text-white lg:text-2xl">
             Feel free to reach out with any inquiries or feedback. We look forward to hearing from you!
             </p>
