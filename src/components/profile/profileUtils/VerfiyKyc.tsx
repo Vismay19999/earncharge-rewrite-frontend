@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAccessToken } from "@/utils/auth";
 
-interface VerifyKycProps {}
+export interface VerifyKycProps {
+  onVerificationComplete: () => void;
+}
 
-const VerifyKyc: React.FC<VerifyKycProps> = () => {
+const VerifyKyc: React.FC<VerifyKycProps> = ({ onVerificationComplete }) => {
   const [aadhaarNumber, setAadhaarNumber] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
@@ -19,15 +21,16 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isOtpSent && timer > 0) {
+    if (timer > 0) {
       interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isOtpSent, timer]);
+  }, [timer]);
 
   const handleSendOtp = async () => {
+    setLoading(true);
     console.log("Send OTP clicked, Aadhaar:", aadhaarNumber);
 
     if (!aadhaarNumber.match(/^\d{12}$/)) {
@@ -36,7 +39,6 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
       return;
     }
 
-    setLoading(true);
     try {
       console.log("Sending OTP request...");
       const response = await axios.post(
@@ -52,7 +54,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
       console.log("OTP sent response:", response);
       toast.success("OTP sent successfully!");
       setIsOtpSent(true);
-      setTimer(30); // Start the 30-second timer
+      setTimer(5); // Set timer to 5 seconds after sending OTP
     } catch (error) {
       console.error("Error sending OTP:", error);
       toast.error("Failed to send OTP. Please try again.");
@@ -95,40 +97,41 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
     }
   };
 
+  // Make sure to call onVerificationComplete when verification is done
+  // For example:
+  // const handleVerification = () => {
+  //   // Your verification logic
+  //   onVerificationComplete();
+  // };
+
   return (
     <div className="mt-4">
-      <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E]">
-        <h2 className="text-lg font-bold mb-4">Verify KYC</h2>
+      <div className="bg-white shadow-md rounded-lg p-6 w-full">
+        <h2 className="text-lg font-semibold mb-4">Verify KYC</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Aadhaar Number
           </label>
           <input
             type="text"
             value={aadhaarNumber}
-            onChange={(e) => {
-              console.log("Aadhaar input changed:", e.target.value);
-              setAadhaarNumber(e.target.value);
-            }}
-            placeholder="UID 12 Digit Number"
+            onChange={(e) => setAadhaarNumber(e.target.value)}
+            placeholder="Enter 12-digit Aadhaar number"
             maxLength={12}
-            className="mt-1 p-2 w-full border rounded-md text-sm outline-none"
+            className="w-full p-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={isOtpSent || loading}
           />
         </div>
         {isOtpSent && (
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">OTP</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">OTP</label>
             <input
               type="text"
               value={otp}
-              onChange={(e) => {
-                console.log("OTP input changed:", e.target.value);
-                setOtp(e.target.value);
-              }}
-              placeholder="Enter OTP"
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter 6-digit OTP"
               maxLength={6}
-              className="mt-1 p-2 w-full border rounded-md text-sm"
+              className="w-full p-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               disabled={loading}
             />
             {timer > 0 && (
@@ -141,7 +144,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
         {!isOtpSent ? (
           <button
             onClick={handleSendOtp}
-            className="transition w-full bg-black text-white p-2 rounded-md text-sm hover:bg-gray-800"
+            className="w-full bg-green-500 text-white p-2 rounded-md text-sm hover:bg-green-600 transition duration-300 ease-in-out"
             disabled={loading}
           >
             {loading ? "Sending OTP..." : "Send OTP"}
@@ -150,17 +153,17 @@ const VerifyKyc: React.FC<VerifyKycProps> = () => {
           <>
             <button
               onClick={handleVerifyOtp}
-              className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 mb-2"
+              className="w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600 mb-2 transition duration-300 ease-in-out"
               disabled={loading}
             >
               {loading ? "Verifying OTP..." : "Verify OTP"}
             </button>
             <button
               onClick={handleSendOtp}
-              className="w-full bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300"
+              className="w-full bg-gray-200 text-gray-700 p-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out"
               disabled={loading || timer > 0}
             >
-              Resend OTP
+              {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
             </button>
           </>
         )}

@@ -7,6 +7,12 @@ import Image from "next/image";
 import { FiPlus } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import { ArrowRight } from "@mui/icons-material";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 interface Wallets {
   paymentWallet: { amount: number };
@@ -88,6 +94,14 @@ const IMPSPage = () => {
     }
   };
 
+  const accountDetails = {
+    bankName: "Central Bank of India",
+    accountNumber: "00000003204714344",
+    ifscCode: "CBIN0281229",
+    branch: "Dharampeth Branch",
+    location: "Nagpur, Maharashtra"
+  };
+
   return (
     <>
       <button
@@ -110,59 +124,67 @@ const IMPSPage = () => {
                 backgroundColor: "white",
                 padding: "40px",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                zIndex: 1000
+                zIndex: 1000,
+                maxWidth: "400px",
+                width: "90%"
               }}
             >
               {/* Close button */}
-              <div className="flex flex-wrap justify-between">
-                <div className="flex-[1]">
-                  <h1>
-                    Add <span className="font-semibold">Amount</span>
+              <div className="flex flex-wrap justify-between items-center mb-4">
+                <div>
+                  <h1 className="text-xl font-semibold">
+                    Add <span className="font-bold">Amount</span>
                   </h1>
                   <span className="text-xs border-[1px] px-2">
                     Balance ₹ {wallets.paymentWallet.amount}
                   </span>
                 </div>
-                <div className="flex flex-wrap justify-end flex-[1]">
-                  <button onClick={() => setIsModalOpen(false)}>
-                    <IoMdClose />
-                  </button>
-                </div>
+                <button onClick={() => setIsModalOpen(false)}>
+                  <IoMdClose size={24} />
+                </button>
               </div>
 
-              {/* Input for UTR number */}
-              <div className="flex flex-wrap flex-col gap-4 mt-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="UTR Number"
-                    value={utrNo}
-                    className="w-full border-[1px] p-2 text-sm rounded-lg"
-                    onChange={(e) => setUtrNo(e.target.value)}
-                  />
-                </div>
+              {/* Account Details Accordion */}
+              <Accordion type="single" collapsible className="w-full mb-4">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Transfer to this account</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="bg-gray-100 p-4 rounded-lg">
+                      <p><strong>Bank:</strong> {accountDetails.bankName}</p>
+                      <p><strong>Account Number:</strong> {accountDetails.accountNumber}</p>
+                      <p><strong>IFSC Code:</strong> {accountDetails.ifscCode}</p>
+                      <p><strong>Branch:</strong> {accountDetails.branch}</p>
+                      <p><strong>Location:</strong> {accountDetails.location}</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
 
-                {/* Input for Amount */}
-                <div>
-                  <input
-                    type="number"
-                    placeholder="Amount"
-                    className="w-full border-[1px] p-2 text-sm rounded-lg"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </div>
-
-                {/* File input for Image */}
+              {/* Form inputs */}
+              <div className="flex flex-wrap flex-col gap-4">
+                <input
+                  type="text"
+                  placeholder="UTR Number"
+                  value={utrNo}
+                  className="w-full border-[1px] p-2 text-sm rounded-lg"
+                  onChange={(e) => setUtrNo(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Amount"
+                  className="w-full border-[1px] p-2 text-sm rounded-lg"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
                 <div className="flex flex-wrap gap-2 flex-col text-sm">
                   <label className="text-xs">
-                  Transaction <span className="font-semibold">Screenshot</span>
+                    Transaction <span className="font-semibold">Screenshot</span>
                   </label>
                   <input
-                  type="file"
-                  accept="image/jpeg, image/jpg, image/png"
-                  className="text-sm"
-                  onChange={handleFileChange}
+                    type="file"
+                    accept="image/jpeg, image/jpg, image/png"
+                    className="text-sm"
+                    onChange={handleFileChange}
                   />
                 </div>
 
@@ -179,15 +201,12 @@ const IMPSPage = () => {
                   </div>
                 )}
 
-                {/* Button to send request */}
-                <div>
-                  <button
-                    onClick={handleSubmit}
-                    className="w-full bg-black p-2 rounded-xl text-white text-sm hover:bg-white border-[1px] hover:text-black transition"
-                  >
-                    Send Request <ArrowRight />
-                  </button>
-                </div>
+                <button
+                  onClick={handleSubmit}
+                  className="w-full bg-black p-2 rounded-xl text-white text-sm hover:bg-white border-[1px] hover:text-black transition flex items-center justify-center"
+                >
+                  Send Request <ArrowRight className="ml-2" />
+                </button>
               </div>
             </div>
           )}
@@ -204,7 +223,7 @@ const IMPSPage = () => {
                 backgroundColor: "rgba(0, 0, 0, 0.5)",
                 zIndex: 999
               }}
-              onClick={() => setIsModalOpen(false)} // Close when clicking outside the modal
+              onClick={() => setIsModalOpen(false)}
             />
           )}
         </>

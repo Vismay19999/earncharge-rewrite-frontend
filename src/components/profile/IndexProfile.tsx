@@ -12,6 +12,11 @@ import Image from "next/image";
 const IndexProfile = () => {
   const { user } = useUser();
 
+  const handleKycVerified = () => {
+    // Add logic to handle KYC verification, e.g., refresh user data
+    console.log('KYC verified');
+  };
+
   if (!user) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-transparent">
@@ -28,7 +33,6 @@ const IndexProfile = () => {
             <div className="w-full flex flex-wrap flex-col lg:flex-row gap-10">
               <div className="flex-[3]">
                 <ProfileInfo user={user} />
-                <KycBase user={user} />
                 <GetWallets />
               </div>
               <div className="flex-[7]">
