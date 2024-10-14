@@ -73,7 +73,7 @@ export default function BBPS() {
         <section className="mt-20 mb-10">
           <div className="flex flex-col xl:flex-row gap-4">
             <div
-              className="flex-[1.5] bg-gray-200 p-6 h-[350px] rounded-xl bg-right-bottom bg-no-repeat"
+              className="flex-[1.5] border-[1px] shadow-lg bg-white border-b-blue-400 border-b-[4px] p-6 h-[350px] rounded-xl bg-right-bottom bg-no-repeat"
               style={{
                 backgroundImage: `url(${sectionArea.src})`,
                 backgroundSize: `180px`,
@@ -97,7 +97,7 @@ export default function BBPS() {
               <br />
             </div>
             <div
-              className="flex-[1] bg-gray-200 p-4 rounded-xl pr-40 bg-right-bottom bg-no-repeat"
+              className="flex-[1]  border-[1px] border-b-[4px] border-b-lime-400 shadow-lg bg-white p-4 rounded-xl pr-40 bg-right-bottom bg-no-repeat"
               style={{
                 backgroundImage: `url(${stockArea.src})`,
                 backgroundSize: `140px`,
