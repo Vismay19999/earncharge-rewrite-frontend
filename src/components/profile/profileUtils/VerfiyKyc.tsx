@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,18 +15,26 @@ const VerifyKyc: React.FC<VerifyKycProps> = ({ onVerificationComplete }) => {
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const token = getAccessToken();
   console.log("Token fetched:", token);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
     if (timer > 0) {
-      interval = setInterval(() => {
+      timerRef.current = setInterval(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
+    } else {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [timer]);
 
   const handleSendOtp = async () => {
@@ -54,7 +62,7 @@ const VerifyKyc: React.FC<VerifyKycProps> = ({ onVerificationComplete }) => {
       console.log("OTP sent response:", response);
       toast.success("OTP sent successfully!");
       setIsOtpSent(true);
-      setTimer(5); // Set timer to 5 seconds after sending OTP
+      setTimer(60); // Set timer to 60 seconds after sending OTP
     } catch (error) {
       console.error("Error sending OTP:", error);
       toast.error("Failed to send OTP. Please try again.");
