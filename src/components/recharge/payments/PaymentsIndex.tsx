@@ -48,7 +48,7 @@ const PaymentsIndex = ({
       amount: amount,
       vpa: vpa,
       phoneNumber: phoneNumber,
-      providerID: activeTab === "payu" ? "6" : "1"
+      providerID: provider
     };
 
     const url =
@@ -102,15 +102,14 @@ const PaymentsIndex = ({
             PayU
           </button>
           <button
-            className={`flex-[1] py-2 text-lg font-semibold transition duration-200 ${
-              activeTab === "lightspeedpay" 
-              ? "border-b-2 border-black text-black"
-              : "text-gray-600 hover:text-black"
-              }`}
+            className={`flex-[1] py-2 text-lg font-semibold transition duration-200 
+              text-gray-400 cursor-not-allowed
+              ${activeTab === "lightspeedpay" ? "border-b-2 border-gray-300" : ""}`}
             onClick={() => handleTabChange("lightspeedpay")}
-            disabled={isPaymentInitiated}
+            // disabled={isPaymentInitiated}
+            disabled={true}
           >
-            LightspeedPay
+            LightspeedPay (Coming Soon)
           </button>
         </div>
               <Image src={payment} alt="Payment" height={350} width={350} />
