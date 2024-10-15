@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getAccessToken } from "@/utils/auth";
 
 interface Props {
   onOperatorData: (operator: string, circle: string, provider: string) => void; // Callback prop
 }
 
 const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
+  const accessToken = getAccessToken();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [operatorInfo, setOperatorInfo] = useState<{
     operator: string;
     circle: string;
+    operatorCode: string;
   } | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -23,13 +26,25 @@ const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
         { phoneNumber },
         {
           headers: {
-            Authorization: `Bearer YOUR_ACCESS_TOKEN`,
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json"
           }
         }
       );
       const { operator, circle, operatorCode } = response.data;
-      setOperatorInfo({ operator, circle });
+      setOperatorInfo({
+        operator: operatorCode,
+        circle,
+        operatorCode: operatorCode
+      });
+      console.log(
+        "Operator:",
+        operator,
+        "Circle:",
+        circle,
+        "operatorCode:",
+        operatorCode
+      );
       toast.success(`Successfully fetched data.`);
 
       // Call the callback function to pass data to the parent
@@ -67,7 +82,6 @@ const FindOperatorCircleByPH: React.FC<Props> = ({ onOperatorData }) => {
       >
         {loading ? "Searching..." : "Find Operator and Circle"}
       </button>
-
     </div>
   );
 };

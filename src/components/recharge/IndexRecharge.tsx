@@ -7,7 +7,7 @@ const IndexRecharge = () => {
   const [operator, setOperator] = useState<string | null>(null);
   const [circle, setCircle] = useState<string | null>(null);
   const [providerId, setProviderId] = useState<string | null>(null);
-  // Callback function to handle operator and circle
+  // Update the callback function to match the expected signature
   const handleOperatorData = (
     operator: string,
     circle: string,
