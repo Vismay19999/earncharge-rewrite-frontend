@@ -11,12 +11,16 @@ import animated3 from "@/../public/animated3.gif";
 import SecuredImage from "@/../public/security.svg";
 
 import Image from "next/image";
+import GoogleTranslate from "@/components/GoogleTranslate";
+import Translatecomponent from "@/components/translate/translatecomponent";
 
 export default function Home() {
   const { user } = useUser()
 
   return (
     <div>
+      
+      <Translatecomponent />
       <div>
         {/* <Recharge /> */}
       </div>
@@ -26,7 +30,6 @@ export default function Home() {
           {/* <IndexRecharge /> */}
         </div>
       )}
-
 <section className="w-full">
         <div className="max-w-[1300px] m-auto flex flex-col">
           <div className="h-[5vh]"></div>
@@ -136,7 +139,7 @@ export default function Home() {
                 Lock
               </p>
               <div className="mt-5 w-full p-6 bg-white rounded-xl">
-                <div className="flex flex-wrap gap-5 justify-around items-center">
+                <div className="flex flex-wrap flex-col lg:flex-row gap-5 justify-around items-center">
                   <Image src="https://fcpress.freecharge.in/api/mediamanager/media/DgHJOvJYp.svg" alt="Payment" width={1000} height={1000} className="w-[100px]" />
                   <Image src="https://fcpress.freecharge.in/api/mediamanager/media/6ZrQKBBoU.svg" alt="Payment" width={1000} height={1000} className="w-[100px]"/>
                   <Image src="https://fcpress.freecharge.in/api/mediamanager/media/4W1-4LipK.svg" alt="Payment" width={1000} height={1000} className="w-[100px]"/>

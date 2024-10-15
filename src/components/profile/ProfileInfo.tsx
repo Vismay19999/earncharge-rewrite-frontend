@@ -6,6 +6,9 @@ import UpiBase from "./profileTabs/UpiBase";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import KycBase from "./profileTabs/KycBase";
+import { FaCheckCircle } from "react-icons/fa";
+
 type Wallet = {
   id: string;
   amount: number;
@@ -58,6 +61,7 @@ type ProfileUser = {
 const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
   const [showFullPhoneNumber, setShowFullPhoneNumber] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showKycTick, setShowKycTick] = useState(false);
 
   const {
     firstName,
@@ -96,6 +100,10 @@ const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
     }, 1000); 
   }, []);
 
+  const handleKycVerified = () => {
+    setShowKycTick(true);
+  };
+
   if (loading) {
     return (
       <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] flex justify-center items-center">
@@ -116,8 +124,11 @@ const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
         </div>
         <div className="flex-[1]">
           <div className="flex flex-col gap-2">
-            <h1 className="text-xl font-regular text-gray-800">
+            <h1 className="text-xl font-regular text-gray-800 flex items-center">
               {firstName || "First Name"} {lastName || "Last Name"}
+              {(user.kyc_verification_status || showKycTick) && (
+                <FaCheckCircle className="text-green-500 ml-2" title="KYC Verified" />
+              )}
             </h1>
             <div className="flex flex-wrap gap-2 items-center flex-row">
               <p className="text-gray-600 font-semibold">
@@ -143,6 +154,7 @@ const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
           </div>
         </div>
       </div>
+      <KycBase user={user} onKycVerified={handleKycVerified} />
       <ToastContainer />
     </div>
   );

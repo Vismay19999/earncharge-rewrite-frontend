@@ -103,7 +103,7 @@ const GetWallets: React.FC = () => {
                 <FaWallet />
               </div>
             </div>
-            <div className="flex-[1] font-semibold text-sm">Referral</div>
+            <div className="flex-[1] font-semibold text-xs">Referral Wallet</div>
           </div>
         </div>
         <div className="flex-[1]">
@@ -133,7 +133,7 @@ const GetWallets: React.FC = () => {
                 <FaWallet />
               </div>
             </div>
-            <div className="flex-[1] font-semibold text-sm">Cashback</div>
+            <div className="flex-[1] font-semibold text-xs">Cashback Wallet</div>
           </div>
         </div>
         <div className="flex-[1]">
@@ -163,7 +163,7 @@ const GetWallets: React.FC = () => {
                 <FaWallet />
               </div>
             </div>
-            <div className="flex-[1] font-semibold text-sm">My Wallet</div>
+            <div className="flex-[1] font-semibold text-xs">My Wallet</div>
           </div>
         </div>
         <div className="flex-[1]">
