@@ -168,6 +168,7 @@ const LoginForm: React.FC = () => {
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
+                        onClick={() => router.push("/otpless/sendLink")}
                         className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
                       >
                         <Link href="/otpless/sendLink">
