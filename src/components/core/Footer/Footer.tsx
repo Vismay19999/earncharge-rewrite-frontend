@@ -73,12 +73,12 @@ const Footer = () => {
           </div>
           <div className="flex flex-wrap mt-20 justify-between flex-col gap-5 lg:flex-row lg:items-center">
             <div className="flex-[1]">
-              <p className="text-sm font-bold leading-1 text-white">
+              <p className="text-lg font-bold leading-1 text-white">
                 Made with 💖 in India
               </p>
             </div>
             <div className="flex-[1]">
-              <p className="text-xs leading-1 text-white">
+              <p className="text-md leading-1 text-white">
                 Earncharge is a fully owned subsidary of Arahant Economy
                 Services Private Limited. It is a digital platform providing
                 Mobile Recharge and BBPS services.

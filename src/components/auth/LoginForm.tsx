@@ -184,6 +184,14 @@ const LoginForm: React.FC = () => {
                         <Link href="/register">I want to register?</Link>
                       </button>
                     </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                    <button
+                      type="button"
+                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                    >
+                      <Link href="/forgotpassword">Forgot Password?</Link>
+                    </button>
+                  </div>
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <p className="text-sm text-center">
                         I agree to abide by EarnCharge{" "}
@@ -266,6 +274,14 @@ const LoginForm: React.FC = () => {
                       className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
                     >
                       <Link href="/register">I want to register?</Link>
+                    </button>
+                  </div>
+                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                    <button
+                      type="button"
+                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                    >
+                      <Link href="/forgotpassword">Forgot Password?</Link>
                     </button>
                   </div>
                   <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">

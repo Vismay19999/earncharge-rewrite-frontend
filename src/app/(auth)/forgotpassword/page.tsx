@@ -1,125 +1,194 @@
 "use client";
 import React, { useState } from "react";
-import { Tab } from "@headlessui/react";
 import axios from "axios";
-import OtpVerification from "@/components/auth/OtpVerification";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
+import forgotPasswordImage from "@/../../public/register.png"; // Make sure to add this image
+import IND from "@/../../public/IND.webp";
+import OtpVerification from "@/components/auth/OtpVerification";
 
 const ForgotPassword = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [activeTab, setActiveTab] = useState<"email" | "phoneNumber">("email");
+  const [formData, setFormData] = useState({
+    phoneNumber: "",
+    email: ""
+  });
   const [showOtpVerification, setShowOtpVerification] = useState(false);
   const router = useRouter();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (/^\d*$/.test(value) && value.length <= 10) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-
     try {
-      const payload = activeTab === 0 ? { phoneNumber } : { email };
+      const payload = { [activeTab]: formData[activeTab] };
       await axios.post(
         "https://api.earncharge.in/v1/user/forgot-password",
         payload
       );
-      setSuccess("OTP sent successfully!");
+      toast.success("OTP sent successfully!");
       setShowOtpVerification(true);
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      toast.error("An error occurred. Please try again.");
     }
   };
 
   const handleCloseOtpVerification = () => {
     setShowOtpVerification(false);
-    setError("");
-    setSuccess("");
     router.push("/");
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Forgot Password
-        </h2>
-      </div>
+    <>
+      <ToastContainer />
+      <div className="rounded-lg text-gray-900 flex justify-center items-center">
+        <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg items-center flex justify-center flex-1">
+          <div className="flex-1 text-center hidden lg:flex items-center justify-center ">
+            <div className="p-10">
+              <Image
+                src={forgotPasswordImage}
+                alt="Forgot Password"
+                className="rounded-3xl"
+              />
+            </div>
+          </div>
+          <div className="lg:w-1/3 xl:w-5/12 p-6 sm:p-12">
+            <div className="flex flex-col items-center">
+              <h1 className="text-3xl xl:text-3xl font-extrabold">
+                Forgot Password
+              </h1>
+              <p>Reset your account password</p>
+              <Tabs
+                value={activeTab}
+                onValueChange={(value) =>
+                  setActiveTab(value as "email" | "phoneNumber")
+                }
+                className="w-[400px] mt-8"
+              >
+                <TabsList className="w-full">
+                  <TabsTrigger value="email" className="w-full">
+                    Email
+                  </TabsTrigger>
+                  <TabsTrigger value="phoneNumber" className="w-full">
+                    Mobile
+                  </TabsTrigger>
+                </TabsList>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <Tab.Group selectedIndex={activeTab} onChange={setActiveTab}>
-            <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl mb-6">
-              {["Phone", "Email"].map((tab, index) => (
-                <Tab
-                  key={tab}
-                  className={({ selected }: { selected: boolean }) =>
-                    `w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60
-                    ${
-                      selected
-                        ? "bg-white shadow"
-                        : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-                    }`
-                  }
-                >
-                  {tab}
-                </Tab>
-              ))}
-            </Tab.List>
-            <Tab.Panels>
-              <Tab.Panel>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    value={phoneNumber}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      if (value.length <= 10) setPhoneNumber(value);
-                    }}
-                    placeholder="Enter phone number"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-4"
-                  >
-                    Reset Password
-                  </button>
-                </form>
-              </Tab.Panel>
-              <Tab.Panel>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter email address"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mt-4"
-                  >
-                    Reset Password
-                  </button>
-                </form>
-              </Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
-          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-          {success && <p className="mt-2 text-sm text-green-600">{success}</p>}
-          {showOtpVerification && (
-            <OtpVerification
-              phoneNumber={activeTab === 0 ? phoneNumber : undefined}
-              email={activeTab === 1 ? email : undefined}
-              onClose={handleCloseOtpVerification}
-            />
-          )}
+                <TabsContent value="email">
+                  <form onSubmit={handleSubmit}>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6 p-2">
+                      <Label htmlFor="email" className="font-semibold">
+                        Email
+                      </Label>
+                      <Input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="someone@something.com"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        maxLength={60}
+                        required
+                      />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="submit"
+                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                      >
+                        Reset Password
+                      </button>
+                    </div>
+                  </form>
+                </TabsContent>
+
+                <TabsContent value="phoneNumber">
+                  <form onSubmit={handleSubmit}>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <Label htmlFor="phoneNumber" className="font-semibold">
+                        Mobile
+                      </Label>
+                      <div className="relative">
+                        <Image
+                          src={IND}
+                          alt="Flag"
+                          className="absolute top-3.5 left-3"
+                          width={20}
+                          height={100}
+                        />
+                        <Input
+                          type="text"
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          className="pl-10"
+                          placeholder="8888855544"
+                          value={formData.phoneNumber}
+                          onChange={handleNumberInputChange}
+                          maxLength={10}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                      <button
+                        type="submit"
+                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                      >
+                        Reset Password
+                      </button>
+                    </div>
+                  </form>
+                </TabsContent>
+              </Tabs>
+
+              <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                <p className="text-sm text-center">
+                  By resetting your password, you agree to EarnCharges&apos;s{" "}
+                  <Link href="#" className="font-semibold">
+                    Terms & Conditions
+                  </Link>{" "}
+                  and{" "}
+                  <Link href="#" className="font-semibold">
+                    Privacy Policy
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      {showOtpVerification && (
+        <OtpVerification
+          phoneNumber={
+            activeTab === "phoneNumber" ? formData.phoneNumber : undefined
+          }
+          email={activeTab === "email" ? formData.email : undefined}
+          onClose={handleCloseOtpVerification}
+        />
+      )}
+    </>
   );
 };
 
