@@ -92,20 +92,20 @@ const LoginForm: React.FC = () => {
   return (
     <>
       <ToastContainer />
-      <div className="rounded-lg text-gray-900 flex justify-center">
-        <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
-          <div className="flex-1 text-center hidden lg:flex items-center justify-center">
-            <div className="p-10">
-              <Image src={login} alt="login" className="rounded-3xl" />
+      <div className="rounded-lg text-gray-900 flex justify-center min-h-screen">
+        <div className="w-full max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex flex-col lg:flex-row justify-center">
+          <div className="flex-1 text-center hidden lg:flex items-center justify-center p-6">
+            <div className="w-full max-w-md">
+              <Image src={login} alt="login" className="rounded-3xl w-full h-auto" />
             </div>
           </div>
-          <div className="lg:w-1/3 xl:w-5/12 p-6 sm:p-12">
+          <div className="w-full lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div className="flex flex-col items-center">
-              <h1 className="text-3xl xl:text-3xl font-extrabold">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-center">
                 Login to your account
               </h1>
-              <p>Secure Access to Your Personal Dashboard</p>
-              <Tabs defaultValue="email" className="w-[400px] mt-8">
+              <p className="mt-2 text-center">Secure Access to Your Personal Dashboard</p>
+              <Tabs defaultValue="email" className="w-full max-w-md mt-8">
                 <TabsList className="w-full">
                   <TabsTrigger
                     value="email"
@@ -125,7 +125,7 @@ const LoginForm: React.FC = () => {
 
                 {/* Email Login Tab */}
                 <TabsContent value="email">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center w-full">
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="email" className="font-semibold">
                         Email
@@ -209,7 +209,7 @@ const LoginForm: React.FC = () => {
 
                 {/* Mobile Login Tab */}
                 <TabsContent value="mobile">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center w-full">
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <Label htmlFor="phoneNumber" className="font-semibold">
                         Mobile

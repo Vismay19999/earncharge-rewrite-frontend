@@ -11,7 +11,6 @@ import { logout as RemoveToken } from "@/utils/auth";
 import { useUser } from "@/actions/UserContext/UserContext";
 import { FaUser } from "react-icons/fa";
 
-
 const MobileSidebar = () => {
   const { user, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
@@ -72,14 +71,16 @@ const MobileSidebar = () => {
             className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
           >
-            <FaArrowRight /> <span className="font-semibold text-lg">About</span>
+            <FaArrowRight />{" "}
+            <span className="font-semibold text-lg">About</span>
           </Link>
           <Link
             href="/offers"
             className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
           >
-            <FaArrowRight /> <span className="font-semibold text-lg">Offers</span>
+            <FaArrowRight />{" "}
+            <span className="font-semibold text-lg">Offers</span>
           </Link>
           <Link
             href="/bbps"
@@ -88,12 +89,17 @@ const MobileSidebar = () => {
           >
             <FaArrowRight /> <span className="font-semibold text-lg">BBPS</span>
           </Link>
+          <span className="text-sm">•</span>
+          <Link href="/referral">
+            <h1 className="hover:underline">Referral</h1>
+          </Link>
           <Link
             href="/contact"
             className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
           >
-            <FaArrowRight /> <span className="font-semibold text-lg">Contact</span>
+            <FaArrowRight />{" "}
+            <span className="font-semibold text-lg">Contact</span>
           </Link>
           <div className="flex flex-col items-center space-y-4 pt-4">
             {user ? (

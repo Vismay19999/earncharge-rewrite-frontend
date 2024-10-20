@@ -31,10 +31,28 @@ const Footer = () => {
                 Home
               </Link>
               <Link
-                href="/"
+                href="/aboutus"
                 className="cursor-pointer block text-white mt-4 text-lg"
               >
-                Blog
+                About Us
+              </Link>
+              <Link
+                href="/offers"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                Offers
+              </Link>
+              <Link
+                href="/bbps"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                BBPS
+              </Link>
+              <Link
+                href="/referral"
+                className="cursor-pointer block text-white mt-4 text-lg"
+              >
+                Referral
               </Link>
             </div>
             <div className="flex-[1]">

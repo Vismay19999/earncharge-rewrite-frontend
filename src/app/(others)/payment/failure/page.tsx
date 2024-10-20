@@ -27,7 +27,6 @@ const Page = () => {
           <FaArrowRightFromBracket />
         </button>
       </div>
-      <Footer />
     </>
   );
 };

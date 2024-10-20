@@ -1,6 +1,7 @@
 import React from 'react'
 import MobileSidebar from './MobileSidebar'
 import PcHeader from './PcHeader'
+import Link from 'next/link'
 
 const Header = () => {
   return (

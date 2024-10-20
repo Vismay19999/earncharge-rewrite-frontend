@@ -85,7 +85,10 @@ const GetWallets: React.FC = () => {
   return (
     <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
       <div className="flex flex-wrap justify-between items-center">
-        <h2 className="text-lg font-bold mb-4 flex-[1]">Wallets</h2>
+        <div className="flex-[2] mb-4">
+        <h2 className="text-lg font-semibold">Wallets</h2>
+        <p className="text-xs">Kindly Refresh The Account If Cashbacks are Not Visible</p>
+        </div>
         <button
           className="text-sm font-regular mb-4 flex-[1] text-right"
           onClick={() => setIsHelpPopupOpen(true)}
