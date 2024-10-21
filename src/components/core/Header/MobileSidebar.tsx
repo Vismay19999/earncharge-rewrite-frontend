@@ -89,9 +89,12 @@ const MobileSidebar = () => {
           >
             <FaArrowRight /> <span className="font-semibold text-lg">BBPS</span>
           </Link>
-          <span className="text-sm">•</span>
-          <Link href="/referral">
-            <h1 className="hover:underline">Referral</h1>
+          <Link
+            href="/referral"
+            className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
+            onClick={closeSidebar}
+          >
+            <FaArrowRight /> <span className="font-semibold text-lg">Referral</span>
           </Link>
           <Link
             href="/contact"

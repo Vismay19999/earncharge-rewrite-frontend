@@ -4,7 +4,7 @@ import Logo from "@/../public/footer logo.png";
 import Link from "next/link";
 import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
 import { FaThreads } from "react-icons/fa6";
-
+import logoBrand from "@/../public/logoBrand.png";
 const Footer = () => {
   return (
     <>
@@ -20,6 +20,10 @@ const Footer = () => {
               <Link href="https://www.instagram.com/earncharge?igsh=dWxkYWg0NGl6N2R0" target="_blank"><Instagram /></Link>
               <Link href="https://www.youtube.com/@EarnChargeIndia" target="_blank"><YouTube /></Link>
               <Link href="https://www.threads.net/@earncharge?glyph_type=SELF_PROFILE" target="_blank"><FaThreads /></Link>
+            </div>
+            <div className="flex justify-start flex-col p-5 gap-5 text-white">
+              <Image src={logoBrand} alt="EarnCharge Branding" width={60} height={60} />
+              <p className="text-white font-semibold">Charge Up Your Wallet — <br /> Earn as You Go!</p>
             </div>
             </div>
             <div className="flex-[1]">
