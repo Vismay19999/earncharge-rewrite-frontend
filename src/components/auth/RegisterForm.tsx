@@ -66,18 +66,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
   return (
     <>
-      <div className="rounded-lg text-gray-900 flex justify-center">
-        <div className="max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex justify-center flex-1">
-          <div className="lg:w-1/3 xl:w-5/12 p-6 sm:p-12">
+      <div className="rounded-lg text-gray-900 flex justify-center w-full">
+        <div className="w-full max-w-screen-xl gap-10 rounded-lg m-0 sm:m-10 bg-white sm:rounded-lg flex flex-col lg:flex-row justify-center">
+          <div className="w-full lg:w-1/2 xl:w-5/12 p-4 sm:p-6 lg:p-12">
             <div className="flex flex-col items-center">
-              <h1 className="text-3xl xl:text-3xl font-extrabold">
+              <h1 className="text-2xl sm:text-3xl xl:text-3xl font-extrabold text-center">
                 Register To Get Started
               </h1>
-              <p>Secure Access to Your Personal Dashboard</p>
-              <form action="" onSubmit={handleSubmit(onSubmitHandler)}>
+              <p className="text-center mt-2">Secure Access to Your Personal Dashboard</p>
+              <form action="" onSubmit={handleSubmit(onSubmitHandler)} className="w-full max-w-sm">
                 <Tabs
                   defaultValue={method === "phoneNumber" ? "mobile" : "email"}
-                  className="w-[400px] mt-8"
+                  className="w-full mt-8"
                 >
                   <TabsList className="w-full">
                     <TabsTrigger
@@ -98,7 +98,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
                   {/* Email Registration */}
                   <TabsContent value="email">
-                    <div className="flex flex-col items-center">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       {/* First Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="fname" className="font-semibold">
@@ -211,7 +211,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
 
                   {/* Mobile Registration */}
                   <TabsContent value="mobile">
-                    <div className="flex flex-col items-center">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       {/* First Name */}
                       <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                         <Label htmlFor="fname" className="font-semibold">
@@ -334,7 +334,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                 </Tabs>
 
                 {/* Submit Button */}
-                <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                <div className="grid w-full items-center gap-1.5 mt-6">
                   <button
                     className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
                     disabled={!method}
@@ -343,7 +343,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     Register
                   </button>
                 </div>
-                <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                <div className="grid w-full items-center gap-1.5 mt-6">
                   <button
                     type="button"
                     className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
@@ -351,7 +351,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     <Link href="/otpless/sendLink">Sign In without OTP</Link>
                   </button>
                 </div>
-                <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
+                <div className="grid w-full items-center gap-1.5 mt-5">
                   <button
                     type="button"
                     className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
@@ -364,11 +364,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           </div>
 
           {/* Register Image */}
-          <div className="flex-1 text-center hidden lg:flex">
+          <div className="w-full lg:w-1/2 text-center hidden lg:flex">
             <Image
               src={register}
               alt="Register"
-              className="w-full h-full rounded-l-lg object-cover"
+              className="w-full h-full rounded-t-lg lg:rounded-l-lg lg:rounded-t-none object-cover"
             />
           </div>
 

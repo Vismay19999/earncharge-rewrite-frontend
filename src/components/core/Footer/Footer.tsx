@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import Logo from "@/../public/footer logo.png";
+import Logo from "@/../public/logoEarn.png";
 import Link from "next/link";
 import { Facebook, Instagram, LinkedIn, YouTube } from "@mui/icons-material";
 import { FaThreads } from "react-icons/fa6";
-import logoBrand from "@/../public/logoBrand.png";
+import logoBrand from "@/../public/iconEarn.png";
 const Footer = () => {
   return (
     <>
