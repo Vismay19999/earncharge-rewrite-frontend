@@ -8,10 +8,10 @@ const page = () => {
   return (
     <>
       <div className="px-10 bg-gray-900 border-t-black border-dashed">
-        <div className="max-w-[1000px] p-20 m-auto justify-between items-center flex flex-wrap gap-10">
+        <div className="max-w-[1000px] p-10 m-auto justify-between items-center flex flex-wrap gap-10 lg:flex-row flex-col">
           <div className="flex-[2]">
             <h1 className="text-white font-semibold text-2xl">
-              <div className="flex flex-col text-[50px] font-[500] leading-[50px] ">
+              <div className="flex flex-col text-[50px] font-[500] leading-[50px]">
                 EarnCharge
                 <span className="text-pink-600 font-semibold">
                   Exclusive Offers!
