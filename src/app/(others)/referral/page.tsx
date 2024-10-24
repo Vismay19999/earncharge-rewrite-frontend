@@ -8,7 +8,7 @@ const ReferralPage = () => {
   return (
     <>
       <div className="px-10 bg-blue-950 border-t-black border-dashed">
-        <div className="max-w-[1000px] p-10 m-auto justify-between items-center flex flex-wrap flex-col lg:flex-row gap-10">
+        <div className="max-w-[1000px] p-0 py-10 m-auto justify-between items-center flex flex-wrap flex-col lg:flex-row gap-10">
           <div className="flex-[1]">
             <h1 className="text-white font-semibold text-2xl">
               <div className="flex flex-col text-[50px] font-[500] leading-[50px] ">
