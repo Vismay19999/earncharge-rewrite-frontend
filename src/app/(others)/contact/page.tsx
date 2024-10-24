@@ -54,7 +54,7 @@ const Contact = () => {
             transition={{ duration: 1.3 }}
             className="flex-[1]"
           >
-            <iframe width="100%" height="350" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=350&amp;hl=en&amp;q=505%20near%20traffic%20park%20dharampeth%20extension%20nagpur%C2%A0440010+(PlentyCred)&amp;t=p&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" className="rounded-lg"></iframe>
+            <iframe width="100%" height="350" scrolling="no" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Dharampeth,%20Nagpur,%20Maharashtra+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" className="rounded-lg"></iframe>
           </motion.div>
         </div>
             <motion.div className="flex flex-col xl:flex-row p-3 lg:p-0 gap-10 mt-10">
@@ -77,7 +77,7 @@ const Contact = () => {
         <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
         border-[#131c23] border-b-[10px]">
           <h1 className="text-4xl font-semibold">Address</h1>
-            <center>505 near traffic park dharampeth extension nagpur 440010.</center>
+            <center>505, Khare Town Dharampeth Extention Near Traffic Park Nagpur Maharashtra India 440010.</center>
         </motion.div>
       </motion.div>
                 </div>
