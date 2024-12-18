@@ -17,7 +17,7 @@ const RSS: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          'https://api.plentycred.co.in/v1/rss/rss-news'
+          'https://plentycred.co.in/api/v1/rss/rss-news'
         );
 
         const responseData = response.data['data'];
