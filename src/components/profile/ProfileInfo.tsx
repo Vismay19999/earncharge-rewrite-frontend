@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import KycBase from "./profileTabs/KycBase";
 import { FaCheckCircle } from "react-icons/fa";
+import WithdrawQR from "./profileTabs/WithdrawRefQR";
 
 type Wallet = {
   id: string;
@@ -154,6 +155,7 @@ const ProfileInfo: React.FC<{ user: ProfileUser }> = ({ user }) => {
           </div>
         </div>
       </div>
+      {/* <WithdrawQR /> */}
       <KycBase user={user} onKycVerified={handleKycVerified} />
       <ToastContainer />
     </div>
