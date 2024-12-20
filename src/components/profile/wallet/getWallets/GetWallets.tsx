@@ -11,6 +11,7 @@ import WalletSuccessPopup from "./WalletSuccessPopup";
 import WalletFailurePopup from "./WalletFailurePopup";
 import HelpPopup from "./HelpPopup";
 import WithdrawRefQR from "../../profileTabs/WithdrawRefQR";
+import WithdrawCashQR from "../../profileTabs/WithdrawCashQr";
 
 interface Wallets {
   referralWallet: { amount: number };
@@ -156,6 +157,9 @@ const GetWallets: React.FC = () => {
               >
                 <FiPlus className="text-white" />
               </button>
+            </div>
+            <div className="flex">
+                <WithdrawCashQR />
             </div>
           </div>
         </div>
