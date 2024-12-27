@@ -8,6 +8,7 @@ import animated from "@/../public/animated.gif";
 import animated2 from "@/../public/animated2.gif";
 import animated3 from "@/../public/animated3.gif";
 
+import Footer from "@/components/core/Footer/Footer";
 import SecuredImage from "@/../public/security.svg";
 
 import Image from "next/image";
@@ -150,7 +151,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <Footer />
     </div>
   );
 }
