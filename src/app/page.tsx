@@ -14,9 +14,17 @@ import SecuredImage from "@/../public/security.svg";
 import Image from "next/image";
 import GoogleTranslate from "@/components/GoogleTranslate";
 import Translatecomponent from "@/components/translate/translatecomponent";
+import { useEffect } from "react";
 
 export default function Home() {
   const { user } = useUser()
+
+  useEffect(() => {
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = "/app";
+    }
+  }, []);
 
   return (
     <div>
