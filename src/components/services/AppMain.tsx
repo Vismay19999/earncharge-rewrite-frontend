@@ -1,165 +1,267 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Wallet, Gift, Users, Smartphone, Tv, Phone, Droplet, Flame, Banknote, Zap, QrCode, Info } from "lucide-react";
+import { 
+  Wallet, Gift, Users, Smartphone, Tv, Phone, 
+  Droplet, Flame, Banknote, Zap, QrCode, Info,
+  ChevronRight, ArrowLeft
+} from "lucide-react";
+import { 
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import Link from "next/link";
+import MobileContent from "./MobileContent";
+import IndexElectricityBBPS from "@/components/bbps/Electricity/IndexElectricityBBPS";
+import IndexFastTagBBPS from "@/components/bbps/FastTag/IndexFastTagBBPS";
+import IndexGasBBPS from "@/components/bbps/Gas/IndexGasBBPS";
+import IndexWaterBBPS from "@/components/bbps/Water/IndexWaterBBPS";
+import { Add, Remove, PhoneAndroid, ElectricBolt, DirectionsCar, WaterDrop, PropaneTank } from "@mui/icons-material";
+import GasProvider from "../bbps/Gas/GasProvider";
 
-const RechargeOptions = [
-  { icon: Smartphone, label: "Mobile" },
-  { icon: Tv, label: "DTH" },
-  { icon: Tv, label: "Broadband" },
-  { icon: Phone, label: "Landline" },
-  { icon: Tv, label: "Cable" },
-  { icon: Flame, label: "Gas" },
-  { icon: Droplet, label: "Water" },
-  { icon: Zap, label: "FasTag" },
-  { icon: Banknote, label: "Loan" },
-  { icon: Zap, label: "Electricity" },
-];
+// Types
+interface ServiceItem {
+  id: string;
+  icon: React.ElementType;
+  label: string;
+  bgColor: string;
+  content: React.ReactNode;
+}
 
-const FeatureItems = [
+interface SliderItem {
+  id: string;
+  title: string;
+  heading: string;
+  subtext: string;
+  bgColor: string;
+}
+
+interface FeatureItem {
+  id: string;
+  icon: React.ElementType;
+  title: string;
+  subtitle: string;
+  bgColor: string;
+}
+
+// Constants
+const SERVICES: ServiceItem[] = [
   {
-    icon: Wallet,
-    title: "EarnCharge\nWallet",
-    color: "#fff",
-    bgColor: "#0F9D58",
+    id: "mobile",
+    icon: Smartphone,
+    label: "Mobile",
+    bgColor: "bg-blue-500",
+    content: <MobileContent />
   },
   {
-    icon: Gift,
-    title: "Explore\nRewards",
-    color: "#fff",
-    bgColor: "#0F9D58",
+    id: "electricity",
+    icon: ElectricBolt,
+    label: "Electric",
+    bgColor: "bg-purple-500",
+    content: <IndexElectricityBBPS />
   },
   {
-    icon: Users,
-    title: "Refer &\nGet 10 Coins",
-    color: "#fff",
-    bgColor: "#0F9D58",
+    id: "fastag",
+    icon: DirectionsCar,
+    label: "FastTag",
+    bgColor: "bg-orange-500",
+    content: <IndexFastTagBBPS />
+  },
+  {
+    id: "gas",
+    icon: Flame,
+    label: "Gas",
+    bgColor: "bg-green-500",
+    content: <IndexGasBBPS />,
+  },
+  {
+    id: "water",
+    icon: Droplet,
+    label: "Water",
+    bgColor: "bg-blue-400",
+    content: <IndexWaterBBPS />
   }
 ];
 
-const sliderData = [
+const FEATURES: FeatureItem[] = [
   {
+    id: "wallet",
+    icon: Wallet,
+    title: "EarnCharge Wallet",
+    subtitle: "Quick secure payments",
+    bgColor: "bg-[#0F9D58]"
+  },
+  {
+    id: "rewards",
+    icon: Gift,
+    title: "Explore Rewards",
+    subtitle: "Exclusive deals for you",
+    bgColor: "bg-[#0F9D58]"
+  },
+  {
+    id: "refer",
+    icon: Users,
+    title: "Refer & Earn",
+    subtitle: "Get 10 Coins per referral",
+    bgColor: "bg-[#0F9D58]"
+  }
+];
+
+const SLIDER_ITEMS: SliderItem[] = [
+  {
+    id: "earn-coins",
     title: "EarnCharge",
     heading: "Earn Coins",
     subtext: "Refer Your Friends",
-    image: "/slider-image-1.jpg"
+    bgColor: "bg-gradient-to-br from-blue-600 to-blue-800"
   },
   {
+    id: "special-offer",
     title: "Special Offer",
     heading: "Get 50% Off",
     subtext: "On Your First Recharge",
-    image: "/slider-image-2.jpg"
+    bgColor: "bg-gradient-to-br from-green-600 to-green-800"
   },
   {
+    id: "quick-pay",
     title: "New Feature",
     heading: "Quick Pay",
     subtext: "Fast & Secure Payments",
-    image: "/slider-image-3.jpg"
+    bgColor: "bg-gradient-to-br from-purple-600 to-purple-800"
   }
 ];
 
+// Main Component
 const AppMain = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % sliderData.length);
-        setIsAnimating(false);
-      }, 300);
-    }, 3000);
+      setCurrentSlide((prev) => (prev + 1) % SLIDER_ITEMS.length);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <section className="bg-gray-50 mt-10">
-      <main className="max-w-[480px] m-auto bg-white min-h-screen">
-        <div className="flex flex-col px-5">
-          <div className="relative w-full h-[200px] rounded-3xl overflow-hidden">
-            <div 
-              className={`absolute inset-0 p-6 flex flex-col justify-between z-10 transition-transform duration-300 ease-in-out ${
-                isAnimating ? 'translate-y-[-10px] opacity-0' : 'translate-y-0 opacity-100'
-              }`}
-            >
-              <div>
-                <h1 className="text-white text-lg font-normal">{sliderData[currentSlide].title}</h1>
-              </div>
-              <div>
-                <h2 className="text-white text-4xl font-bold">{sliderData[currentSlide].heading}</h2>
-                <p className="text-white text-sm font-light">{sliderData[currentSlide].subtext}</p>
+    <div className="bg-white min-h-screen relative">
+      <main className="max-w-md mx-auto bg-white min-h-screen ">
+        {/* Header */}
+        <div className="px-5 py-6 space-y-8">
+          {/* Hero Slider */}
+          <div className="relative w-full h-52 rounded-2xl overflow-hidden">
+            <div className={`absolute inset-0 ${SLIDER_ITEMS[currentSlide].bgColor} transition-all duration-500`}>
+              <div className="h-full p-8 flex flex-col justify-between">
+                <div>
+                  <span className="inline-block px-4 py-1.5 bg-white/20 rounded-full text-white text-sm font-medium">
+                    {SLIDER_ITEMS[currentSlide].title}
+                  </span>
+                </div>
+                <div>
+                  <h2 className="text-white text-4xl font-bold mb-2">
+                    {SLIDER_ITEMS[currentSlide].heading}
+                  </h2>
+                  <p className="text-white/90 text-base">
+                    {SLIDER_ITEMS[currentSlide].subtext}
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
-              {sliderData.map((_, index) => (
+            <div className="absolute bottom-6 right-6 flex gap-2">
+              {SLIDER_ITEMS.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentSlide === index ? "bg-white scale-125" : "bg-white/50 scale-100"
-                  }`}
-                  onClick={() => {
-                    setIsAnimating(true);
-                    setTimeout(() => {
-                      setCurrentSlide(index);
-                      setIsAnimating(false);
-                    }, 300);
-                  }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 
+                    ${currentSlide === index ? "bg-white scale-125" : "bg-white/50 scale-100"}`}
+                  onClick={() => setCurrentSlide(index)}
                 />
               ))}
             </div>
-            <Image
-              src={sliderData[currentSlide].image}
-              alt="Banner"
-              fill
-              className={`object-cover rounded-3xl transition-all duration-300 ease-in-out ${
-                isAnimating ? 'scale-105 opacity-80' : 'scale-100 opacity-100'
-              }`}
-            />
           </div>
 
-          <div className="px-4 py-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-medium text-gray-900">Recharge & Bharat Bill Payments</h3>
-                <Info size={16} className="text-gray-400" />
-              </div>
-              <div className="flex items-center gap-2 text-gray-600 border rounded-full px-3 py-1">
-                <span className="text-sm">vismay@okaxis</span>
-                <QrCode size={16} />
-              </div>
+          {/* Quick Actions */}
+          <div className="space-y-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+              <button className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                Services
+              </button>
             </div>
-
-            <div className="grid grid-cols-5 gap-6">
-              {RechargeOptions.map((option, index) => (
-                <div key={index} className="flex flex-col items-center gap-2">
-                  <div className="w-14 h-14 rounded-xl bg-white border shadow-sm flex items-center justify-center">
-                    <option.icon size={24} className="text-gray-600" />
+            <div className="grid grid-cols-3 gap-6">
+              {SERVICES.map((service) => (
+                <button 
+                  key={service.id}
+                  onClick={() => setSelectedService(service)}
+                  className="group focus:outline-none"
+                >
+                  <div className="flex flex-col items-center gap-3">
+                    <div className={`w-16 h-16 rounded-2xl ${service.bgColor} bg-opacity-80 
+                      group-hover:bg-opacity-20 transition-all duration-200 flex items-center 
+                      justify-center group-hover:shadow-lg group-hover:-translate-y-1`}>
+                      <service.icon size={28} className={`text-opacity-70`} />
+                    </div>
+                    <span className="text-sm font-medium text-gray-600 group-hover:text-gray-900 
+                      transition-colors">
+                      {service.label}
+                    </span>
                   </div>
-                  <span className="text-xs text-gray-600">{option.label}</span>
-                </div>
+                </button>
               ))}
             </div>
           </div>
 
-          <div className="px-4 py-6 grid grid-cols-3 gap-4">
-            {FeatureItems.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center gap-2 p-4 rounded-xl"
-              >
-                <div className="w-12 h-12 rounded-full flex items-center justify-center"
-                     style={{ backgroundColor: item.bgColor }}>
-                  <item.icon size={24} className="text-white" />
-                </div>
-                <span className="text-sm font-medium text-center whitespace-pre-line">{item.title}</span>
-              </div>
-            ))}
+          {/* Features */}
+          <div className="space-y-5">
+            <h3 className="text-lg font-semibold text-gray-900">Special Features</h3>
+            <div className="grid grid-cols-1 gap-4">
+              {FEATURES.map((feature) => (
+                <Card 
+                  key={feature.id} 
+                  className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  <CardContent className="p-5">
+                    <div className="flex items-center gap-5">
+                      <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 
+                        ${feature.bgColor}`}>
+                        <feature.icon size={26} className="text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-gray-900 text-lg mb-1">{feature.title}</h4>
+                        <p className="text-sm text-gray-600">{feature.subtitle}</p>
+                      </div>
+                      <ChevronRight size={20} className="text-gray-400 group-hover:text-gray-600 
+                        transition-colors shrink-0" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Service Modal */}
+        <Sheet open={!!selectedService} onOpenChange={() => ""}>
+          <SheetContent className="w-full max-w-md mx-auto">
+            <div className="px-4 overflow-y-scroll h-[480px]">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setSelectedService(null)}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+                >
+                  <ArrowLeft size={20} className="text-gray-600" />
+                </button>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {selectedService?.label}
+                </h2>
+              </div>
+              <div className="mt-10">
+                {selectedService?.content}
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </main>
-    </section>
+    </div>
   );
 };
 

@@ -36,7 +36,7 @@ export const SheetContent: React.FC<SheetContentProps> = ({ children, className 
   return (
     <div
       className={clsx(
-        "fixed bottom-0 left-0 right-0 bg-white shadow-xl p-4",
+        "fixed bottom-0 left-0 right-0 bg-white shadow-xl p-6 pt-8 rounded-t-xl ",
         className // Forward the className
       )}
     >
