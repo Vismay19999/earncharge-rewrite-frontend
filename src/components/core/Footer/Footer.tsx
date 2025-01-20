@@ -8,7 +8,7 @@ import logoBrand from "@/../public/iconEarn.png";
 const Footer = () => {
   return (
     <>
-      <div className="w-full py-12 p-6 bg-[#131c23]">
+      <div className="w-full py-12 p-6 bg-[#131c23] pb-[100px]">
         <div className="max-w-[1000px] m-auto">
           <div className="flex flex-col lg:flex-row gap-10">
             <div className="flex-[1]">

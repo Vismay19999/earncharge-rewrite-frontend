@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "@/actions/UserContext/UserContext";
 import Header from "@/components/core/Header/Header";
 import Translatecomponent from "@/components/translate/translatecomponent";
+import BottomNavigation from "@/components/ui/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           {children}
           <div>
           </div>
+          <BottomNavigation />
         </UserProvider>
       </body>
     </html>

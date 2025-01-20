@@ -13,6 +13,7 @@ import login from "@/../public/log.jpg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import IND from "@/../../public/IND.webp";
+import { ArrowLeft } from "lucide-react";
 
 const LoginForm: React.FC = () => {
   const [loginMethod, setLoginMethod] = useState<

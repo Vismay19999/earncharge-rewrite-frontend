@@ -28,7 +28,6 @@ export default function Home() {
 
   return (
     <div>
-      
       <Translatecomponent />
       <div>
         {/* <Recharge /> */}

@@ -1,0 +1,35 @@
+"use client"
+import Link from 'next/link';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { RiHome5Fill, RiUser3Line, RiSettings4Line } from 'react-icons/ri';
+import { FaArrowLeft } from 'react-icons/fa6';
+
+const BottomNavigation = () => {
+    const router = useRouter();
+
+  return (
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-100 h-16 flex items-center justify-center gap-20 px-6 shadow-lg">
+      {/* User Button */}
+      <button onClick={() => router.back()} className="flex flex-col items-center justify-center space-y-1 transition-colors hover:text-blue-500">
+        <FaArrowLeft size={24} />
+        <span className="text-xs font-medium">Back</span>
+      </button>
+
+      {/* Home Button */}
+      <Link href="/" className="group relative -top-6 transition-transform hover:scale-105">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 rounded-full shadow-xl">
+          <RiHome5Fill size={24} className="text-white" />
+        </div>
+      </Link>
+
+      {/* Settings Button */}
+      <Link href="/" className="flex flex-col items-center justify-center space-y-1 transition-colors hover:text-blue-500">
+        <RiUser3Line size={24} />
+        <span className="text-xs font-medium">Profile</span>
+      </Link>
+    </nav>
+  );
+};
+
+export default BottomNavigation;
