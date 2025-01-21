@@ -233,8 +233,15 @@ const AppMain = () => {
                 <Card 
                   key={feature.id} 
                   className="group hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+                  onClick={() => {
+                    if (!token) {
+                      window.location.href = "/login";
+                    } else {
+                      window.location.href = "/profile";
+                    }
+                  }}
                 >
-                  <CardContent className="p-5">
+                  <CardContent className="p-5 cursor-pointer">
                     <div className="flex items-center gap-5">
                       <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 
                         ${feature.bgColor}`}>
@@ -275,6 +282,9 @@ const AppMain = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <br />
+        <br />
+        <br />
       </main>
     </div>
   );

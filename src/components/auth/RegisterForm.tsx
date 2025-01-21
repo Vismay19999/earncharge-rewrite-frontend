@@ -343,7 +343,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     Register
                   </button>
                 </div>
-                <div className="grid w-full items-center gap-1.5 mt-6">
+                <div className="hidden md:grid w-full items-center gap-1.5 mt-6">
                   <button
                     type="button"
                     className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"

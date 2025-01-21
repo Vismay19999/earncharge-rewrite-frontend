@@ -8,7 +8,7 @@ const page = () => {
       <div className="max-w-[768px] m-auto">
         <AppMain />
       </div>
-        <Footer />
+        {/* <Footer /> */}
     </>
   );
 };

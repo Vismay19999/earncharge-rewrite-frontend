@@ -5,6 +5,7 @@ import { UserProvider } from "@/actions/UserContext/UserContext";
 import Header from "@/components/core/Header/Header";
 import Translatecomponent from "@/components/translate/translatecomponent";
 import BottomNavigation from "@/components/ui/navigation";
+import Footer from "@/components/core/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,9 @@ export default function RootLayout({
           <div>
           </div>
           <BottomNavigation />
+          <div className="hidden md:block">
+          <Footer />
+          </div>
         </UserProvider>
       </body>
     </html>

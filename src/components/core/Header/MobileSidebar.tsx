@@ -32,7 +32,7 @@ const MobileSidebar = () => {
   return (
     <>
       <div className="md:hidden z-50 backdrop-blur-md shadow-md flex justify-between items-center p-4">
-        <Link href="/">
+        <Link href="/app">
           <Image src={Logo} alt="Logo" width={150} height={40} />
         </Link>
         <IconButton onClick={toggleSidebar}>

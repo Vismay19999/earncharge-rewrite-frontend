@@ -166,7 +166,7 @@ const LoginForm: React.FC = () => {
                         Sign In
                       </button>
                     </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <div className="hidden md:grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <button
                         type="button"
                         onClick={() => router.push("/otpless/sendLink")}
@@ -196,11 +196,11 @@ const LoginForm: React.FC = () => {
                     <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
                       <p className="text-sm text-center">
                         I agree to abide by EarnCharge{" "}
-                        <Link href="#" className="font-semibold">
+                        <Link href="/terms" className="font-semibold">
                           Terms Conditions
                         </Link>{" "}
                         &{" "}
-                        <Link href="#" className="font-semibold">
+                        <Link href="/policy" className="font-semibold">
                           Privacy Policy
                         </Link>
                       </p>
