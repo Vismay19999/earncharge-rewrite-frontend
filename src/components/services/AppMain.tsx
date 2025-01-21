@@ -18,6 +18,7 @@ import IndexGasBBPS from "@/components/bbps/Gas/IndexGasBBPS";
 import IndexWaterBBPS from "@/components/bbps/Water/IndexWaterBBPS";
 import { Add, Remove, PhoneAndroid, ElectricBolt, DirectionsCar, WaterDrop, PropaneTank } from "@mui/icons-material";
 import GasProvider from "../bbps/Gas/GasProvider";
+import { getAccessToken } from "@/utils/auth";
 
 // Types
 interface ServiceItem {
@@ -135,6 +136,7 @@ const SLIDER_ITEMS: SliderItem[] = [
 const AppMain = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+  const token = getAccessToken();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -180,19 +182,19 @@ const AppMain = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="space-y-5">
+          <div className="space-y-5 relative">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
               <button className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
                 Services
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-6">
+            <div className={`grid grid-cols-3 gap-6 ${!token ? 'blur-sm' : ''}`}>
               {SERVICES.map((service) => (
                 <button 
                   key={service.id}
-                  onClick={() => setSelectedService(service)}
-                  className="group focus:outline-none"
+                  onClick={() => token && setSelectedService(service)}
+                  className={`group focus:outline-none ${!token ? 'pointer-events-none' : ''}`}
                 >
                   <div className="flex flex-col items-center gap-3">
                     <div className={`w-16 h-16 rounded-2xl ${service.bgColor} bg-opacity-80 
@@ -208,6 +210,19 @@ const AppMain = () => {
                 </button>
               ))}
             </div>
+            
+            {/* Login overlay */}
+            {!token && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Link
+                  href="/login"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg 
+                    font-medium shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  Login to Access Services
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Features */}
