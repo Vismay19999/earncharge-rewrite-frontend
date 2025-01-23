@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/../public/logo.png";
@@ -7,17 +7,24 @@ import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { FaArrowRight } from "react-icons/fa6";
-import { logout as RemoveToken } from "@/utils/auth";
+import { getAccessToken, logout as RemoveToken } from "@/utils/auth";
 import { useUser } from "@/actions/UserContext/UserContext";
 import { FaUser } from "react-icons/fa";
 
 const MobileSidebar = () => {
   const { user, logout } = useUser();
   const [isOpen, setIsOpen] = useState(false);
-
+  const [token, setToken] = useState<string | null>(null);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+ useEffect(() => {
+  const token = getAccessToken()
+  if(token) {
+    setToken(token)
+  }
+ } , [])
 
   const closeSidebar = () => {
     setIsOpen(false);
@@ -114,12 +121,6 @@ const MobileSidebar = () => {
                 >
                   <FaUser /> {user.firstName}
                 </Link>
-                <button
-                  onClick={logoutHandler}
-                  className="w-full p-2 rounded-xl bg-white text-black"
-                >
-                  Logout
-                </button>
               </>
             ) : (
               <>
@@ -139,6 +140,19 @@ const MobileSidebar = () => {
                 </Link>
               </>
             )}
+
+            {
+              token && (
+                <>
+                              <button
+                  onClick={logoutHandler}
+                  className="w-full p-2 rounded-xl bg-white text-black"
+                >
+                  Logout
+                </button>
+                </>
+              )
+            }
           </div>
         </nav>
       </div>

@@ -136,14 +136,20 @@ const SLIDER_ITEMS: SliderItem[] = [
 const AppMain = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
-  const token = getAccessToken();
+  const [isMounted, setIsMounted] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDER_ITEMS.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    setIsMounted(true); // Ensures client-only rendering
+    const token = getAccessToken()
+    if(token){
+
+      setToken(token);
+    }
   }, []);
+
+  if (!isMounted) return null; 
+
 
   return (
     <div className="bg-white min-h-screen relative">
@@ -189,12 +195,12 @@ const AppMain = () => {
                 Services
               </button>
             </div>
-            <div className={`grid grid-cols-3 gap-6 ${!token ? 'blur-sm' : ''}`}>
+            <div className={`grid grid-cols-3 gap-6 ${!token || !isMounted ? 'blur-sm' : ''}`}>
               {SERVICES.map((service) => (
                 <button 
                   key={service.id}
                   onClick={() => token && setSelectedService(service)}
-                  className={`group focus:outline-none ${!token ? 'pointer-events-none' : ''}`}
+                  className={`group focus:outline-none ${!token || !isMounted ? 'pointer-events-none' : ''}`}
                 >
                   <div className="flex flex-col items-center gap-3">
                     <div className={`w-16 h-16 rounded-2xl ${service.bgColor} bg-opacity-80 

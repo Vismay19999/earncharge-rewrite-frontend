@@ -54,7 +54,7 @@ const LoginForm: React.FC = () => {
     }
 
     const payload = {
-      [loginMethod]: formData[loginMethod],
+      [loginMethod === 'phoneNumber' ? 'phoneNumber' : 'email']: formData[loginMethod],
       password: formData.password
     };
 
@@ -261,7 +261,7 @@ const LoginForm: React.FC = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                  <div className="hidden md:grid w-full max-w-sm items-center gap-1.5 mt-6">
                     <button
                       type="button"
                       className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
