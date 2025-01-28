@@ -144,7 +144,7 @@ const MobileSidebar = () => {
             {
               token && (
                 <>
-                              <button
+                <button
                   onClick={logoutHandler}
                   className="w-full p-2 rounded-xl bg-white text-black"
                 >
