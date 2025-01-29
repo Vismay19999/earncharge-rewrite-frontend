@@ -60,7 +60,7 @@ const MobileSidebar = () => {
         </div>
         <nav className="flex flex-col space-y-2 p-4">
           <Link
-            href="/"
+            href="/app"
             className="flex items-center space-x-3 hover:bg-gray-800 p-3 rounded-md transition"
             onClick={closeSidebar}
           >
