@@ -20,12 +20,6 @@ const Page = () => {
     }
   }, []);
 
-  // Render null until mounted to avoid hydration issues
-  if (!isMounted) return null;
-
-  // Return null if there is no token
-  if (!token) return null;
-
   console.log(user.user)
   return (
     <div className="max-w-[768px] m-auto">
