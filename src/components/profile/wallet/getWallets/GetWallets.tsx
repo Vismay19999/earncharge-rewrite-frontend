@@ -125,13 +125,14 @@ const GetWallets: React.FC = () => {
                 <FiPlus className="text-white" />
               </button>
             </div>
-            <div className="flex">
-            <WithdrawRefQR />
-            </div>
           </div>
         </div>
       </div>
+                <div>
+            <WithdrawRefQR />
 
+                </div>
+        
       {/* Cashback Wallet */}
       <div className="flex flex-row justify-between py-2">
         <div className="flex-[1]">
@@ -159,10 +160,13 @@ const GetWallets: React.FC = () => {
               </button>
             </div>
             <div className="flex">
-                <WithdrawCashQR />
             </div>
           </div>
         </div>
+      </div>
+      <div>
+      <WithdrawCashQR />
+
       </div>
 
       {/* Payment Wallet */}
