@@ -35,7 +35,7 @@ const BottomNavigation = () => {
 
             {/* Home Button */}
             <Link
-                href="/"
+                href="/app"
                 className="group relative -top-6 transition-transform hover:scale-105"
             >
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-4 rounded-full shadow-xl">

@@ -8,6 +8,7 @@ import KycBase from "./profileTabs/KycBase";
 import GetWallets from "./wallet/getWallets/GetWallets";
 import IndexTransactions from "./transactions/IndexTransactions";
 import Image from "next/image";
+import QRAssigned from "./qrassigned/QRAssigned";
 
 const IndexProfile = () => {
   const { user } = useUser();
@@ -41,6 +42,13 @@ const IndexProfile = () => {
                     <h1 className="font-semibold text-xl">Transactions</h1>
                     <IndexTransactions />
                   </div>
+                </div>
+                <br />
+                <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
+                <div className="p-4">
+                <h1 className="font-semibold text-xl">QR Assigned</h1>
+                </div>
+                    <QRAssigned />
                 </div>
               </div>
             </div>

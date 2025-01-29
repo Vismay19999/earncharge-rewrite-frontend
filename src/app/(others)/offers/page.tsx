@@ -7,7 +7,7 @@ import Image from "next/image";
 const page = () => {
   return (
     <>
-      <div className="px-10 bg-gray-900 border-t-black border-dashed">
+      <div className="px-4 bg-gray-900 border-t-black border-dashed">
         <div className="max-w-[1000px] p-10 m-auto justify-between items-center flex flex-wrap gap-10 lg:flex-row flex-col">
           <div className="flex-[2]">
             <h1 className="text-white font-semibold text-2xl">
