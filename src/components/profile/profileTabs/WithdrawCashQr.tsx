@@ -31,6 +31,7 @@ const WithdrawCashQR = () => {
       })
 
       toast.success("QR code generated successfully")
+      window.location.reload()
       // Here you might want to handle the QR code data from the response
     } catch (error: any) {
       if (error.response?.status === 400 && error.response?.data?.message?.includes("Minimum wallet balance")) {

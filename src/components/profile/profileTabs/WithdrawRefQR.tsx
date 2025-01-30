@@ -27,6 +27,7 @@ const WithdrawQR = () => {
       );
 
       toast.success('QR code generated successfully');
+      window.location.reload()
       // Here you might want to handle the QR code data from the response
       
     } catch (error: any) {
