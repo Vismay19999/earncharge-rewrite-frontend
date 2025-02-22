@@ -49,7 +49,7 @@ export default function Home() {
                     Instant Transactions and Secure Payments
                   </div>
                   <div className="font-[400] text-[18px] leading-[25px] ">
-                    Recharge is fast and easy to use. So, a user can look for a
+                    Earncharge is fast and easy to use. So, a user can look for a
                     suitable recharge plan and complete the recharge in just a
                     few clicks. It does not even take a minute. Recharge is 100%
                     safe for making your payments. It offers end-to-end data
