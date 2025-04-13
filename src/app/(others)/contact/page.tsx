@@ -77,7 +77,7 @@ const Contact = () => {
         <motion.div className="flex justify-center items-center flex-col bg-white p-10 shadow-lg rounded-lg
         border-[#131c23] border-b-[10px]">
           <h1 className="text-4xl font-semibold">Address</h1>
-            <center>505, Khare Town Dharampeth Extention Near Traffic Park Nagpur Maharashtra India 440010.</center>
+            <center>Plot No: 326, behind LAD Collage Shankar Nagar Nagpur Maharashtra India 440010</center>
         </motion.div>
       </motion.div>
                 </div>
