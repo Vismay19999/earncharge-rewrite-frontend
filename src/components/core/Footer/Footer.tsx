@@ -101,8 +101,8 @@ const Footer = () => {
             </div>
             <div className="flex-[1]">
               <p className="text-md leading-1 text-white">
-                Earncharge is a fully owned subsidary of Arahant Economy
-                Services Private Limited. It is a digital platform providing
+                Earncharge is a fully owned subsidary of ACAMUS UTILITY RECHARGE SERVICES PRIVATE LIMITED.
+                CIN: U62099MH2025PTC441399. It is a digital platform providing
                 Mobile Recharge and BBPS services.
               </p>
             </div>
