@@ -1,0 +1,43 @@
+name: Deploy to VPS with Docker
+
+on:
+  push:
+    branches:
+      - main  # Change if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Docker image locally using Docker Compose
+        run: |
+          echo "${{ secrets.ENV }}" > .env
+          docker compose build
+
+      - name: Test Docker image locally (Optional)
+        run: |
+          docker compose up -d
+          # Add any tests you need to run on the container here
+          # Example: curl, wget, or any other command to check if the app is running correctly
+          # For instance, wait for a service to become available:
+          # curl --retry 10 --retry-connrefused --silent --show-error http://localhost:33300
+
+      - name: Setup SSH and Deploy to VPS
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd /var/www/earncharge-rewrite-frontend
+            git pull
+            echo "${{ secrets.ENV }}" > .env
+            docker compose up --build -d
+            docker system prune -f
+            docker system prune -a --volumes -f
+          EOF
