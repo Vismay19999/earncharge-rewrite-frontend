@@ -1,17 +1,21 @@
 "use client";
 import { useState, useRef } from "react";
-import MobileContent from './MobileContent';
-import IndexElectricityBBPS from "@/components/bbps/Electricity/IndexElectricityBBPS";
-import IndexFastTagBBPS from "@/components/bbps/FastTag/IndexFastTagBBPS";
-import IndexGasBBPS from "@/components/bbps/Gas/IndexGasBBPS";
-import IndexWaterBBPS from "@/components/bbps/Water/IndexWaterBBPS";
-import { Add, Remove, PhoneAndroid, ElectricBolt, DirectionsCar, WaterDrop, PropaneTank } from "@mui/icons-material";
+import { ElectricBolt, DirectionsCar, WaterDrop, PropaneTank } from "@mui/icons-material";
+import { Add, Remove, PhoneAndroid } from "@mui/icons-material";
+import MobileContent from "./MobileContent";
 
 // Define a type for the tab content and icons
 interface Tab {
   content: JSX.Element;
   icon: JSX.Element;
 }
+
+const ComingSoonMessage = () => (
+  <div className="flex flex-col items-center justify-center h-48">
+    <h2 className="text-2xl font-semibold text-gray-700 mb-2">Coming Soon!</h2>
+    <p className="text-gray-500">This service will be available shortly.</p>
+  </div>
+);
 
 const AllTabs = () => {
   const [currentTab, setCurrentTab] = useState<string>("Mobile");
@@ -29,10 +33,10 @@ const AllTabs = () => {
   // Define the tabs with their respective content and icons
   const tabs: Record<string, Tab> = {
     Mobile: { content: <MobileContent />, icon: <MobileIcon /> },
-    Electricity: { content: <IndexElectricityBBPS />, icon: <ElectricityIcon /> },
-    Gas: { content: <IndexGasBBPS />, icon: <GasIcon /> },
-    Water: { content: <IndexWaterBBPS />, icon: <WaterIcon /> },
-    FastTag: { content: <IndexFastTagBBPS />, icon: <FastTagIcon /> },
+    Electricity: { content: <ComingSoonMessage />, icon: <ElectricityIcon /> },
+    Gas: { content: <ComingSoonMessage />, icon: <GasIcon /> },
+    Water: { content: <ComingSoonMessage />, icon: <WaterIcon /> },
+    FastTag: { content: <ComingSoonMessage />, icon: <FastTagIcon /> },
   };
 
   const renderTabs = (visibleTabs: string[]) => {
@@ -82,16 +86,9 @@ const AllTabs = () => {
         {renderRemainingTabs()}
       </div>
 
-      {/* Desktop View - Show first 6 tabs */}
+      {/* Desktop View - Show all tabs */}
       <div className="relative hidden lg:flex gap-10">
-        {renderTabs(Object.keys(tabs).slice(0, 6))}
-        <button
-          className="flex items-center justify-center bg-gray-100 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-all duration-200"
-          onClick={handleDropdownClick}
-        >
-          {showDropdown ? <Remove /> : <Add />}
-        </button>
-        {renderRemainingTabs()}
+        {renderTabs(Object.keys(tabs))}
       </div>
 
       {/* Tab content */}
