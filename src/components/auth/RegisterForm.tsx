@@ -343,14 +343,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
                     Register
                   </button>
                 </div>
-                <div className="hidden md:grid w-full items-center gap-1.5 mt-6">
+                {/* <div className="hidden md:grid w-full items-center gap-1.5 mt-6">
                   <button
                     type="button"
                     className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
                   >
                     <Link href="/otpless/sendLink">Sign In without OTP</Link>
                   </button>
-                </div>
+                </div> */}
                 <div className="grid w-full items-center gap-1.5 mt-5">
                   <button
                     type="button"

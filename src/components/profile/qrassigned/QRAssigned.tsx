@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { getAccessToken } from "@/utils/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { QrCode, Calendar, Link, CheckCircle, XCircle } from "lucide-react";
+import { QrCode, Calendar, Link, CheckCircle, XCircle, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface QRCodeData {
   id: string;
@@ -46,23 +47,13 @@ const QRAssigned = () => {
     fetchQRCodes();
   }, []);
 
-  if (!loading && qrCodes.length === 0) {
-    return null;
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Your QR Codes
-        <span className="text-lg font-normal ml-2 text-gray-600">
-          (Total: {loading ? "-" : qrCodes.length})
-        </span>
-      </h1>
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           loading..
         </div>
-      ) : (
+      ) : qrCodes.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {qrCodes.map((qrCode) => (
             <Card
@@ -101,6 +92,14 @@ const QRAssigned = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-12 px-4 bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="bg-gray-100 p-4 rounded-full mb-4">
+            <QrCode className="h-8 w-8 text-gray-500" />
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">No QR Codes Available</h3>
+          <p className="text-gray-500 text-center mb-6">You don't have any QR codes assigned yet. Claim them from withdraw section.</p>
         </div>
       )}
     </div>

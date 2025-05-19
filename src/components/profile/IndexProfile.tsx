@@ -15,7 +15,7 @@ const IndexProfile = () => {
 
   const handleKycVerified = () => {
     // Add logic to handle KYC verification, e.g., refresh user data
-    console.log('KYC verified');
+    console.log("KYC verified");
   };
 
   if (!user) {
@@ -37,18 +37,14 @@ const IndexProfile = () => {
                 <GetWallets />
               </div>
               <div className="flex-[7]">
-                <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
-                  <div className="p-4">
-                    <h1 className="font-semibold text-xl">Transactions</h1>
-                    <IndexTransactions />
-                  </div>
-                </div>
+                <IndexTransactions />
+
                 <br />
                 <div className="bg-white shadow-md rounded-xl p-2 w-full border-l-[8px] border-[#0AA87E]">
-                <div className="p-4">
-                <h1 className="font-semibold text-xl">QR Assigned</h1>
-                </div>
-                    <QRAssigned />
+                  <div className="p-4">
+                    <h1 className="font-semibold text-xl">QR Assigned</h1>
+                  </div>
+                  <QRAssigned />
                 </div>
               </div>
             </div>

@@ -127,7 +127,7 @@ const LoginForm: React.FC = () => {
                 {/* Email Login Tab */}
                 <TabsContent value="email">
                   <div className="flex flex-col items-center w-full">
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       <Label htmlFor="email" className="font-semibold">
                         Email
                       </Label>
@@ -135,14 +135,14 @@ const LoginForm: React.FC = () => {
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="someone@something.com"
+                        placeholder="Enter your email"
                         value={formData.email}
                         onChange={handleInputChange}
                         maxLength={60}
                       />
                     </div>
 
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">
                         Password
                       </Label>
@@ -155,55 +155,6 @@ const LoginForm: React.FC = () => {
                         onChange={handleInputChange}
                         maxLength={30}
                       />
-                    </div>
-
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
-                        onClick={handleLogin}
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                    <div className="hidden md:grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        onClick={() => router.push("/otpless/sendLink")}
-                        className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
-                      >
-                        <Link href="/otpless/sendLink">
-                          Sign In without OTP
-                        </Link>
-                      </button>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
-                      <button
-                        type="button"
-                        className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
-                      >
-                        <Link href="/register">I want to register?</Link>
-                      </button>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
-                    <button
-                      type="button"
-                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
-                    >
-                      <Link href="/forgotpassword">Forgot Password?</Link>
-                    </button>
-                  </div>
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <p className="text-sm text-center">
-                        I agree to abide by EarnCharge{" "}
-                        <Link href="/terms" className="font-semibold">
-                          Terms Conditions
-                        </Link>{" "}
-                        &{" "}
-                        <Link href="/policy" className="font-semibold">
-                          Privacy Policy
-                        </Link>
-                      </p>
                     </div>
                   </div>
                 </TabsContent>
@@ -211,24 +162,24 @@ const LoginForm: React.FC = () => {
                 {/* Mobile Login Tab */}
                 <TabsContent value="mobile">
                   <div className="flex flex-col items-center w-full">
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       <Label htmlFor="phoneNumber" className="font-semibold">
                         Mobile
                       </Label>
-                      <div className="relative">
+                      <div className="relative w-full">
                         <Image
                           src={IND}
                           alt="Flag"
-                          className="absolute top-3.5 left-3"
+                          className="absolute top-1/2 transform -translate-y-1/2 left-3"
                           width={20}
-                          height={100}
+                          height={20}
                         />
                         <Input
                           type="text"
                           id="phoneNumber"
                           name="phoneNumber"
                           className="pl-10"
-                          placeholder="8888855544"
+                          placeholder="Enter your phone number"
                           value={formData.phoneNumber}
                           onChange={handleNumberInputChange}
                           maxLength={10}
@@ -236,7 +187,7 @@ const LoginForm: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
+                    <div className="grid w-full items-center gap-1.5 mt-6">
                       <Label htmlFor="password" className="font-semibold">
                         Password
                       </Label>
@@ -250,54 +201,62 @@ const LoginForm: React.FC = () => {
                         maxLength={30}
                       />
                     </div>
-
-                    <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                      <button
-                        type="button"
-                        className="transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
-                        onClick={handleLogin}
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                  </div>
-                  <div className="hidden md:grid w-full max-w-sm items-center gap-1.5 mt-6">
-                    <button
-                      type="button"
-                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
-                    >
-                      <Link href="/otpless/sendLink">Sign In without OTP</Link>
-                    </button>
-                  </div>
-                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
-                    <button
-                      type="button"
-                      className="p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
-                    >
-                      <Link href="/register">I want to register?</Link>
-                    </button>
-                  </div>
-                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-5">
-                    <button
-                      type="button"
-                      className="p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
-                    >
-                      <Link href="/forgotpassword">Forgot Password?</Link>
-                    </button>
-                  </div>
-                  <div className="grid w-full max-w-sm items-center gap-1.5 mt-6">
-                    <p className="text-sm text-center">
-                      I agree to abide by EarnCharge{" "}
-                      <Link href="#" className="font-semibold">
-                        Terms Conditions
-                      </Link>{" "}
-                      &{" "}
-                      <Link href="#" className="font-semibold">
-                        Privacy Policy
-                      </Link>
-                    </p>
                   </div>
                 </TabsContent>
+                
+                {/* Common buttons and links for both tabs */}
+                <div className="mt-6">
+                  <button
+                    type="button"
+                    className="w-full transition p-2.5 rounded-2xl bg-[#0AA579] hover:bg-black text-white focus:bg-black font-semibold"
+                    onClick={handleLogin}
+                  >
+                    Sign In
+                  </button>
+                </div>
+
+                {/* <div className="hidden md:block mt-6">
+                  <button
+                    type="button"
+                    onClick={() => router.push("/otpless/sendLink")}
+                    className="w-full p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                  >
+                    <Link href="/otpless/sendLink">
+                      Sign In without OTP
+                    </Link>
+                  </button>
+                </div> */}
+
+                <div className="mt-5">
+                  <button
+                    type="button"
+                    className="w-full p-2.5 rounded-2xl bg-black text-white focus:bg-black font-semibold"
+                  >
+                    <Link href="/register">I want to register?</Link>
+                  </button>
+                </div>
+
+                <div className="mt-5">
+                  <button
+                    type="button"
+                    className="w-full p-2.5 rounded-2xl bg-white border-[1px] text-black focus:bg-zinc-100 font-semibold"
+                  >
+                    <Link href="/forgotpassword">Forgot Password?</Link>
+                  </button>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <p className="text-sm">
+                    I agree to abide by EarnCharge{" "}
+                    <Link href="/terms" className="font-semibold">
+                      Terms Conditions
+                    </Link>{" "}
+                    &{" "}
+                    <Link href="/policy" className="font-semibold">
+                      Privacy Policy
+                    </Link>
+                  </p>
+                </div>
               </Tabs>
             </div>
           </div>

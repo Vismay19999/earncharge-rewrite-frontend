@@ -39,7 +39,7 @@ const MobileSidebar = () => {
   return (
     <>
       <div className="md:hidden z-50 backdrop-blur-md shadow-md flex justify-between items-center p-3">
-        <Link href="/app">
+        <Link href="/">
           <Image src={Logo} alt="Logo" width={120} height={30} />
         </Link>
         <IconButton onClick={toggleSidebar}>
@@ -61,7 +61,7 @@ const MobileSidebar = () => {
 
         <nav className="flex flex-col space-y-1 p-3">
           {[
-            { href: "/app", label: "Home" },
+            { href: "/", label: "Home" },
             { href: "/blog", label: "Blog" },
             { href: "/aboutus", label: "About" },
             { href: "/offers", label: "Offers" },

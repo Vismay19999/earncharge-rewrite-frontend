@@ -6,7 +6,6 @@ import Header from "@/components/core/Header/Header";
 import Translatecomponent from "@/components/translate/translatecomponent";
 import BottomNavigation from "@/components/ui/navigation";
 import Footer from "@/components/core/Footer/Footer";
-import { MpinProvider } from "@/actions/MpinContext/MpinContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,19 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
-          <MpinProvider>
-          <div>
-            <Header />
-          </div>
+          <Header />
           {children}
-          <div>
-          </div>
-          <BottomNavigation />
-          <div className="hidden md:block">
           <Footer />
-          </div>
-
-          </MpinProvider>
         </UserProvider>
       </body>
     </html>

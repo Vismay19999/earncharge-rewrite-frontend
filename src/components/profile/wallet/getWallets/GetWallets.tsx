@@ -3,67 +3,64 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAccessToken } from "@/utils/auth";
 import { FaWallet } from "react-icons/fa";
-import { FiPlus } from "react-icons/fi";
-import Modal from "../Modal";
-import IMPSPage from "../../IMPSMODAL";
 import { toast } from "react-toastify";
-import WalletSuccessPopup from "./WalletSuccessPopup";
-import WalletFailurePopup from "./WalletFailurePopup";
-import HelpPopup from "./HelpPopup";
-import WithdrawRefQR from "../../profileTabs/WithdrawRefQR";
-import WithdrawCashQR from "../../profileTabs/WithdrawCashQr";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-interface Wallets {
-  referralWallet: { amount: number };
-  cashbackWallet: { amount: number };
-  paymentWallet: { amount: number };
+interface WalletData {
+  total_amount: number;
 }
 
 const GetWallets: React.FC = () => {
-  const [wallets, setWallets] = useState<Wallets | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<
-    "cashback" | "referral" | "payment"
-  >("cashback");
-  const [isHelpPopupOpen, setIsHelpPopupOpen] = useState<boolean>(false);
-  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState<boolean>(false);
-  const [isFailurePopupOpen, setIsFailurePopupOpen] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [walletData, setWalletData] = useState<WalletData | null>(null);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState<boolean>(false);
+  const [withdrawAmount, setWithdrawAmount] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchWallets();
+    fetchWallet();
   }, []);
 
-  const fetchWallets = async () => {
+  const fetchWallet = async () => {
     try {
       const accessToken = getAccessToken();
-      const response = await axios.get<Wallets>(
-        "https://api.earncharge.in/v1/user/wallets",
+      const response = await axios.get<{ message: string; walletData: WalletData }>(
+        "https://api.earncharge.in/v1/user/wallet",
         {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         }
       );
-      setWallets(response.data);
+      setWalletData(response.data.walletData);
     } catch (err: any) {
-      toast.error("Failed to fetch wallets. Please try again.");
+      toast.error("Failed to fetch wallet. Please try again.");
     }
   };
 
-  const handleWithdraw = async (amount: string) => {
+  const handleWithdraw = async () => {
+    setError(null);
+    setSuccess(null);
+    
+    if (!withdrawAmount || parseFloat(withdrawAmount) < 10) {
+      setError("Minimum withdrawal amount is ₹10");
+      return;
+    }
+
+    if (walletData && parseFloat(withdrawAmount) > walletData.total_amount) {
+      setError("Insufficient balance in your wallet");
+      return;
+    }
+
     try {
+      setIsLoading(true);
       const accessToken = getAccessToken();
-      const url =
-        modalType === "cashback"
-          ? "https://api.earncharge.in/v1/user/wallet/withdraw/cashback"
-          : modalType === "referral"
-          ? "https://api.earncharge.in/v1/user/wallet/withdraw/referral"
-          : "https://api.earncharge.in/v1/user/wallet/withdraw/payment";
       const response = await axios.post(
-        url,
-        { amount },
+        "https://api.earncharge.in/v1/user/wallet/withdraw",
+        { amount: withdrawAmount },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -71,157 +68,121 @@ const GetWallets: React.FC = () => {
           }
         }
       );
-      setSuccessMessage(response.data?.message || `Your ${modalType} withdrawal was successful.`);
-      await fetchWallets();
-      setIsSuccessPopupOpen(true);
+      
+      setSuccess(response.data?.message || "Withdrawal request successful");
+      await fetchWallet();
+      setTimeout(() => {
+        setIsWithdrawOpen(false);
+        setWithdrawAmount("");
+        setSuccess(null);
+      }, 2000);
     } catch (err: any) {
-      setErrorMessage(err.response?.data?.message || "An unexpected error occurred. Please try again.");
-      setIsFailurePopupOpen(true);
+      setError(err.response?.data?.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  if (!wallets) {
-    return <div>Loading...</div>;
+  if (!walletData) {
+    return (
+      <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
+        <div className="flex justify-between items-center mb-6">
+          <div className="h-6 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+          <div className="h-3 bg-gray-200 rounded w-1/5 animate-pulse"></div>
+        </div>
+        <div className="bg-white rounded-xl p-6 border-2 border-[#0AA87E] shadow-lg animate-pulse">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+              <div>
+                <div className="h-3 bg-gray-200 rounded w-24 mb-2"></div>
+                <div className="h-5 bg-gray-200 rounded w-16"></div>
+              </div>
+            </div>
+            <div className="w-24 h-8 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="bg-white shadow-md rounded-xl p-6 w-full border-l-[8px] border-[#0AA87E] mt-4">
-      <div className="flex flex-wrap justify-between items-center">
-        <div className="flex-[2] mb-4">
-        <h2 className="text-lg font-semibold">Wallets</h2>
-        <p className="text-xs">Kindly Refresh The Account If Cashbacks are Not Visible</p>
-        </div>
-        <button
-          className="text-sm font-regular mb-4 flex-[1] text-right"
-          onClick={() => setIsHelpPopupOpen(true)}
-        >
-          Help?
-        </button>
+      <div className="flex flex-wrap justify-between items-center mb-6">
+        <h2 className="text-xl font-bold">My Wallet</h2>
       </div>
 
-      {/* Referral Wallet */}
-      <div className="flex flex-row justify-between py-2">
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
-            <div className="flex">
-              <div className="bg-gray-100 p-2 rounded-full">
-                <FaWallet />
+      <div className="bg-white rounded-xl p-6 text-gray-900 mb-6 border-2 border-[#0AA87E] shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-[#0AA87E]/10 rounded-full -mr-20 -mt-20 z-0"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#0AA87E]/10 rounded-full -ml-10 -mb-10 z-0"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="bg-[#0AA87E] p-3 rounded-full">
+              <FaWallet size={24} className="text-white" />
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">Available Balance</p>
+              <h3 className="text-2xl font-bold text-gray-900">₹ {walletData.total_amount}</h3>
+            </div>
+          </div>
+          <Button 
+            onClick={() => setIsWithdrawOpen(true)}
+            className="bg-[#0AA87E] hover:bg-[#0AA87E]/80 text-white font-medium"
+          >
+            Withdraw
+          </Button>
+        </div>
+      </div>
+
+      {/* Withdraw Modal */}
+      <Dialog open={isWithdrawOpen} onOpenChange={setIsWithdrawOpen}>
+        <DialogContent className="sm:max-w-[425px] bg-white text-gray-900 border border-gray-200">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl font-bold text-gray-900">Withdraw Funds</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="bg-[#0AA87E] p-4 rounded-full">
+                <FaWallet size={24} className="text-white" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-gray-500">Available Balance</p>
+                <p className="text-xl font-bold">₹ {walletData.total_amount}</p>
               </div>
             </div>
-            <div className="flex-[1] font-semibold text-xs">Referral Wallet</div>
-          </div>
-        </div>
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
-            <div className="flex">₹ {wallets.referralWallet.amount}</div>
-            <div className="flex">
-              <button
-                onClick={() => {
-                  setModalType("referral");
-                  setIsModalOpen(true);
-                }}
-                className="rounded-xl bg-black p-2"
-              >
-                <FiPlus className="text-white" />
-              </button>
+            
+            <div className="space-y-2">
+              <label htmlFor="amount" className="text-sm font-medium text-gray-700">
+                Withdrawal Amount (Min ₹10)
+              </label>
+              <Input
+                id="amount"
+                type="number"
+                value={withdrawAmount}
+                onChange={(e) => setWithdrawAmount(e.target.value)}
+                placeholder="Enter amount"
+                min={10}
+                max={walletData.total_amount}
+                className="bg-white border-gray-300 text-gray-900"
+              />
+              {error && <p className="text-red-500 text-xs">{error}</p>}
+              {success && <p className="text-green-500 text-xs">{success}</p>}
             </div>
           </div>
-        </div>
-      </div>
-                <div>
-            <WithdrawRefQR />
-
-                </div>
-        
-      {/* Cashback Wallet */}
-      <div className="flex flex-row justify-between py-2">
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
-            <div className="flex">
-              <div className="bg-gray-100 p-2 rounded-full">
-                <FaWallet />
-              </div>
-            </div>
-            <div className="flex-[1] font-semibold text-xs">Cashback Wallet</div>
-          </div>
-        </div>
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
-            <div className="flex">₹ {wallets.cashbackWallet.amount}</div>
-            <div className="flex">
-              <button
-                onClick={() => {
-                  setModalType("cashback");
-                  setIsModalOpen(true);
-                }}
-                className="rounded-xl bg-black p-2"
-              >
-                <FiPlus className="text-white" />
-              </button>
-            </div>
-            <div className="flex">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-      <WithdrawCashQR />
-
-      </div>
-
-      {/* Payment Wallet */}
-      <div className="flex flex-row justify-between py-2">
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-4 justify-start items-center">
-            <div className="flex">
-              <div className="bg-gray-100 p-2 rounded-full">
-                <FaWallet />
-              </div>
-            </div>
-            <div className="flex-[1] font-semibold text-xs">My Wallet</div>
-          </div>
-        </div>
-        <div className="flex-[1]">
-          <div className="flex flex-wrap flex-row gap-5 justify-end items-center">
-            <div className="flex">
-              <div className="flex items-center gap-5">
-                ₹ {wallets.paymentWallet.amount} <IMPSPage />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleWithdraw}
-        balance={
-          modalType === "cashback"
-            ? wallets.cashbackWallet.amount
-            : wallets.referralWallet.amount
-        }
-        walletType={modalType === "cashback" ? "Cashback" : "Referral"}
-      />
-
-      <WalletSuccessPopup
-        isOpen={isSuccessPopupOpen}
-        onClose={() => setIsSuccessPopupOpen(false)}
-        walletType={modalType}
-        successMessage={successMessage}
-      />
-
-      <WalletFailurePopup
-        isOpen={isFailurePopupOpen}
-        onClose={() => setIsFailurePopupOpen(false)}
-        walletType={modalType}
-        errorMessage={errorMessage}
-      />
-
-      <HelpPopup
-        isOpen={isHelpPopupOpen}
-        onClose={() => setIsHelpPopupOpen(false)}
-      />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsWithdrawOpen(false)} className="bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleWithdraw} 
+              disabled={isLoading || !withdrawAmount || parseFloat(withdrawAmount) < 10 || parseFloat(withdrawAmount) > walletData.total_amount}
+              className="bg-[#0AA87E] hover:bg-[#0AA87E]/90 text-white"
+            >
+              {isLoading ? "Processing..." : "Withdraw"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
